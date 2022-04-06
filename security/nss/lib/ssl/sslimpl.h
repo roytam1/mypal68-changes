@@ -1,6 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-/*
- * This file is PRIVATE to SSL and should be the first thing included by
+/* This file is PRIVATE to SSL and should be the first thing included by
  * any SSL implementation file.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public

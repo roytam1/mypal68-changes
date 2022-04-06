@@ -42,4 +42,3 @@ import sys
 sys.path.insert(0, os.path.join(os.path.split(__file__)[0], '..'))
 
 
-# vi:sts=4 sw=4 et

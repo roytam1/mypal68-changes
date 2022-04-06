@@ -289,7 +289,6 @@ module.exports = function crc32wrapper(input, crc) {
         return crc32str(crc|0, input, input.length, 0);
     }
 };
-// vim: set shiftwidth=4 softtabstop=4:
 
 },{"./utils":32}],5:[function(require,module,exports){
 'use strict';
@@ -1983,8 +1982,6 @@ module.exports = function (data) {
     }
     return new ArrayReader(utils.transformTo("array", data));
 };
-
-// vim: set shiftwidth=4 softtabstop=4:
 
 },{"../support":30,"../utils":32,"./ArrayReader":17,"./NodeBufferReader":19,"./StringReader":20,"./Uint8ArrayReader":21}],23:[function(require,module,exports){
 'use strict';

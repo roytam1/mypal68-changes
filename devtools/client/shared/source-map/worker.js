@@ -1915,9 +1915,7 @@ module.exports.parseURL = function (input, options) {
 /***/ 171:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */

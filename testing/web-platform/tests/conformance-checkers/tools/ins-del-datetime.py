@@ -172,4 +172,3 @@ for key in non_errors.keys():
     del_file.write('<del datetime="%s"></del> <!-- %s -->\n' % (non_errors[key], key))
 ins_file.close()
 del_file.close()
-# vim: ts=4:sw=4

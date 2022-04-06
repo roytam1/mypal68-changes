@@ -1,6 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-/*
- * vtables (and methods that call through them) for the 4 types of
+/* vtables (and methods that call through them) for the 4 types of
  * SSLSockets supported.  Only one type is still supported.
  * Various other functions.
  *

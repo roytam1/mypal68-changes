@@ -41,4 +41,3 @@ def web_socket_transfer_data(request):
                              (request.ws_resource, request.ws_protocol))
 
 
-# vi:sts=4 sw=4 et

@@ -178,4 +178,3 @@ class StreamBase(object):
         return ''.join(read_bytes)
 
 
-# vi:sts=4 sw=4 et

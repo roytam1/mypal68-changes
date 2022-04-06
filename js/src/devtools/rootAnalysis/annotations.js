@@ -1,5 +1,3 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 4 -*- */
-
 "use strict";
 
 // Ignore calls made through these function pointers

@@ -1,4 +1,3 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Private header file of libSSL.
  * Various and sundry protocol constants. DON'T CHANGE THESE. These
  * values are defined by the SSL 3.0 protocol specification.

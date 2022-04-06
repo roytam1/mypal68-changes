@@ -187,9 +187,3 @@ extern struct ud_itab_entry ud_itab[];
 extern struct ud_lookup_table_list_entry ud_lookup_table_list[];
 
 #endif /* UD_DECODE_H */
-
-/* vim:cindent
- * vim:expandtab
- * vim:ts=4
- * vim:sw=4
- */

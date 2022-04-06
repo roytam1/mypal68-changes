@@ -5742,5 +5742,3 @@ function formatStartTag(el) {
     return ret + ">";
 }
 //@}
-
-// vim: foldmarker=@{,@} foldmethod=marker

@@ -254,4 +254,3 @@ def headerparserhandler(request):
     return apache.DONE  # Return DONE such that no other handlers are invoked.
 
 
-# vi:sts=4 sw=4 et

@@ -1,5 +1,3 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-// vim:set ts=2 sts=2 sw=2 et cin:
 // Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without

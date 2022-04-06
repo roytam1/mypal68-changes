@@ -303,4 +303,3 @@ def format_extensions(extension_list):
     return ', '.join(formatted_extension_list)
 
 
-# vi:sts=4 sw=4 et

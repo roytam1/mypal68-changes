@@ -1,5 +1,3 @@
-.. -*- Mode: rst; fill-column: 80; -*-
-
 ====================================
  Runtime locale switching in Fennec
 ====================================

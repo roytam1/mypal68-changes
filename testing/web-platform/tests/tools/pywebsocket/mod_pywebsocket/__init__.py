@@ -221,4 +221,3 @@ A request object has these extension processing related attributes.
 """
 
 
-# vi:sts=4 sw=4 et tw=72

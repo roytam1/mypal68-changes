@@ -1,6 +1,4 @@
-/* -*- Mode: c; c-basic-offset: 4; indent-tabs-mode: t; tab-width: 8; -*- */
-/*
- * Copyright © 2005 Keith Packard
+/* Copyright © 2005 Keith Packard
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public

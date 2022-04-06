@@ -1,4 +1,3 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
 var currentTest;
 var gIsRefImageLoaded = false;
 const gShouldOutputDebugInfo = false;

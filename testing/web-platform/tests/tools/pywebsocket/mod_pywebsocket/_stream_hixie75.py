@@ -226,4 +226,3 @@ class StreamHixie75(StreamBase):
             'StreamHixie75 doesn\'t support send_ping')
 
 
-# vi:sts=4 sw=4 et

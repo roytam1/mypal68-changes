@@ -8522,5 +8522,3 @@ commandNames.forEach(function(command) {
 });
 })();
 //@}
-
-// vim: foldmarker=@{,@} foldmethod=marker

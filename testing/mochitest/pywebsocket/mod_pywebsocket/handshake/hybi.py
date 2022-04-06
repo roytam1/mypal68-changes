@@ -425,4 +425,3 @@ class Handshaker(object):
                            raw_response)
 
 
-# vi:sts=4 sw=4 et

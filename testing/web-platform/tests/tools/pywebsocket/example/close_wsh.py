@@ -66,4 +66,3 @@ def web_socket_passive_closing_handshake(request):
     return code, reason
 
 
-# vi:sts=4 sw=4 et

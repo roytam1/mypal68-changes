@@ -222,4 +222,3 @@ function doBrowserCellButton(browserCell, test) {
     };
 }
 //@}
-// vim: foldmarker=@{,@} foldmethod=marker

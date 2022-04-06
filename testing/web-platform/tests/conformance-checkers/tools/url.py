@@ -421,4 +421,3 @@ def write_isvalid_files():
 write_novalid_files()
 write_haswarn_files()
 write_isvalid_files()
-# vim: ts=4:sw=4

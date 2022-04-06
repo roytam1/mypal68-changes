@@ -1,5 +1,3 @@
-# -*- Mode: Makefile -*-
-
 shellresult := $(shell pathtest)
 ifneq (2f7cdd0b-7277-48c1-beaf-56cb0dbacb24,$(filter $(shellresult),2f7cdd0b-7277-48c1-beaf-56cb0dbacb24))
 $(error pathtest not found in submake shell function)

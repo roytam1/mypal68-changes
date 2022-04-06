@@ -179,4 +179,3 @@ def parse_token_list(data):
     return token_list
 
 
-# vi:sts=4 sw=4 et

@@ -216,4 +216,3 @@ class MessageSender(threading.Thread):
         self._queue.put((message, threading.Condition()))
 
 
-# vi:sts=4 sw=4 et

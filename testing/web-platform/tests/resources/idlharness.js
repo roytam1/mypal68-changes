@@ -3274,4 +3274,3 @@ function fetch_spec(spec) {
         return r.text();
     });
 }
-// vim: set expandtab shiftwidth=4 tabstop=4 foldmarker=@{,@} foldmethod=marker:

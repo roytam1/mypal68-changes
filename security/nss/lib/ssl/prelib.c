@@ -1,7 +1,4 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil -*- */
-
-/*
- * Functions used by https servers to send (download) pre-encrypted files
+/* Functions used by https servers to send (download) pre-encrypted files
  * over SSL connections that use Fortezza ciphersuites.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public

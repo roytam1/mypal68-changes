@@ -1205,4 +1205,3 @@ if __name__ == '__main__':
     _main(sys.argv[1:])
 
 
-# vi:sts=4 sw=4 et

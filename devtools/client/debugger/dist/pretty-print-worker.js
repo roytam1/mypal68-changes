@@ -78,7 +78,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ 12:
 /***/ (function(module, exports) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
@@ -655,7 +654,6 @@ module.exports = {
 /***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
@@ -1078,9 +1076,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
 /***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  *
@@ -1225,9 +1221,7 @@ exports.decode = function base64VLQ_decode(aStr, aIndex, aOutParam) {
 /***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -1417,7 +1411,7 @@ self.onmessage = workerHandler({ prettyPrint });
 /***/ 381:
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* -*- indent-tabs-mode: nil; js-indent-level: 2; fill-column: 80 -*- */
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 /*
  * Copyright 2013 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE.md or:

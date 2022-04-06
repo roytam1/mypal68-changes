@@ -1,6 +1,4 @@
 
-.. -*- Mode: rst; fill-column: 100; -*-
-
 =======================================
 Downloadable content (DLC) UI Telemetry
 =======================================

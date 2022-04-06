@@ -95,4 +95,3 @@ class MemorizingFile(object):
         return self._memorized_lines
 
 
-# vi:sts=4 sw=4 et

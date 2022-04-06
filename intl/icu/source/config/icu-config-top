@@ -1,5 +1,4 @@
 #!/bin/sh
-## -*-sh-*-
 #set -x
 # BEGIN of icu-config-top
 # Copyright (C) 2016 and later: Unicode, Inc. and others.

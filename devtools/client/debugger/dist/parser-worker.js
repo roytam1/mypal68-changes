@@ -6023,9 +6023,7 @@ module.exports = isObjectLike;
 /* 12 */
 /***/ (function(module, exports) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -7545,9 +7543,7 @@ function cloneNode(node, deep = true) {
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -7967,9 +7963,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  *
@@ -8113,9 +8107,7 @@ exports.decode = function base64VLQ_decode(aStr, aIndex, aOutParam) {
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -12662,9 +12654,7 @@ exports.SourceNode = __webpack_require__(94).SourceNode;
 /* 89 */
 /***/ (function(module, exports) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -12735,9 +12725,7 @@ exports.decode = function (charCode) {
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2014 Mozilla Foundation and contributors
+/* Copyright 2014 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -12820,9 +12808,7 @@ exports.MappingList = MappingList;
 /* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -13908,9 +13894,7 @@ exports.IndexedSourceMapConsumer = IndexedSourceMapConsumer;
 /* 92 */
 /***/ (function(module, exports) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -14025,9 +14009,7 @@ exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
 /* 93 */
 /***/ (function(module, exports) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -14145,9 +14127,7 @@ exports.quickSort = function (ary, comparator) {
 /* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -16198,7 +16178,6 @@ module.exports = Uint8Array;
         isIdentifierPartES6: isIdentifierPartES6
     };
 }());
-/* vim: set sw=4 ts=4 et tw=80 : */
 
 
 /***/ }),
@@ -20021,7 +20000,6 @@ module.exports = function toFastproperties(o) {
     exports.code = __webpack_require__(135);
     exports.keyword = __webpack_require__(268);
 }());
-/* vim: set sw=4 ts=4 et tw=80 : */
 
 
 /***/ }),
@@ -20171,7 +20149,6 @@ module.exports = function toFastproperties(o) {
         trailingStatement: trailingStatement
     };
 }());
-/* vim: set sw=4 ts=4 et tw=80 : */
 
 
 /***/ }),
@@ -20342,7 +20319,6 @@ module.exports = function toFastproperties(o) {
         isIdentifierES6: isIdentifierES6
     };
 }());
-/* vim: set sw=4 ts=4 et tw=80 : */
 
 
 /***/ }),

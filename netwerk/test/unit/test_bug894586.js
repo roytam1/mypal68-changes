@@ -154,5 +154,3 @@ function run_test() {
     registrar.unregisterFactory(handler.classID, handler);
   }
 }
-
-// vim: set et ts=2 :

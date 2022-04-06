@@ -580,7 +580,6 @@ def test_comment_and_no_newline_at_end():
         [
             "def test_basic_complex():",
             "    assert 1 == 2",
-            "# vim: filetype=pyopencl:fdm=marker",
         ]
     )
     ast, start, end = getstatementrange_ast(1, source)

@@ -1,4 +1,3 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* This file implements the SERVER Session ID cache.
  * NOTE:  The contents of this file are NOT used by the client.
  *

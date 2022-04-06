@@ -891,4 +891,3 @@ class Stream(StreamBase):
         return self._original_opcode
 
 
-# vi:sts=4 sw=4 et

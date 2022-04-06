@@ -390,4 +390,3 @@ class Dispatcher(object):
                 self._handler_suite_map[convert(path)] = handler_suite
 
 
-# vi:sts=4 sw=4 et

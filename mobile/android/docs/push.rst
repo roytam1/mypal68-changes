@@ -1,5 +1,3 @@
-.. -*- Mode: rst; fill-column: 80; -*-
-
 =======================================================
  The architecture of the Fennec Webpush implementation
 =======================================================

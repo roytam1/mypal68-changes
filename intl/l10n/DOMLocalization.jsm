@@ -1,5 +1,3 @@
-/* vim: set ts=2 et sw=2 tw=80 filetype=javascript: */
-
 /* Copyright 2017 Mozilla Foundation and others
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

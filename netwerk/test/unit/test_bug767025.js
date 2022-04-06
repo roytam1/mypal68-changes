@@ -1,5 +1,3 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
-
 const { HttpServer } = ChromeUtils.import("resource://testing-common/httpd.js");
 
 /**

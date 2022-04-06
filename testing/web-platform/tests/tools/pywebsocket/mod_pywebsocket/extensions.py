@@ -747,4 +747,3 @@ def is_compression_extension(extension_name):
     return extension_name in _compression_extension_names
 
 
-# vi:sts=4 sw=4 et

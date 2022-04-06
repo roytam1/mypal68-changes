@@ -218,4 +218,3 @@ class MockDispatcher(object):
         pass
 
 
-# vi:sts=4 sw=4 et

@@ -1,6 +1,4 @@
-/* -*- js-indent-level: 4; indent-tabs-mode: nil -*- */
-/*
- * e10s event dispatcher from content->chrome
+/* e10s event dispatcher from content->chrome
  *
  * type = eventName (QuitApplication)
  * data = json object {"filename":filename} <- for LoggerInit

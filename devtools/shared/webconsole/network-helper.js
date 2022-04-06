@@ -1,6 +1,4 @@
-/* vim:set ts=2 sw=2 sts=2 et: */
-/*
- * Software License Agreement (BSD License)
+/* Software License Agreement (BSD License)
  *
  * Copyright (c) 2007, Parakey Inc.
  * All rights reserved.

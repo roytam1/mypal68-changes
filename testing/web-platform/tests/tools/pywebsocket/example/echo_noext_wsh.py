@@ -58,4 +58,3 @@ def web_socket_transfer_data(request):
             request.ws_stream.send_message(line, binary=True)
 
 
-# vi:sts=4 sw=4 et

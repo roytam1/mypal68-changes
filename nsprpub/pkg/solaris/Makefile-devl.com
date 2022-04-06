@@ -30,5 +30,3 @@ LN = /usr/bin/ln
 CLOBBERFILES = $(FILES)
 
 include $(topsrcdir)/config/rules.mk
-
-# vim: ft=make

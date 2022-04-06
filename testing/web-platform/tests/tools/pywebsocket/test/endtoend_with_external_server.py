@@ -64,4 +64,3 @@ if __name__ == '__main__':
     unittest.main(argv=[sys.argv[0]])
 
 
-# vi:sts=4 sw=4 et

@@ -1,5 +1,3 @@
-.. -*- Mode: rst; fill-column: 100; -*-
-
 ===================================
  Shutting down Firefox for Android
 ===================================

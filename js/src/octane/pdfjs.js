@@ -393,9 +393,6 @@ function getPDF() {
 ///////// specific global names have been prefixed by PdfJS_window., ////////
 ///////// to avoid interference with the benchmark runner script. ////////
 
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 var PDFJS = {};
 
 (function pdfjsWrapper() {
@@ -405,8 +402,6 @@ var PDFJS = {};
   PDFJS.build = '3cc61f0';
 
   // Files are inserted below - see Makefile
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -874,9 +869,6 @@ var PDFDocument = (function PDFDocumentClosure() {
 
   return PDFDocument;
 })();
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -1443,9 +1435,6 @@ var StatTimer = (function StatTimerClosure() {
   };
   return StatTimer;
 })();
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 /**
  * This is the main entry point for loading a PDF and interacting with it.
@@ -2034,9 +2023,6 @@ var WorkerTransport = (function WorkerTransportClosure() {
   return WorkerTransport;
 
 })();
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -3282,9 +3268,6 @@ if (!isWorker) {
   }
 }
 
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var Name = (function NameClosure() {
@@ -4097,10 +4080,6 @@ var PDFObjects = (function PDFObjectsClosure() {
   };
   return PDFObjects;
 })();
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -4976,10 +4955,6 @@ var PostScriptLexer = (function PostScriptLexerClosure() {
   return PostScriptLexer;
 })();
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var ISOAdobeCharset = [
@@ -5081,10 +5056,6 @@ var ExpertSubsetCharset = [
   'eightinferior', 'nineinferior', 'centinferior', 'dollarinferior',
   'periodinferior', 'commainferior'
 ];
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -12016,10 +11987,6 @@ var CIDToUnicodeMaps = {
     {f: 7, c: 19887}]
 };
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var ColorSpace = (function ColorSpaceClosure() {
@@ -12549,9 +12516,6 @@ var LabCS = (function LabCSClosure() {
   };
   return LabCS;
 })();
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -13145,10 +13109,6 @@ var CipherTransformFactory = (function CipherTransformFactoryClosure() {
 
   return CipherTransformFactory;
 })();
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -14060,10 +14020,6 @@ var EvalState = (function EvalStateClosure() {
   };
   return EvalState;
 })();
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -18745,10 +18701,6 @@ var CFFCompiler = (function CFFCompilerClosure() {
   return CFFCompiler;
 })();
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var GlyphsUnicode = {
@@ -22958,10 +22910,6 @@ var GlyphsUnicode = {
   '.notdef': 0x0000
 };
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var PDFImage = (function PDFImageClosure() {
@@ -23333,10 +23281,6 @@ function loadJpegStream(id, imageData, objs) {
   });
   img.src = 'data:image/jpeg;base64,' + PdfJS_window.window.btoa(imageData);
 }
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -26282,10 +26226,6 @@ var Metrics = {
   }
 };
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var EOF = {};
@@ -26925,10 +26865,6 @@ var Linearization = (function LinearizationClosure() {
   return Linearization;
 })();
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var PatternType = {
@@ -27228,10 +27164,6 @@ var TilingPattern = (function TilingPatternClosure() {
 
   return TilingPattern;
 })();
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -29524,10 +29456,6 @@ var LZWStream = (function LZWStreamClosure() {
   return LZWStream;
 })();
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 function MessageHandler(name, comObj) {
@@ -29750,10 +29678,6 @@ if (typeof PdfJS_window.window === 'undefined') {
   var handler = new MessageHandler('worker_processor', this);
   WorkerMessageHandler.setup(handler);
 }
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 // - The JPEG specification can be found in the ITU CCITT Recommendation T.81
 //   (www.w3.org/Graphics/JPEG/itu-t81.pdf)
@@ -30667,8 +30591,6 @@ var JpegImage = (function jpegImage() {
 
   return constructor;
 })();
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 
@@ -32529,10 +32451,6 @@ var JpxImage = (function JpxImageClosure() {
   return JpxImage;
 })();
 
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
 'use strict';
 
 var bidi = PDFJS.bidi = (function bidiClosure() {
@@ -32961,10 +32879,6 @@ var bidi = PDFJS.bidi = (function bidiClosure() {
 
   return bidi;
 })();
-
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 
 'use strict';
 

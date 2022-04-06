@@ -1126,4 +1126,3 @@ if __name__ == '__main__':
     main()
 
 
-# vi:sts=4 sw=4 et

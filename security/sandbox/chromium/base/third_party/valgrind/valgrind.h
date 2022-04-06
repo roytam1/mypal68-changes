@@ -1,5 +1,4 @@
-/* -*- c -*-
-   ----------------------------------------------------------------
+/* ----------------------------------------------------------------
 
    Notice that the following BSD-style license applies to this one
    file (valgrind.h) only.  The rest of Valgrind is licensed under the

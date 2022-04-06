@@ -260,4 +260,3 @@ except ValueError as e:
     urllib.parse.uses_netloc.append('wss')
 
 
-# vi:sts=4 sw=4 et

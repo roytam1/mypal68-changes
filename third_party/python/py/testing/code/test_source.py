@@ -488,8 +488,7 @@ def test_oneline():
 def test_comment_and_no_newline_at_end():
     from py._code.source import getstatementrange_ast
     source = Source(['def test_basic_complex():',
-                     '    assert 1 == 2',
-                     '# vim: filetype=pyopencl:fdm=marker'])
+                     '    assert 1 == 2'])
     ast, start, end = getstatementrange_ast(1, source)
     assert end == 2
 

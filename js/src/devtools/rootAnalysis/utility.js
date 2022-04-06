@@ -1,5 +1,3 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 4 -*- */
-
 "use strict";
 
 loadRelativeToScript('dumpCFG.js');

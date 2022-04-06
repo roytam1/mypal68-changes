@@ -1,6 +1,4 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
-/*
- * This testcase performs 3 requests against the offline cache.  They
+/* This testcase performs 3 requests against the offline cache.  They
  * are
  *
  *  - start_cache_nonpinned_app1()

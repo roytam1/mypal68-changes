@@ -12,7 +12,7 @@
    /* comment £ */
 /* comment
  * and
-some
+some
    # more
    // comment */
 // comment /*

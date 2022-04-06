@@ -361,4 +361,3 @@ file.write('<body>\n')
 for key in non_errors.keys():
     file.write('%s <!-- %s -->\n' % (non_errors[key], key))
 file.close()
-# vim: ts=4:sw=4

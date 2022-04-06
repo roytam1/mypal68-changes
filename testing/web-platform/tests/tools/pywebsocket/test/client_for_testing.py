@@ -1097,4 +1097,3 @@ def create_client_hixie75(options):
         options, WebSocketHixie75Handshake(options), WebSocketStreamHixie75)
 
 
-# vi:sts=4 sw=4 et

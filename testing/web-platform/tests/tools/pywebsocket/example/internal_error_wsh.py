@@ -39,4 +39,3 @@ def web_socket_transfer_data(request):
     raise msgutil.BadOperationException('Intentional')
 
 
-# vi:sts=4 sw=4 et

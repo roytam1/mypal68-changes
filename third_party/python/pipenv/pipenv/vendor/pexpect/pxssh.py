@@ -488,4 +488,3 @@ class pxssh (spawn):
                 return False
         return True
 
-# vi:ts=4:sw=4:expandtab:ft=python:

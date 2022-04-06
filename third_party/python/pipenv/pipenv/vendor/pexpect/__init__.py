@@ -80,6 +80,3 @@ __revision__ = ''
 __all__ = ['ExceptionPexpect', 'EOF', 'TIMEOUT', 'spawn', 'spawnu', 'run', 'runu',
            'which', 'split_command_line', '__version__', '__revision__']
 
-
-
-# vim: set shiftround expandtab tabstop=4 shiftwidth=4 ft=python autoindent :

@@ -107,4 +107,3 @@ def do_handshake(request, dispatcher, allowDraft75=False, strict=False):
         status=common.HTTP_STATUS_BAD_REQUEST)
 
 
-# vi:sts=4 sw=4 et

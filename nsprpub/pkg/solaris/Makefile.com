@@ -33,5 +33,3 @@ CP = /usr/bin/cp
 CLOBBERFILES = $(FILES)
 
 include $(topsrcdir)/config/rules.mk
-
-# vim: ft=make

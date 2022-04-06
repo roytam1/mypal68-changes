@@ -1,4 +1,3 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
 const SIMPLEURI_SPEC = "data:text/plain,hello world";
 const BLOBURI_SPEC = "blob:123456";
 

@@ -2085,4 +2085,3 @@ if __name__ == '__main__':
     unittest.main()
 
 
-# vi:sts=4 sw=4 et

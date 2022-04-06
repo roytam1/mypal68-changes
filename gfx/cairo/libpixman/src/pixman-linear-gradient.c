@@ -1,6 +1,4 @@
-/* -*- Mode: c; c-basic-offset: 4; tab-width: 8; indent-tabs-mode: t; -*- */
-/*
- * Copyright © 2000 SuSE, Inc.
+/* Copyright © 2000 SuSE, Inc.
  * Copyright © 2007 Red Hat, Inc.
  * Copyright © 2000 Keith Packard, member of The XFree86 Project, Inc.
  *             2005 Lars Knoll & Zack Rusin, Trolltech

@@ -95,5 +95,3 @@ class MemorizingFile(object):
         """Get lines memorized so far."""
         return self._memorized_lines
 
-
-# vi:sts=4 sw=4 et

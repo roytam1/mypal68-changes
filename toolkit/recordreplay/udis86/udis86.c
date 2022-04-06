@@ -127,5 +127,3 @@ ud_set_input_buffer(struct ud* u, const uint8_t* buf, size_t len)
   u->inp_buf_size = len;
   u->inp_buf_index = 0;
 }
-
-/* vim:set ts=2 sw=2 expandtab */

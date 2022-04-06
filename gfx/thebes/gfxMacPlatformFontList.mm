@@ -1,5 +1,4 @@
-/* -*- Mode: ObjC; tab-width: 20; indent-tabs-mode: nil; c-basic-offset: 2 -*-
- * ***** BEGIN LICENSE BLOCK *****
+/* ***** BEGIN LICENSE BLOCK *****
  * Version: BSD
  *
  * Copyright (C) 2006-2009 Mozilla Corporation.  All rights reserved.

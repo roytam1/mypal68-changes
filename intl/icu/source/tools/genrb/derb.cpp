@@ -288,7 +288,6 @@ main(int argc, char* argv[]) {
             if (prbom) { /* XXX: Should be done only for UTFs */
               u_fputc(0xFEFF, out);
             }
-            u_fprintf(out, "// -*- Coding: %s; -*-\n//\n", encoding ? encoding : getEncodingName(ucnv_getDefaultName()));
             u_fprintf(out, "// This file was dumped by derb(8) from ");
             if (thename) {
               u_fprintf(out, "%s", thename);

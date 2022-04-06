@@ -83,5 +83,3 @@
     ], # conditions
   }], # targets
 }
-
-# vim:ai:ts=4:sts=4:sw=2:expandtab:textwidth=70

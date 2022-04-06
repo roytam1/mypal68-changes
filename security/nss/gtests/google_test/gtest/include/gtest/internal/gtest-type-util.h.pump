@@ -1,4 +1,3 @@
-$$ -*- mode: c++; -*-
 $var n = 50  $$ Maximum length of type lists we want to support.
 // Copyright 2008 Google Inc.
 // All Rights Reserved.

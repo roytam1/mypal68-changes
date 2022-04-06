@@ -1882,4 +1882,3 @@ def start(request, dispatcher):
     mux_handler.wait_until_done()
 
 
-# vi:sts=4 sw=4 et

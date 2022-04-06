@@ -1090,7 +1090,3 @@ ud_decode(struct ud *u)
   /* return number of bytes disassembled. */
   return u->inp_ctr;
 }
-
-/*
-vim: set ts=2 sw=2 expandtab
-*/

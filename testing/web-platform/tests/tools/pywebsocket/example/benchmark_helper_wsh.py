@@ -82,4 +82,3 @@ def web_socket_transfer_data(request):
             raise ValueError('Invalid command: ' + commands[0])
 
 
-# vi:sts=4 sw=4 et

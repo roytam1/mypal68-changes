@@ -1,4 +1,3 @@
-/* -*- Mode: javascript; tab-width: 2; indent-tabs-mode: nil; js-indent-level: 2 -*- */
 
 requestLongerTimeout(3);
 

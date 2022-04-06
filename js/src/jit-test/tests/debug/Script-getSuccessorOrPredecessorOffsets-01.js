@@ -1,5 +1,3 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2; js-indent-level: 2 -*- */
-
 // An offset A of a script should have successor B iff B has predecessor A.
 // Offsets reached while stepping through a script should be successors of
 // each other.

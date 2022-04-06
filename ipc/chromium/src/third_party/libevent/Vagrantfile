@@ -1,6 +1,3 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 # DESCRIPTION:
 # ============
 # Vagrant for running libevent tests with:

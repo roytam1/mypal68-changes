@@ -196,7 +196,3 @@ typedef struct ud_operand     ud_operand_t;
 #define UD_INP_CACHE_SZ       32
 
 #endif
-
-/*
-vim: set ts=2 sw=2 expandtab
-*/

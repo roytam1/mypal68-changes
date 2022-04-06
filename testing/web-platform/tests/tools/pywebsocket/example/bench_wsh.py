@@ -57,4 +57,3 @@ def web_socket_transfer_data(request):
         time.sleep(wait)
 
 
-# vi:sts=4 sw=4 et

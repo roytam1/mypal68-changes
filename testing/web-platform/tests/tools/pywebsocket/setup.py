@@ -71,4 +71,3 @@ setup(author='Yuzo Fujishima',
       )
 
 
-# vi:sts=4 sw=4 et

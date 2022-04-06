@@ -421,4 +421,3 @@ class DeflateSocket(object):
         return len(bytes)
 
 
-# vi:sts=4 sw=4 et

@@ -1,5 +1,3 @@
-.. -*- Mode: rst; fill-column: 100; -*-
-
 ======================================
  Install tracking with the Adjust SDK
 ======================================

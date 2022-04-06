@@ -25493,9 +25493,8 @@ object-assign
             /******/ [
               /* 0 */
               /***/ function(module, exports) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -26624,9 +26623,7 @@ object-assign
               },
               /* 5 */
               /***/ function(module, exports, __webpack_require__) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -27092,9 +27089,7 @@ object-assign
               },
               /* 6 */
               /***/ function(module, exports, __webpack_require__) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  *
@@ -27241,9 +27236,7 @@ object-assign
               },
               /* 7 */
               /***/ function(module, exports, __webpack_require__) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -29397,9 +29390,7 @@ object-assign
               },
               /* 22 */
               /***/ function(module, exports) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -29471,9 +29462,7 @@ object-assign
               },
               /* 23 */
               /***/ function(module, exports, __webpack_require__) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2014 Mozilla Foundation and contributors
+/* Copyright 2014 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -29563,9 +29552,7 @@ object-assign
               },
               /* 24 */
               /***/ function(module, exports, __webpack_require__) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -30833,9 +30820,7 @@ object-assign
               },
               /* 25 */
               /***/ function(module, exports) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -30982,9 +30967,7 @@ object-assign
               },
               /* 26 */
               /***/ function(module, exports) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -31101,9 +31084,7 @@ object-assign
               },
               /* 27 */
               /***/ function(module, exports, __webpack_require__) {
-                /* -*- Mode: js; js-indent-level: 2; -*- */
-                /*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */

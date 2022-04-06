@@ -1,5 +1,3 @@
-# -*- Mode: Makefile -*-
-
 $(info MAKEFLAGS = '$(MAKEFLAGS)')
 $(info MAKE = '$(MAKE)')
 $(info value MAKE = "$(value MAKE)")

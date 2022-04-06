@@ -6443,7 +6443,6 @@ parseYieldExpression: true
     }());
 
 }));
-/* vim: set sw=4 ts=4 et tw=80 : */
 
 })()
 },{}],5:[function(require,module,exports){
@@ -6457,9 +6456,7 @@ exports.SourceMapConsumer = require('./source-map/source-map-consumer').SourceMa
 exports.SourceNode = require('./source-map/source-node').SourceNode;
 
 },{"./source-map/source-map-consumer":10,"./source-map/source-map-generator":11,"./source-map/source-node":12}],6:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -6555,9 +6552,7 @@ define(function (require, exports, module) {
 });
 
 },{"./util":13,"amdefine":14}],7:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  *
@@ -6701,9 +6696,7 @@ define(function (require, exports, module) {
 });
 
 },{"./base64":8,"amdefine":14}],8:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -6745,9 +6738,7 @@ define(function (require, exports, module) {
 });
 
 },{"amdefine":14}],9:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -6828,9 +6819,7 @@ define(function (require, exports, module) {
 });
 
 },{"amdefine":14}],10:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -7271,9 +7260,7 @@ define(function (require, exports, module) {
 });
 
 },{"./array-set":6,"./base64-vlq":7,"./binary-search":9,"./util":13,"amdefine":14}],11:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -7654,9 +7641,7 @@ define(function (require, exports, module) {
 });
 
 },{"./array-set":6,"./base64-vlq":7,"./util":13,"amdefine":14}],12:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -8009,9 +7994,7 @@ define(function (require, exports, module) {
 });
 
 },{"./source-map-generator":11,"./util":13,"amdefine":14}],13:[function(require,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2011 Mozilla Foundation and contributors
+/* Copyright 2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
@@ -8128,8 +8111,7 @@ define(function (require, exports, module) {
 });
 
 },{"amdefine":14}],14:[function(require,module,exports){
-(function(process,__filename){/** vim: et:ts=4:sw=4:sts=4
- * @license amdefine 0.0.5 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
+(function(process,__filename){/** @license amdefine 0.0.5 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/amdefine for details
  */

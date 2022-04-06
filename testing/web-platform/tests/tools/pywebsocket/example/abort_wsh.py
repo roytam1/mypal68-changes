@@ -40,4 +40,3 @@ def web_socket_transfer_data(request):
         "Aborted in web_socket_transfer_data")
 
 
-# vi:sts=4 sw=4 et

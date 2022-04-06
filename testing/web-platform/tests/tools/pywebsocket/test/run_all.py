@@ -86,4 +86,3 @@ if __name__ == '__main__':
     unittest.main(defaultTest='_suite', argv=[sys.argv[0]] + args)
 
 
-# vi:sts=4 sw=4 et

@@ -1,6 +1,4 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/*
- * This file essentially replicates NSPR's source for the functions that
+/* This file essentially replicates NSPR's source for the functions that
  * map system-specific error codes to NSPR error codes.  We would use
  * NSPR's functions, instead of duplicating them, but they're private.
  * As long as SSL's server session cache code must do platform native I/O
