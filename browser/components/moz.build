@@ -20,9 +20,6 @@ with Files("tests/browser/browser_contentpermissionprompt.js"):
 with Files("tests/unit/test_distribution.js"):
     BUG_COMPONENT = ("Firefox", "Distributions")
 
-with Files("safebrowsing/**"):
-    BUG_COMPONENT = ("Toolkit", "Safe Browsing")
-
 with Files('controlcenter/**'):
     BUG_COMPONENT = ('Firefox', 'General')
 
@@ -42,7 +39,6 @@ DIRS += [
     'newtab',
     'originattributes',
     'places',
-    'pocket',
     'preferences',
     'privatebrowsing',
     'protocolhandler',
@@ -51,7 +47,6 @@ DIRS += [
     'sessionstore',
     'shell',
     'syncedtabs',
-    'uitour',
     'urlbar',
     'translation',
 ]
@@ -90,7 +85,6 @@ EXTRA_JS_MODULES += [
 ]
 
 BROWSER_CHROME_MANIFESTS += [
-    'safebrowsing/content/test/browser.ini',
     'tests/browser/browser.ini'
 ]
 

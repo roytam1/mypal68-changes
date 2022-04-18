@@ -31,14 +31,13 @@ const {DiscoveryStreamFeed} = ChromeUtils.import("resource://activity-stream/lib
 
 const DEFAULT_SITES = new Map([
   // This first item is the global list fallback for any unexpected geos
-  ["", "https://www.youtube.com/,https://www.facebook.com/,https://www.wikipedia.org/,https://www.reddit.com/,https://www.amazon.com/,https://twitter.com/"],
-  ["US", "https://www.youtube.com/,https://www.facebook.com/,https://www.amazon.com/,https://www.reddit.com/,https://www.wikipedia.org/,https://twitter.com/"],
-  ["CA", "https://www.youtube.com/,https://www.facebook.com/,https://www.reddit.com/,https://www.wikipedia.org/,https://www.amazon.ca/,https://twitter.com/"],
-  ["DE", "https://www.youtube.com/,https://www.facebook.com/,https://www.amazon.de/,https://www.ebay.de/,https://www.wikipedia.org/,https://www.reddit.com/"],
-  ["PL", "https://www.youtube.com/,https://www.facebook.com/,https://allegro.pl/,https://www.wikipedia.org/,https://www.olx.pl/,https://www.wykop.pl/"],
-  ["RU", "https://vk.com/,https://www.youtube.com/,https://ok.ru/,https://www.avito.ru/,https://www.aliexpress.com/,https://www.wikipedia.org/"],
-  ["GB", "https://www.youtube.com/,https://www.facebook.com/,https://www.reddit.com/,https://www.amazon.co.uk/,https://www.bbc.co.uk/,https://www.ebay.co.uk/"],
-  ["FR", "https://www.youtube.com/,https://www.facebook.com/,https://www.wikipedia.org/,https://www.amazon.fr/,https://www.leboncoin.fr/,https://twitter.com/"],
+  ["", "https://www.wikipedia.org/,https://www.reddit.com/"],
+  ["US", "https://www.reddit.com/,https://www.wikipedia.org/"],
+  ["CA", "https://www.reddit.com/,https://www.wikipedia.org/"],
+  ["DE", "https://www.wikipedia.org/,https://www.reddit.com/"],
+  ["PL", "https://allegro.pl/,https://www.wikipedia.org/,https://www.olx.pl/,https://www.wykop.pl/"],
+  ["RU", "https://vk.com/,https://ok.ru/,https://www.avito.ru/,https://www.aliexpress.com/,https://www.wikipedia.org/"],
+  ["FR", "https://www.wikipedia.org/,https://www.leboncoin.fr/"],
 ]);
 const GEO_PREF = "browser.search.region";
 const SPOCS_GEOS = ["US"];

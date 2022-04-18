@@ -10,11 +10,6 @@
     "image_url": "allegro-pl@2x.png"
   },
   {
-    "title": "amazon",
-    "urls": ["https://www.amazon.ca/", "https://www.amazon.co.uk/", "https://www.amazon.com/", "https://www.amazon.de/", "https://www.amazon.fr/"],
-    "image_url": "amazon@2x.png"
-  },
-  {
     "title": "avito",
     "url": "https://www.avito.ru/",
     "image_url": "avito-ru@2x.png"
@@ -23,11 +18,6 @@
     "title": "baidu",
     "url": "https://www.baidu.com/",
     "image_url": "baidu-com@2x.png"
-  },
-  {
-    "title": "bbc",
-    "url": "https://www.bbc.co.uk/",
-    "image_url": "bbc-uk@2x.png"
   },
   {
     "title": "bing",
@@ -40,21 +30,6 @@
     "image_url": "duckduckgo-com@2x.png"
   },
   {
-    "title": "ebay",
-    "urls": ["https://www.ebay.com", "https://www.ebay.co.uk/", "https://ebay.de"],
-    "image_url": "ebay@2x.png"
-  },
-  {
-    "title": "facebook",
-    "url": "https://www.facebook.com/",
-    "image_url": "facebook-com@2x.png"
-  },
-  {
-    "title": "google",
-    "url": "https://www.google.com/",
-    "image_url": "google-com@2x.png"
-  },
-  {
     "title": "leboncoin",
     "url": "http://www.leboncoin.fr/",
     "image_url": "leboncoin-fr@2x.png"
@@ -65,19 +40,9 @@
     "image_url": "ok-ru@2x.png"
   },
   {
-    "title": "olx",
-    "url": "https://www.olx.pl/",
-    "image_url": "olx-pl@2x.png"
-  },
-  {
     "title": "reddit",
     "url": "https://www.reddit.com/",
     "image_url": "reddit-com@2x.png"
-  },
-  {
-    "title": "twitter",
-    "url": "https://twitter.com/",
-    "image_url": "twitter-com@2x.png"
   },
   {
     "title": "vk",
@@ -98,10 +63,5 @@
     "title": "yandex",
     "url": "https://www.yandex.com/",
     "image_url": "yandex-com@2x.png"
-  },
-  {
-    "title": "youtube",
-    "url": "https://www.youtube.com/",
-    "image_url": "youtube-com@2x.png"
   }
 ]

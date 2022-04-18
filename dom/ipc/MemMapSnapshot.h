@@ -30,7 +30,7 @@ namespace ipc {
  */
 class MOZ_RAII MemMapSnapshot {
  public:
-  Result<Ok, nsresult> Init(size_t aSize);
+  Result<Ok, nsresult> Init(size_t aSize, const char* aName = nullptr);
   Result<Ok, nsresult> Finalize(loader::AutoMemMap& aMap);
 
   template <typename T = void>
@@ -40,7 +40,6 @@ class MOZ_RAII MemMapSnapshot {
   }
 
  private:
-  Result<Ok, nsresult> Create(size_t aSize);
   Result<Ok, nsresult> Freeze(loader::AutoMemMap& aMem);
 
   loader::AutoMemMap mMem;

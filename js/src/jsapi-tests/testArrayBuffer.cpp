@@ -1,4 +1,4 @@
-#include "jsfriendapi.h"
+/#include "jsfriendapi.h"
 
 #include "builtin/TestingFunctions.h"
 #include "js/ArrayBuffer.h"  // JS::{GetArrayBuffer{ByteLength,Data},IsArrayBufferObject,NewArrayBuffer{,WithContents},StealArrayBufferContents}

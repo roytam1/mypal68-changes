@@ -130,20 +130,6 @@
     </popupnotificationcontent>
   </popupnotification>
 
-  <popupnotification id="appMenu-update-unsupported-notification"
-                     popupid="update-unsupported"
-                     data-lazy-l10n-id="appmenu-update-unsupported"
-                     data-l10n-attrs="buttonlabel, buttonaccesskey, secondarybuttonlabel, secondarybuttonaccesskey"
-                     closebuttonhidden="true"
-                     dropmarkerhidden="true"
-                     checkboxhidden="true"
-                     buttonhighlight="true"
-                     hidden="true">
-    <popupnotificationcontent id="update-unsupported-notification-content" orient="vertical">
-      <description id="update-unsupported-description" data-lazy-l10n-id="appmenu-update-unsupported-message"></description>
-    </popupnotificationcontent>
-  </popupnotification>
-
   <popupnotification id="appMenu-update-restart-notification"
                      popupid="update-restart"
                      data-lazy-l10n-id="appmenu-update-restart"
@@ -671,10 +657,6 @@
                        label="&bookmarksSubview.label;"
                        closemenu="none"
                        oncommand="BookmarkingUI.showSubView(this);"/>
-        <toolbarbutton id="appMenu-library-pocket-button"
-                       class="subviewbutton subviewbutton-iconic"
-                       label="&pocketMenuitem.label;"
-                       oncommand="Pocket.openList(event)"/>
         <toolbarbutton id="appMenu-library-history-button"
                        class="subviewbutton subviewbutton-iconic subviewbutton-nav"
                        label="&historyMenu.label;"

@@ -4,7 +4,7 @@
 
 #include <windows.h>
 #include <winsdkver.h>
-#include <wrl.h>
+#include "mozwrlbase.h"
 
 #include "nsServiceManagerUtils.h"
 

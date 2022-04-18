@@ -131,7 +131,7 @@ HRESULT
 AgileReference::Resolve(REFIID aIid, void** aOutInterface) const {
   MOZ_ASSERT(aOutInterface);
   MOZ_ASSERT(mAgileRef || mGitCookie);
-  MOZ_ASSERT(IsCOMInitializedOnCurrentThread());
+  //MOZ_ASSERT(IsCOMInitializedOnCurrentThread());
 
   if (!aOutInterface) {
     return E_INVALIDARG;

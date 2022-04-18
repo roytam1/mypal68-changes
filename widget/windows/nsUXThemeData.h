@@ -76,6 +76,7 @@ enum WindowsThemeColor {
 #define CMDBUTTONIDX_BUTTONBOX 3
 
 class nsUXThemeData {
+  static HMODULE sThemeDLL;
   static HANDLE sThemes[eUXNumClasses];
 
   // We initialize sCommandButtonBoxMetrics separately as a performance
@@ -91,6 +92,7 @@ class nsUXThemeData {
   static void EnsureCommandButtonBoxMetrics();
 
  public:
+  static const wchar_t kThemeLibraryName[];
   static bool sFlatMenus;
   static bool sTitlebarInfoPopulatedAero;
   static bool sTitlebarInfoPopulatedThemed;

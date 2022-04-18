@@ -90,7 +90,7 @@ def embed(cxx, preprocessorOption, cppflags, msgs, sources, c_out, js_out, names
     objdir = os.getcwd()
     # Use relative pathnames to avoid path translation issues in WSL.
     combinedSources = '\n'.join([msgs] + ['#include "%(s)s"' %
-                                          {'s': mozpath.relpath(source, objdir)}
+                                          {'s': mozpath.realpath(source)}
                                           for source in sources])
     args = cppflags + ['-D%(k)s=%(v)s' % {'k': k, 'v': env[k]} for k in env]
     preprocessed = preprocess(cxx, preprocessorOption, combinedSources, args)

@@ -16,7 +16,7 @@
   ${WordFind} "$0" "-" "+1{" $0
   ${If} $0 == "FirefoxURL"
   ${AndIf} $9 != 0 ; We're not running in session 0
-    ReadRegStr $0 HKCU "Software\Classes\FirefoxURL\shell\open\command" ""
+    ReadRegStr $0 HKCU "Software\Classes\Mypal68URL\shell\open\command" ""
     ${GetPathFromString} "$0" $0
     ${GetParent} "$0" $0
     ${If} ${FileExists} "$0"
@@ -27,25 +27,25 @@
   ${CreateShortcutsLog}
 
   ; Remove registry entries for non-existent apps and for apps that point to our
-  ; install location in the Software\Mozilla key and uninstall registry entries
+  ; install location in the Software\Mypal68 key and uninstall registry entries
   ; that point to our install location for both HKCU and HKLM.
   SetShellVarContext current  ; Set SHCTX to the current user (e.g. HKCU)
-  ${RegCleanMain} "Software\Mozilla"
+  ${RegCleanMain} "Software\Mypal68"
   ${RegCleanUninstall}
   ${UpdateProtocolHandlers}
 
   ; setup the application model id registration value
-  ${InitHashAppModelId} "$INSTDIR" "Software\Mozilla\${AppName}\TaskBarIDs"
+  ${InitHashAppModelId} "$INSTDIR" "Software\Mypal68\${AppName}\TaskBarIDs"
 
   ClearErrors
-  WriteRegStr HKLM "Software\Mozilla" "${BrandShortName}InstallerTest" "Write Test"
+  WriteRegStr HKLM "Software\Mypal68" "${BrandShortName}InstallerTest" "Write Test"
   ${If} ${Errors}
     StrCpy $TmpVal "HKCU"
   ${Else}
     SetShellVarContext all    ; Set SHCTX to all users (e.g. HKLM)
-    DeleteRegValue HKLM "Software\Mozilla" "${BrandShortName}InstallerTest"
+    DeleteRegValue HKLM "Software\Mypal68" "${BrandShortName}InstallerTest"
     StrCpy $TmpVal "HKLM"
-    ${RegCleanMain} "Software\Mozilla"
+    ${RegCleanMain} "Software\Mypal68"
     ${RegCleanUninstall}
     ${UpdateProtocolHandlers}
     ${FixShellIconHandler} "HKLM"
@@ -54,9 +54,9 @@
     ; Add the Firewall entries after an update
     Call AddFirewallEntries
 
-    ReadRegStr $0 HKLM "Software\mozilla.org\Mozilla" "CurrentVersion"
+    ReadRegStr $0 HKLM "Software\Mypal68" "CurrentVersion"
     ${If} "$0" != "${GREVersion}"
-      WriteRegStr HKLM "Software\mozilla.org\Mozilla" "CurrentVersion" "${GREVersion}"
+      WriteRegStr HKLM "Software\Mypal68" "CurrentVersion" "${GREVersion}"
     ${EndIf}
 
     ; Image File Execution Options were set for a short period on AArch64 (ARM64)
@@ -138,7 +138,7 @@
     ${OrIf} ${IsNativeARM64}
       SetRegView 64
     ${EndIf}
-    ReadRegDWORD $5 HKLM "Software\Mozilla\MaintenanceService" "Attempted"
+    ReadRegDWORD $5 HKLM "Software\Mypal68\MaintenanceService" "Attempted"
     ClearErrors
     ${If} ${RunningX64}
     ${OrIf} ${IsNativeARM64}
@@ -607,31 +607,31 @@
 
   ; Running Firefox 64 bit on Windows 64 bit
   ClearErrors
-  ReadRegDWORD $2 HKLM "Software\Mozilla\${AppName}\32to64DidMigrate" "$1"
+  ReadRegDWORD $2 HKLM "Software\Mypal68\${AppName}\32to64DidMigrate" "$1"
   ; If there were no errors then the system was updated from Firefox 32 bit to
   ; Firefox 64 bit and if the value is already 1 then the registry value has
   ; already been updated in the HKLM registry.
   ${IfNot} ${Errors}
   ${AndIf} $2 != 1
     ClearErrors
-    WriteRegDWORD HKLM "Software\Mozilla\${AppName}\32to64DidMigrate" "$1" 1
+    WriteRegDWORD HKLM "Software\Mypal68\${AppName}\32to64DidMigrate" "$1" 1
     ${If} ${Errors}
       ; There was an error writing to HKLM so just write it to HKCU
-      WriteRegDWORD HKCU "Software\Mozilla\${AppName}\32to64DidMigrate" "$1" 1
+      WriteRegDWORD HKCU "Software\Mypal68\${AppName}\32to64DidMigrate" "$1" 1
     ${Else}
       ; This will delete the value from HKCU if it exists
-      DeleteRegValue HKCU "Software\Mozilla\${AppName}\32to64DidMigrate" "$1"
+      DeleteRegValue HKCU "Software\Mypal68\${AppName}\32to64DidMigrate" "$1"
     ${EndIf}
   ${EndIf}
 
   ClearErrors
-  ReadRegDWORD $2 HKCU "Software\Mozilla\${AppName}\32to64DidMigrate" "$1"
+  ReadRegDWORD $2 HKCU "Software\Mypal68\${AppName}\32to64DidMigrate" "$1"
   ; If there were no errors then the system was updated from Firefox 32 bit to
   ; Firefox 64 bit and if the value is already 1 then the registry value has
   ; already been updated in the HKCU registry.
   ${IfNot} ${Errors}
   ${AndIf} $2 != 1
-    WriteRegDWORD HKCU "Software\Mozilla\${AppName}\32to64DidMigrate" "$1" 1
+    WriteRegDWORD HKCU "Software\Mypal68\${AppName}\32to64DidMigrate" "$1" 1
   ${EndIf}
 
 !else
@@ -641,14 +641,14 @@
   ${OrIf} ${IsNativeARM64}
     ; Running Firefox 32 bit on a Windows 64 bit system
     ClearErrors
-    ReadRegDWORD $2 HKLM "Software\Mozilla\${AppName}\32to64DidMigrate" "$1"
+    ReadRegDWORD $2 HKLM "Software\Mypal68\${AppName}\32to64DidMigrate" "$1"
     ; If there were errors the value doesn't exist yet.
     ${If} ${Errors}
       ClearErrors
-      WriteRegDWORD HKLM "Software\Mozilla\${AppName}\32to64DidMigrate" "$1" 0
+      WriteRegDWORD HKLM "Software\Mypal68\${AppName}\32to64DidMigrate" "$1" 0
       ; If there were errors write the value in HKCU.
       ${If} ${Errors}
-        WriteRegDWORD HKCU "Software\Mozilla\${AppName}\32to64DidMigrate" "$1" 0
+        WriteRegDWORD HKCU "Software\Mypal68\${AppName}\32to64DidMigrate" "$1" 0
       ${EndIf}
     ${EndIf}
   ${EndIf}
@@ -685,7 +685,7 @@
 !macroend
 !define FixShellIconHandler "!insertmacro FixShellIconHandler"
 
-; Add Software\Mozilla\ registry entries (uses SHCTX).
+; Add Software\Mypal68\ registry entries (uses SHCTX).
 !macro SetAppKeys
   ; Check if this is an ESR release and if so add registry values so it is
   ; possible to determine that this is an ESR install (bug 726781).
@@ -698,14 +698,14 @@
   ${EndIf}
 
   ${GetLongPath} "$INSTDIR" $8
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal}\${AppVersion}$3 (${ARCH} ${AB_CD})\Main"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal}\${AppVersion}$3 (${ARCH} ${AB_CD})\Main"
   ${WriteRegStr2} $TmpVal "$0" "Install Directory" "$8" 0
   ${WriteRegStr2} $TmpVal "$0" "PathToExe" "$8\${FileMainEXE}" 0
 
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal}\${AppVersion}$3 (${ARCH} ${AB_CD})\Uninstall"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal}\${AppVersion}$3 (${ARCH} ${AB_CD})\Uninstall"
   ${WriteRegStr2} $TmpVal "$0" "Description" "${BrandFullNameInternal} ${AppVersion}$3 (${ARCH} ${AB_CD})" 0
 
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal}\${AppVersion}$3 (${ARCH} ${AB_CD})"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal}\${AppVersion}$3 (${ARCH} ${AB_CD})"
   ${WriteRegStr2} $TmpVal  "$0" "" "${AppVersion}$3 (${ARCH} ${AB_CD})" 0
   ${If} "$3" == ""
     DeleteRegValue SHCTX "$0" "ESR"
@@ -713,14 +713,14 @@
     ${WriteRegDWORD2} $TmpVal "$0" "ESR" 1 0
   ${EndIf}
 
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal} ${AppVersion}$3\bin"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal} ${AppVersion}$3\bin"
   ${WriteRegStr2} $TmpVal "$0" "PathToExe" "$8\${FileMainEXE}" 0
 
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal} ${AppVersion}$3\extensions"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal} ${AppVersion}$3\extensions"
   ${WriteRegStr2} $TmpVal "$0" "Components" "$8\components" 0
   ${WriteRegStr2} $TmpVal "$0" "Plugins" "$8\plugins" 0
 
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal} ${AppVersion}$3"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal} ${AppVersion}$3"
   ${WriteRegStr2} $TmpVal "$0" "GeckoVer" "${GREVersion}" 0
   ${If} "$3" == ""
     DeleteRegValue SHCTX "$0" "ESR"
@@ -728,7 +728,7 @@
     ${WriteRegDWORD2} $TmpVal "$0" "ESR" 1 0
   ${EndIf}
 
-  StrCpy $0 "Software\Mozilla\${BrandFullNameInternal}$3"
+  StrCpy $0 "Software\Mypal68\${BrandFullNameInternal}$3"
   ${WriteRegStr2} $TmpVal "$0" "" "${GREVersion}" 0
   ${WriteRegStr2} $TmpVal "$0" "CurrentVersion" "${AppVersion}$3 (${ARCH} ${AB_CD})" 0
 !macroend
@@ -963,7 +963,7 @@
     ; Setting the Attempted value will ensure that a new Maintenance Service
     ; install will never be attempted again after this from updates.  The value
     ; is used only to see if updates should attempt new service installs.
-    WriteRegDWORD HKLM "Software\Mozilla\MaintenanceService" "Attempted" 1
+    WriteRegDWORD HKLM "Software\Mypal68\MaintenanceService" "Attempted" 1
 
     ; These values associate the allowed certificates for the current
     ; installation.
@@ -1442,7 +1442,7 @@ Function SetAsDefaultAppUserHKCU
   StrCpy $0 $0 -2
   ${If} $0 != $8
     ${If} $AppUserModelID == ""
-      ${InitHashAppModelId} "$INSTDIR" "Software\Mozilla\${AppName}\TaskBarIDs"
+      ${InitHashAppModelId} "$INSTDIR" "Software\Mypal68\${AppName}\TaskBarIDs"
     ${EndIf}
     StrCpy $R9 "${AppRegName}-$AppUserModelID"
   ${EndIf}

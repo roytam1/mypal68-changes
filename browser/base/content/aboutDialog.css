@@ -4,7 +4,7 @@
 @namespace html "http://www.w3.org/1999/xhtml";
 
 #aboutDialog {
-  width: 620px;
+  width: 564px;
   /* Set an explicit line-height to avoid discrepancies in 'auto' spacing
      across screens with different device DPI, which may cause font metrics
      to round differently. */
@@ -12,7 +12,6 @@
 }
 
 #rightBox {
-  background-image: url("chrome://branding/content/about-wordmark.svg");
   background-repeat: no-repeat;
   /* padding-top creates room for the wordmark */
   padding-top: 38px;
@@ -24,7 +23,8 @@
 }
 
 #bottomBox {
-  padding: 15px 10px 0;
+  padding: 15px 10px;
+  margin-top: 80px;
 }
 
 #release {

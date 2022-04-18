@@ -22,10 +22,10 @@
 #include <map>
 #pragma warning(pop)
 
-#include "Authenticode.h"
+//#include "Authenticode.h"
 #include "CrashAnnotations.h"
-#include "MozglueUtils.h"
-#include "UntrustedDllsHandler.h"
+//#include "MozglueUtils.h"
+//#include "UntrustedDllsHandler.h"
 #include "nsAutoPtr.h"
 #include "nsWindowsDllInterceptor.h"
 #include "mozilla/CmdLineAndEnvUtils.h"
@@ -40,15 +40,15 @@
 #include "WindowsDllBlocklist.h"
 #include "mozilla/AutoProfilerLabel.h"
 #include "mozilla/glue/Debug.h"
-#include "mozilla/glue/WindowsDllServices.h"
+//#include "mozilla/glue/WindowsDllServices.h"
 
 using namespace mozilla;
 
 using CrashReporter::Annotation;
 using CrashReporter::AnnotationToString;
 
-static glue::Win32SRWLock gDllServicesLock;
-static glue::detail::DllServicesBase* gDllServices;
+//static glue::Win32SRWLock gDllServicesLock;
+//static glue::detail::DllServicesBase* gDllServices;
 
 #define DLL_BLOCKLIST_ENTRY(name, ...) {name, __VA_ARGS__},
 #define DLL_BLOCKLIST_STRING_TYPE const char*
@@ -63,13 +63,13 @@ static bool sBlocklistInitFailed;
 static bool sUser32BeforeBlocklist;
 
 // This feature is enabled only on NIGHTLY, only for the main process.
-inline static bool IsUntrustedDllsHandlerEnabled() {
+/*inline static bool IsUntrustedDllsHandlerEnabled() {
 #ifdef NIGHTLY_BUILD
   return !(sInitFlags & eDllBlocklistInitFlagIsChildProcess);
 #else
   return false;
 #endif
-}
+}*/
 
 typedef MOZ_NORETURN_PTR void(__fastcall* BaseThreadInitThunk_func)(
     BOOL aIsInitialThread, void* aStartAddress, void* aThreadParam);
@@ -346,7 +346,7 @@ static wchar_t* lastslash(wchar_t* s, int len) {
 static NTSTATUS NTAPI patched_LdrLoadDll(PWCHAR filePath, PULONG flags,
                                          PUNICODE_STRING moduleFileName,
                                          PHANDLE handle) {
-  if (IsUntrustedDllsHandlerEnabled()) {
+  /*if (IsUntrustedDllsHandlerEnabled()) {
     glue::UntrustedDllsHandler::EnterLoaderCall();
   }
   // Warning: this must be at the top function scope.
@@ -354,7 +354,7 @@ static NTSTATUS NTAPI patched_LdrLoadDll(PWCHAR filePath, PULONG flags,
     if (IsUntrustedDllsHandlerEnabled()) {
       glue::UntrustedDllsHandler::ExitLoaderCall();
     }
-  });
+  });*/
 
   // We have UCS2 (UTF16?), we want ASCII, but we also just want the filename
   // portion
@@ -555,7 +555,7 @@ continue_loading:
   NTSTATUS ret;
   HANDLE myHandle;
 
-  if (IsUntrustedDllsHandlerEnabled()) {
+  /*if (IsUntrustedDllsHandlerEnabled()) {
     TimeStamp loadStart = TimeStamp::Now();
     ret = stub_LdrLoadDll(filePath, flags, moduleFileName, &myHandle);
     TimeStamp loadEnd = TimeStamp::Now();
@@ -574,9 +574,9 @@ continue_loading:
         }
       }
     }
-  } else {
+  } else {*/
     ret = stub_LdrLoadDll(filePath, flags, moduleFileName, &myHandle);
-  }
+  //}
 
   if (handle) {
     *handle = myHandle;
@@ -648,7 +648,7 @@ MFBT_API void DllBlocklist_Initialize(uint32_t aInitFlags) {
   gStartAddressesToBlock = new mozilla::Vector<void*, 4>;
 #endif
 
-  if (IsUntrustedDllsHandlerEnabled()) {
+  /*if (IsUntrustedDllsHandlerEnabled()) {
 #ifdef ENABLE_TESTS
     // Check whether we are running as an xpcshell test.
     if (mozilla::EnvHasValue("XPCSHELL_TEST_PROFILE_DIR")) {
@@ -683,7 +683,7 @@ MFBT_API void DllBlocklist_Initialize(uint32_t aInitFlags) {
 #endif
 
     glue::UntrustedDllsHandler::Init();
-  }
+  }*/
 
   // In order to be effective against AppInit DLLs, the blocklist must be
   // initialized before user32.dll is loaded into the process (bug 932100).
@@ -865,11 +865,12 @@ NTSTATUS NTAPI LdrRegisterDllNotification(
     ULONG aFlags, PLDR_DLL_NOTIFICATION_FUNCTION aCallback, PVOID aContext,
     PVOID* aCookie);
 
-static PVOID gNotificationCookie;
+/*static PVOID gNotificationCookie;
 
 static VOID CALLBACK DllLoadNotification(
     ULONG aReason, PCLDR_DLL_NOTIFICATION_DATA aNotificationData,
     PVOID aContext) {
+    return;
   if (aReason != LDR_DLL_NOTIFICATION_REASON_LOADED) {
     // We don't care about unloads
     return;
@@ -925,4 +926,4 @@ MFBT_API void DllBlocklist_SetBasicDllServices(
   }
 
   aSvc->SetAuthenticodeImpl(GetAuthenticode());
-}
+}*/

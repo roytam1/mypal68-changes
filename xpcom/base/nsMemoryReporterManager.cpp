@@ -540,9 +540,9 @@ static MOZ_MUST_USE nsresult ResidentDistinguishedAmount(int64_t* aN) {
   PROCESS_MEMORY_COUNTERS pmc;
   pmc.cb = sizeof(PROCESS_MEMORY_COUNTERS);
 
-  if (!GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
+  //if (!GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
     return NS_ERROR_FAILURE;
-  }
+  //}
 
   *aN = pmc.WorkingSetSize;
   return NS_OK;
@@ -632,10 +632,10 @@ static MOZ_MUST_USE nsresult PrivateDistinguishedAmount(int64_t* aN) {
   PROCESS_MEMORY_COUNTERS_EX pmcex;
   pmcex.cb = sizeof(PROCESS_MEMORY_COUNTERS_EX);
 
-  if (!GetProcessMemoryInfo(GetCurrentProcess(),
-                            (PPROCESS_MEMORY_COUNTERS)&pmcex, sizeof(pmcex))) {
+  //if (!GetProcessMemoryInfo(GetCurrentProcess(),
+  //                          (PPROCESS_MEMORY_COUNTERS)&pmcex, sizeof(pmcex))) {
     return NS_ERROR_FAILURE;
-  }
+  //}
 
   *aN = pmcex.PrivateUsage;
   return NS_OK;

@@ -39,12 +39,6 @@ const INITIAL_STATE = {
     data: {},
   },
   Sections: [],
-  Pocket: {
-    isUserLoggedIn: null,
-    pocketCta: {},
-    waitingForSpoc: true,
-  },
-  // This is the new pocket configurable layout state.
   DiscoveryStream: {
     // This is a JSON-parsed copy of the discoverystream.config pref value.
     config: {enabled: false, layout_endpoint: ""},
@@ -362,23 +356,6 @@ function Sections(prevState = INITIAL_STATE.Sections, action) {
           return item;
         }),
       }));
-    case at.PLACES_SAVED_TO_POCKET:
-      if (!action.data) {
-        return prevState;
-      }
-      return prevState.map(section => Object.assign({}, section, {
-        rows: section.rows.map(item => {
-          if (item.url === action.data.url) {
-            return Object.assign({}, item, {
-              open_url: action.data.open_url,
-              pocket_id: action.data.pocket_id,
-              title: action.data.title,
-              type: "pocket",
-            });
-          }
-          return item;
-        }),
-      }));
     case at.PLACES_BOOKMARK_REMOVED:
       if (!action.data) {
         return prevState;
@@ -406,10 +383,6 @@ function Sections(prevState = INITIAL_STATE.Sections, action) {
       }
       return prevState.map(section =>
         Object.assign({}, section, {rows: section.rows.filter(site => site.url !== action.data.url)}));
-    case at.DELETE_FROM_POCKET:
-    case at.ARCHIVE_FROM_POCKET:
-      return prevState.map(section =>
-        Object.assign({}, section, {rows: section.rows.filter(site => site.pocket_id !== action.data.pocket_id)}));
     case at.SNIPPETS_PREVIEW_MODE:
       return prevState.map(section => ({...section, rows: []}));
     default:
@@ -427,27 +400,6 @@ function Snippets(prevState = INITIAL_STATE.Snippets, action) {
       return Object.assign({}, prevState, {blockList: []});
     case at.SNIPPETS_RESET:
       return INITIAL_STATE.Snippets;
-    default:
-      return prevState;
-  }
-}
-
-function Pocket(prevState = INITIAL_STATE.Pocket, action) {
-  switch (action.type) {
-    case at.POCKET_WAITING_FOR_SPOC:
-      return {...prevState, waitingForSpoc: action.data};
-    case at.POCKET_LOGGED_IN:
-      return {...prevState, isUserLoggedIn: !!action.data};
-    case at.POCKET_CTA:
-      return {
-        ...prevState,
-        pocketCta: {
-          ctaButton: action.data.cta_button,
-          ctaText: action.data.cta_text,
-          ctaUrl: action.data.cta_url,
-          useCta: action.data.use_cta,
-        },
-      };
     default:
       return prevState;
   }
@@ -544,24 +496,6 @@ function DiscoveryStream(prevState = INITIAL_STATE.DiscoveryStream, action) {
       return isNotReady() ? prevState :
         nextState(items => items.filter(item => item.url !== action.data.url));
 
-    case at.PLACES_SAVED_TO_POCKET:
-      const addPocketInfo = item => {
-        if (item.url === action.data.url) {
-          return Object.assign({}, item, {
-            open_url: action.data.open_url,
-            pocket_id: action.data.pocket_id,
-          });
-        }
-        return item;
-      };
-      return isNotReady() ? prevState :
-        nextState(items => items.map(addPocketInfo));
-
-    case at.DELETE_FROM_POCKET:
-    case at.ARCHIVE_FROM_POCKET:
-      return isNotReady() ? prevState :
-        nextState(items => items.filter(item => item.pocket_id !== action.data.pocket_id));
-
     case at.PLACES_BOOKMARK_ADDED:
       const updateBookmarkInfo = item => {
         if (item.url === action.data.url) {
@@ -621,7 +555,6 @@ this.reducers = {
   Prefs,
   Dialog,
   Sections,
-  Pocket,
   DiscoveryStream,
   Search,
 };

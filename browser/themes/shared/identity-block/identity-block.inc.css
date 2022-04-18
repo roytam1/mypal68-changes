@@ -121,10 +121,6 @@
   list-style-image: url(chrome://browser/skin/identity-icon-notice.svg);
 }
 
-#urlbar[pageproxystate="valid"] > #identity-box.chromeUI > #identity-icon {
-  list-style-image: url(chrome://branding/content/identity-icons-brand.svg);
-}
-
 #urlbar[pageproxystate="invalid"] > #identity-box > #identity-icon {
   list-style-image: url(chrome://browser/skin/search-glass.svg);
   fill-opacity: .4;

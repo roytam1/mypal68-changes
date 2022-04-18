@@ -50,7 +50,6 @@ XPCOMUtils.defineLazyModuleGetters(this, {
   PlacesUIUtils: "resource:///modules/PlacesUIUtils.jsm",
   PlacesTransactions: "resource://gre/modules/PlacesTransactions.jsm",
   PluralForm: "resource://gre/modules/PluralForm.jsm",
-  Pocket: "chrome://pocket/content/Pocket.jsm",
   PrivateBrowsingUtils: "resource://gre/modules/PrivateBrowsingUtils.jsm",
   ProcessHangMonitor: "resource:///modules/ProcessHangMonitor.jsm",
   PromiseUtils: "resource://gre/modules/PromiseUtils.jsm",
@@ -226,11 +225,6 @@ if (AppConstants.NIGHTLY_BUILD) {
   );
 }
 
-XPCOMUtils.defineLazyScriptGetter(
-  this,
-  "pktUI",
-  "chrome://pocket/content/main.js"
-);
 XPCOMUtils.defineLazyScriptGetter(
   this,
   "ToolbarKeyboardNavigator",
@@ -2590,7 +2584,7 @@ function HandleAppCommandEvent(evt) {
       gLazyFindCommand("onFindCommand");
       break;
     case "Help":
-      openHelpLink("firefox-help");
+      openHelpLink("");
       break;
     case "Open":
       BrowserOpenFileWindow();

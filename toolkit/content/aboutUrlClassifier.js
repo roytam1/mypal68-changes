@@ -566,7 +566,6 @@ var Debug = {
     "UrlClassifierProtocolParser",
     "UrlClassifierStreamUpdater",
     "UrlClassifierPrefixSet",
-    "ApplicationReputation",
   ],
 
   init() {

@@ -27,21 +27,11 @@ const BUILT_IN_SECTIONS = {
         icon: "icon-info",
       }] : [],
     },
-    shouldHidePref: options.hidden,
-    eventSource: "TOP_STORIES",
-    icon: options.provider_icon,
-    title: {id: "header_recommended_by", values: {provider: options.provider_name}},
-    learnMore: {
-      link: {
-        href: "https://getpocket.com/firefox/new_tab_learn_more",
-        id: "pocket_how_it_works",
-      },
-    },
     privacyNoticeURL: "https://www.mozilla.org/privacy/firefox/#suggest-relevant-content",
     compactCards: false,
     rowsPref: "section.topstories.rows",
     maxRows: 4,
-    availableLinkMenuOptions: ["CheckBookmarkOrArchive", "CheckSavedToPocket", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl"],
+    availableLinkMenuOptions: ["CheckBookmarkOrArchive", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl"],
     emptyState: {
       message: {id: "topstories_empty_state", values: {provider: options.provider_name}},
       icon: "check",
@@ -63,9 +53,6 @@ const BUILT_IN_SECTIONS = {
       }, {
         name: "section.highlights.includeDownloads",
         titleString: "prefs_highlights_options_download_label",
-      }, {
-        name: "section.highlights.includePocket",
-        titleString: "prefs_highlights_options_pocket_label",
       }],
     },
     shouldHidePref:  false,
@@ -85,11 +72,9 @@ const BUILT_IN_SECTIONS = {
 
 const SectionsManager = {
   ACTIONS_TO_PROXY: ["WEBEXT_CLICK", "WEBEXT_DISMISS"],
-  CONTEXT_MENU_PREFS: {"CheckSavedToPocket": "extensions.pocket.enabled"},
   CONTEXT_MENU_OPTIONS_FOR_HIGHLIGHT_TYPES: {
-    history: ["CheckBookmark", "CheckSavedToPocket", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl", "DeleteUrl"],
-    bookmark: ["CheckBookmark", "CheckSavedToPocket", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl", "DeleteUrl"],
-    pocket: ["ArchiveFromPocket", "CheckSavedToPocket", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl"],
+    history: ["CheckBookmark", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl", "DeleteUrl"],
+    bookmark: ["CheckBookmark", "Separator", "OpenInNewWindow", "OpenInPrivateWindow", "Separator", "BlockUrl", "DeleteUrl"],
     download: ["OpenFile", "ShowFile", "Separator", "GoToDownloadPage", "CopyDownloadLink", "Separator", "RemoveDownload", "BlockUrl"],
   },
   initialized: false,
@@ -112,22 +97,8 @@ const SectionsManager = {
       });
     }
 
-    Object.keys(this.CONTEXT_MENU_PREFS).forEach(k =>
-      Services.prefs.addObserver(this.CONTEXT_MENU_PREFS[k], this));
-
     this.initialized = true;
     this.emit(this.INIT);
-  },
-  observe(subject, topic, data) {
-    switch (topic) {
-      case "nsPref:changed":
-        for (const pref of Object.keys(this.CONTEXT_MENU_PREFS)) {
-          if (data === this.CONTEXT_MENU_PREFS[pref]) {
-            this.updateSections();
-          }
-        }
-        break;
-    }
   },
   updateSectionPrefs(id, collapsed) {
     const section = this.sections.get(id);
@@ -226,11 +197,6 @@ const SectionsManager = {
    * @param id      section ID
    */
   updateLinkMenuOptions(options, id) {
-    if (options.availableLinkMenuOptions) {
-      options.contextMenuOptions = options.availableLinkMenuOptions.filter(
-        o => !this.CONTEXT_MENU_PREFS[o] || Services.prefs.getBoolPref(this.CONTEXT_MENU_PREFS[o]));
-    }
-
     // Once we have rows, we can give each card it's own context menu based on it's type.
     // We only want to do this for highlights because those have different data types.
     // All other sections (built by the web extension API) will have the same context menu per section
@@ -251,12 +217,6 @@ const SectionsManager = {
         Cu.reportError(`No context menu for highlight type ${card.type} is configured`);
       } else {
         card.contextMenuOptions = this.CONTEXT_MENU_OPTIONS_FOR_HIGHLIGHT_TYPES[card.type];
-
-        // Remove any options that shouldn't be there based on CONTEXT_MENU_PREFS.
-        // For example: If the Pocket extension is disabled, we should remove the CheckSavedToPocket option
-        // for each card that has it
-        card.contextMenuOptions = card.contextMenuOptions.filter(
-          o => !this.CONTEXT_MENU_PREFS[o] || Services.prefs.getBoolPref(this.CONTEXT_MENU_PREFS[o]));
       }
     }
   },
@@ -295,8 +255,6 @@ const SectionsManager = {
     }
   },
   uninit() {
-    Object.keys(this.CONTEXT_MENU_PREFS).forEach(k =>
-      Services.prefs.removeObserver(this.CONTEXT_MENU_PREFS[k], this));
     SectionsManager.initialized = false;
   },
 };

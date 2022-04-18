@@ -23,7 +23,7 @@ class SharedPreferenceSerializer final {
   SharedPreferenceSerializer(SharedPreferenceSerializer&& aOther);
   ~SharedPreferenceSerializer();
 
-  bool SerializeToSharedMemory();
+  bool SerializeToSharedMemory(GeckoChildProcessHost& procHost, std::vector<std::string>& aExtraOpts);
 
   base::SharedMemoryHandle GetSharedMemoryHandle() const {
     return mShm.handle();
@@ -36,9 +36,6 @@ class SharedPreferenceSerializer final {
   nsACString::size_type GetPrefLength() const { return mPrefs.Length(); }
 
   size_t GetPrefMapSize() const { return mPrefMapSize; }
-
-  void AddSharedPrefCmdLineArgs(GeckoChildProcessHost& procHost,
-                                std::vector<std::string>& aExtraOpts) const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SharedPreferenceSerializer);

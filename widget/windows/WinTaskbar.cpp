@@ -30,6 +30,8 @@
 #include <propkey.h>
 #include <shellapi.h>
 
+const wchar_t kShellLibraryName[] =  L"shell32.dll";
+
 static NS_DEFINE_CID(kJumpListBuilderCID, NS_WIN_JUMPLISTBUILDER_CID);
 
 namespace {
@@ -65,9 +67,23 @@ nsresult SetWindowAppUserModelProp(mozIDOMWindow* aParent,
 
   if (!toplevelHWND) return NS_ERROR_INVALID_ARG;
 
+  typedef HRESULT (WINAPI * SHGetPropertyStoreForWindowPtr)
+                    (HWND hwnd, REFIID riid, void** ppv);
+  SHGetPropertyStoreForWindowPtr funcGetProStore = nullptr;
+
+  HMODULE hDLL = ::LoadLibraryW(kShellLibraryName);
+  funcGetProStore = (SHGetPropertyStoreForWindowPtr)
+    GetProcAddress(hDLL, "SHGetPropertyStoreForWindow");
+
+  if (!funcGetProStore) {
+    FreeLibrary(hDLL);
+    return NS_ERROR_NO_INTERFACE;
+  }
+
   RefPtr<IPropertyStore> pPropStore;
-  if (FAILED(SHGetPropertyStoreForWindow(toplevelHWND, IID_IPropertyStore,
+  if (FAILED(funcGetProStore(toplevelHWND, IID_IPropertyStore,
                                          getter_AddRefs(pPropStore)))) {
+    FreeLibrary(hDLL);
     return NS_ERROR_INVALID_ARG;
   }
 
@@ -83,6 +99,7 @@ nsresult SetWindowAppUserModelProp(mozIDOMWindow* aParent,
   }
 
   PropVariantClear(&pv);
+  FreeLibrary(hDLL);
 
   return rv;
 }
@@ -273,10 +290,32 @@ WinTaskbar::GetDefaultGroupId(nsAString& aDefaultGroupId) {
 
 // (static) Called from AppShell
 bool WinTaskbar::RegisterAppUserModelID() {
+  if (!IsWin7OrLater())
+    return false;
+
   nsAutoString uid;
   if (!GetAppUserModelID(uid)) return false;
 
-  return SUCCEEDED(SetCurrentProcessExplicitAppUserModelID(uid.get()));
+  SetCurrentProcessExplicitAppUserModelIDPtr funcAppUserModelID = nullptr;
+  bool retVal = false;
+
+  HMODULE hDLL = ::LoadLibraryW(kShellLibraryName);
+
+  funcAppUserModelID = (SetCurrentProcessExplicitAppUserModelIDPtr)
+                        GetProcAddress(hDLL, "SetCurrentProcessExplicitAppUserModelID");
+
+  if (!funcAppUserModelID) {
+    ::FreeLibrary(hDLL);
+    return false;
+  }
+
+  if (SUCCEEDED(funcAppUserModelID(uid.get())))
+    retVal = true;
+
+  if (hDLL)
+    ::FreeLibrary(hDLL);
+
+  return retVal;
 }
 
 NS_IMETHODIMP

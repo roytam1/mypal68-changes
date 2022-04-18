@@ -1,4 +1,4 @@
-#include "jsfriendapi.h"
+/#include "jsfriendapi.h"
 
 #include "js/ArrayBuffer.h"  // JS::NewArrayBuffer
 #include "jsapi-tests/tests.h"

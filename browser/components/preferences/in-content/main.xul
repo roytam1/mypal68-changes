@@ -532,15 +532,6 @@
                 is="highlightable-button"
                 disabled="true"/>
       </hbox>
-      <hbox id="unsupportedSystem" align="start">
-        <description flex="1" data-l10n-id="update-unsupported">
-          <label id="unsupportedLink" class="learnMore" data-l10n-name="unsupported-link" is="text-link"></label>
-        </description>
-        <spacer flex="1"/>
-        <button data-l10n-id="update-checkForUpdatesButton"
-                is="highlightable-button"
-                disabled="true"/>
-      </hbox>
       <hbox id="restarting" align="start">
         <image class="update-throbber"/><label data-l10n-id="update-restarting"></label>
         <spacer flex="1"/>

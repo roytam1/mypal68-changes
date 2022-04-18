@@ -270,7 +270,8 @@ LONG nsWindow::sLastMouseDownTime = 0L;
 LONG nsWindow::sLastClickCount = 0L;
 BYTE nsWindow::sLastMouseButton = 0;
 
-bool nsWindow::sHaveInitializedPrefs = false;
+// Trim heap on minimize. (initialized, but still true.)
+int             nsWindow::sTrimOnMinimize         = 2;
 
 TriStateBool nsWindow::sHasBogusPopupsDropShadowOnMultiMonitor = TRI_UNKNOWN;
 
@@ -440,7 +441,7 @@ class TIPMessageHandler {
 
     // On touchscreen devices, tiptsf.dll will have been loaded when STA COM was
     // first initialized.
-    if (!IsWin10OrLater() && GetModuleHandle(L"tiptsf.dll") &&
+    /*if (!IsWin10OrLater() && GetModuleHandle(L"tiptsf.dll") &&
         !sProcessCaretEventsStub) {
       sTipTsfInterceptor.Init("tiptsf.dll");
       DebugOnly<bool> ok = sProcessCaretEventsStub.Set(
@@ -453,7 +454,7 @@ class TIPMessageHandler {
       DebugOnly<bool> hooked = sSendMessageTimeoutWStub.Set(
           sUser32Intercept, "SendMessageTimeoutW", &SendMessageTimeoutWHook);
       MOZ_ASSERT(hooked);
-    }
+    }*/
   }
 
   class MOZ_RAII A11yInstantiationBlocker {
@@ -500,8 +501,8 @@ class TIPMessageHandler {
                                               DWORD aGeneratingTid,
                                               DWORD aEventTime) {
     A11yInstantiationBlocker block;
-    sProcessCaretEventsStub(aWinEventHook, aEvent, aHwnd, aObjectId, aChildId,
-                            aGeneratingTid, aEventTime);
+    //sProcessCaretEventsStub(aWinEventHook, aEvent, aHwnd, aObjectId, aChildId,
+    //                        aGeneratingTid, aEventTime);
   }
 
   static LRESULT WINAPI SendMessageTimeoutWHook(HWND aHwnd, UINT aMsgCode,
@@ -511,14 +512,14 @@ class TIPMessageHandler {
     // We don't want to handle this unless the message is a WM_GETOBJECT that we
     // want to block, and the aHwnd is a nsWindow that belongs to the current
     // thread.
-    if (!aMsgResult || aMsgCode != WM_GETOBJECT ||
+    /*if (!aMsgResult || aMsgCode != WM_GETOBJECT ||
         static_cast<DWORD>(aLParam) != OBJID_CLIENT ||
         !WinUtils::GetNSWindowPtr(aHwnd) ||
         ::GetWindowThreadProcessId(aHwnd, nullptr) != ::GetCurrentThreadId() ||
         !IsA11yBlocked()) {
       return sSendMessageTimeoutWStub(aHwnd, aMsgCode, aWParam, aLParam, aFlags,
                                       aTimeout, aMsgResult);
-    }
+    }*/
 
     // In this case we want to fake the result that would happen if we had
     // decided not to handle WM_GETOBJECT in our WndProc. We hand the message
@@ -534,7 +535,6 @@ class TIPMessageHandler {
       sProcessCaretEventsStub;
   static WindowsDllInterceptor::FuncHookType<decltype(&SendMessageTimeoutW)>
       sSendMessageTimeoutWStub;
-  static StaticAutoPtr<TIPMessageHandler> sInstance;
 
   HHOOK mHook;
   UINT mMessages[7];
@@ -758,7 +758,7 @@ nsresult nsWindow::Create(nsIWidget* aParent, nsNativeWidget aNativeParent,
       parent = nullptr;
     }
 
-    if (!IsWin8OrLater() && HasBogusPopupsDropShadowOnMultiMonitor() &&
+    if (IsVistaOrLater() && !IsWin8OrLater() && HasBogusPopupsDropShadowOnMultiMonitor() &&
         ShouldUseOffMainThreadCompositing()) {
       extendedStyle |= WS_EX_COMPOSITED;
     }
@@ -818,10 +818,10 @@ nsresult nsWindow::Create(nsIWidget* aParent, nsNativeWidget aNativeParent,
   // that we have a mWnd.
   mDefaultScale = -1.0;
 
-  if (mIsRTL) {
+  if (mIsRTL && WinUtils::dwmSetWindowAttributePtr) {
     DWORD dwAttribute = TRUE;
-    DwmSetWindowAttribute(mWnd, DWMWA_NONCLIENT_RTL_LAYOUT, &dwAttribute,
-                          sizeof dwAttribute);
+    WinUtils::dwmSetWindowAttributePtr(mWnd, DWMWA_NONCLIENT_RTL_LAYOUT, &dwAttribute,
+                                       sizeof dwAttribute);
   }
 
   if (mOpeningAnimationSuppressed) {
@@ -893,13 +893,20 @@ nsresult nsWindow::Create(nsIWidget* aParent, nsNativeWidget aNativeParent,
   mDefaultIMC.Init(this);
   IMEHandler::InitInputContext(this, mInputContext);
 
-  // Do some initialization work, but only if (a) it hasn't already been done,
-  // and (b) this is the hidden window (which is conveniently created before
-  // any visible windows but after the profile has been initialized).
-  if (!sHaveInitializedPrefs && mWindowType == eWindowType_invisible) {
+  // If the internal variable set by the config.trim_on_minimize pref has not
+  // been initialized, and if this is the hidden window (conveniently created
+  // before any visible windows, and after the profile has been initialized),
+  // do some initialization work.
+  if (sTrimOnMinimize == 2 && mWindowType == eWindowType_invisible) {
+    // Our internal trim prevention logic is effective on 2K/XP at maintaining
+    // the working set when windows are minimized, but on Vista and up it has
+    // little to no effect. Since this feature has been the source of numerous
+    // bugs over the years, disable it (sTrimOnMinimize=1) on Vista and up.
+    sTrimOnMinimize =
+      Preferences::GetBool("config.trim_on_minimize",
+        IsVistaOrLater() ? 1 : 0);
     sSwitchKeyboardLayout =
         Preferences::GetBool("intl.keyboard.per_window_layout", false);
-    sHaveInitializedPrefs = true;
   }
 
   // Query for command button metric data for rendering the titlebar. We
@@ -1612,9 +1619,8 @@ bool nsWindow::IsVisible() const { return mIsVisible; }
 // XP and Vista visual styles sometimes require window clipping regions to be
 // applied for proper transparency. These routines are called on size and move
 // operations.
-// XXX this is apparently still needed in Windows 7 and later
 void nsWindow::ClearThemeRegion() {
-  if (!HasGlass() &&
+  if (IsVistaOrLater() && !HasGlass() &&
       (mWindowType == eWindowType_popup && !IsPopupWithTitleBar() &&
        (mPopupType == ePopupTypeTooltip || mPopupType == ePopupTypePanel))) {
     SetWindowRgn(mWnd, nullptr, false);
@@ -1628,7 +1634,7 @@ void nsWindow::SetThemeRegion() {
   // state. At some point we might need part and state values from
   // nsNativeThemeWin's GetThemePartAndState, but currently windows that change
   // shape based on state haven't come up.
-  if (!HasGlass() &&
+  if (IsVistaOrLater() && !HasGlass() &&
       (mWindowType == eWindowType_popup && !IsPopupWithTitleBar() &&
        (mPopupType == ePopupTypeTooltip || mPopupType == ePopupTypePanel))) {
     HRGN hRgn = nullptr;
@@ -1654,14 +1660,14 @@ void nsWindow::SetThemeRegion() {
 
 void nsWindow::RegisterTouchWindow() {
   mTouchWindow = true;
-  ::RegisterTouchWindow(mWnd, TWF_WANTPALM);
+  mGesture.RegisterTouchWindow(mWnd);
   ::EnumChildWindows(mWnd, nsWindow::RegisterTouchForDescendants, 0);
 }
 
 BOOL CALLBACK nsWindow::RegisterTouchForDescendants(HWND aWnd, LPARAM aMsg) {
   nsWindow* win = WinUtils::GetNSWindowPtr(aWnd);
   if (win) {
-    ::RegisterTouchWindow(aWnd, TWF_WANTPALM);
+    win->mGesture.RegisterTouchWindow(aWnd);
   }
   return TRUE;
 }
@@ -2035,7 +2041,13 @@ void nsWindow::SetSizeMode(nsSizeMode aMode) {
         break;
 
       case nsSizeMode_Minimized:
-        mode = SW_MINIMIZE;
+        // Using SW_SHOWMINIMIZED prevents the working set from being trimmed but
+        // keeps the window active in the tray. So after the window is minimized,
+        // windows will fire WM_WINDOWPOSCHANGED (OnWindowPosChanged) at which point
+        // we will do some additional processing to get the active window set right.
+        // If sTrimOnMinimize is set, we let windows handle minimization normally
+        // using SW_MINIMIZE.
+        mode = sTrimOnMinimize ? SW_MINIMIZE : SW_SHOWMINIMIZED;
         break;
 
       default:
@@ -2056,9 +2068,11 @@ void nsWindow::SetSizeMode(nsSizeMode aMode) {
 }
 
 void nsWindow::SuppressAnimation(bool aSuppress) {
-  DWORD dwAttribute = aSuppress ? TRUE : FALSE;
-  DwmSetWindowAttribute(mWnd, DWMWA_TRANSITIONS_FORCEDISABLED, &dwAttribute,
-                        sizeof dwAttribute);
+  if(WinUtils::dwmSetWindowAttributePtr) {
+    DWORD dwAttribute = aSuppress ? TRUE : FALSE;
+    WinUtils::dwmSetWindowAttributePtr(mWnd, DWMWA_TRANSITIONS_FORCEDISABLED, &dwAttribute,
+                                       sizeof dwAttribute);
+  }
 }
 
 // Constrain a potential move to fit onscreen
@@ -2375,7 +2389,7 @@ static WindowsDllInterceptor::FuncHookType<GetWindowInfoPtr>
 
 BOOL WINAPI GetWindowInfoHook(HWND hWnd, PWINDOWINFO pwi) {
   if (!sGetWindowInfoPtrStub) {
-    NS_ASSERTION(FALSE, "Something is horribly wrong in GetWindowInfoHook!");
+   NS_ASSERTION(FALSE, "Something is horribly wrong in GetWindowInfoHook!");
     return FALSE;
   }
   int windowStatus =
@@ -2393,11 +2407,10 @@ BOOL WINAPI GetWindowInfoHook(HWND hWnd, PWINDOWINFO pwi) {
 void nsWindow::UpdateGetWindowInfoCaptionStatus(bool aActiveCaption) {
   if (!mWnd) return;
 
-  sUser32Intercept.Init("user32.dll");
-  sGetWindowInfoPtrStub.Set(sUser32Intercept, "GetWindowInfo",
-                            &GetWindowInfoHook);
   if (!sGetWindowInfoPtrStub) {
-    return;
+    sUser32Intercept.Init("user32.dll");
+    sGetWindowInfoPtrStub.Set(sUser32Intercept, "GetWindowInfo",
+                              &GetWindowInfoHook);
   }
 
   // Update our internally tracked caption status
@@ -3013,9 +3026,9 @@ void nsWindow::UpdateGlass() {
 
   // Extends the window frame behind the client area
   if (nsUXThemeData::CheckForCompositor()) {
-    DwmExtendFrameIntoClientArea(mWnd, &margins);
-    DwmSetWindowAttribute(mWnd, DWMWA_NCRENDERING_POLICY, &policy,
-                          sizeof policy);
+    WinUtils::dwmExtendFrameIntoClientAreaPtr(mWnd, &margins);
+    WinUtils::dwmSetWindowAttributePtr(mWnd, DWMWA_NCRENDERING_POLICY, &policy,
+                                       sizeof policy);
   }
 }
 #endif
@@ -4766,7 +4779,7 @@ LRESULT CALLBACK nsWindow::WindowProcInternal(HWND hWnd, UINT msg,
   return res;
 }
 
-const char16_t* GetQuitType() {
+/*const char16_t* GetQuitType() {
   if (Preferences::GetBool(PREF_WIN_REGISTER_APPLICATION_RESTART, false)) {
     DWORD cchCmdLine = 0;
     HRESULT rc = ::GetApplicationRestartSettings(::GetCurrentProcess(), nullptr,
@@ -4776,7 +4789,7 @@ const char16_t* GetQuitType() {
     }
   }
   return nullptr;
-}
+}*/
 
 // The main windows message processing method for plugins.
 // The result means whether this method processed the native
@@ -4902,7 +4915,7 @@ bool nsWindow::ProcessMessage(UINT msg, WPARAM& wParam, LPARAM& lParam,
       /* We don't do this for win10 glass with a custom titlebar,
        * in order to avoid the caption buttons breaking. */
       !(IsWin10OrLater() && HasGlass()) &&
-      DwmDefWindowProc(mWnd, msg, wParam, lParam, &dwmHitResult)) {
+      WinUtils::dwmDwmDefWindowProcPtr(mWnd, msg, wParam, lParam, &dwmHitResult)) {
     *aRetValue = dwmHitResult;
     return true;
   }
@@ -4921,9 +4934,12 @@ bool nsWindow::ProcessMessage(UINT msg, WPARAM& wParam, LPARAM& lParam,
             do_CreateInstance(NS_SUPPORTS_PRBOOL_CONTRACTID);
         cancelQuit->SetData(false);
 
-        const char16_t* quitType = GetQuitType();
+        /*const char16_t* quitType = GetQuitType();
         obsServ->NotifyObservers(cancelQuit, "quit-application-requested",
-                                 quitType);
+                                 quitType);*/
+        obsServ->NotifyObservers(cancelQuit, "quit-application-requested",
+                                 nullptr);
+
 
         bool abortQuit;
         cancelQuit->GetData(&abortQuit);
@@ -4953,12 +4969,13 @@ bool nsWindow::ProcessMessage(UINT msg, WPARAM& wParam, LPARAM& lParam,
             mozilla::services::GetObserverService();
         const char16_t* context = u"shutdown-persist";
         const char16_t* syncShutdown = u"syncShutdown";
-        const char16_t* quitType = GetQuitType();
+        //const char16_t* quitType = GetQuitType();
 
         obsServ->NotifyObservers(nullptr, "quit-application-granted",
                                  syncShutdown);
         obsServ->NotifyObservers(nullptr, "quit-application-forced", nullptr);
-        obsServ->NotifyObservers(nullptr, "quit-application", quitType);
+        //obsServ->NotifyObservers(nullptr, "quit-application", quitType);
+        obsServ->NotifyObservers(nullptr, "quit-application", nullptr);
         obsServ->NotifyObservers(nullptr, "profile-change-net-teardown",
                                  context);
         obsServ->NotifyObservers(nullptr, "profile-change-teardown", context);
@@ -5022,7 +5039,7 @@ bool nsWindow::ProcessMessage(UINT msg, WPARAM& wParam, LPARAM& lParam,
     } break;
 
     case WM_SETTINGCHANGE: {
-      if (wParam == SPI_SETCLIENTAREAANIMATION ||
+      if (//wParam == SPI_SETCLIENTAREAANIMATION ||
           // CaretBlinkTime is cached in nsLookAndFeel
           wParam == SPI_SETKEYBOARDDELAY) {
         NotifyThemeChanged();
@@ -5807,6 +5824,12 @@ bool nsWindow::ProcessMessage(UINT msg, WPARAM& wParam, LPARAM& lParam,
 
     case WM_SYSCOMMAND: {
       WPARAM filteredWParam = (wParam & 0xFFF0);
+      // prevent Windows from trimming the working set. bug 76831
+      if (!sTrimOnMinimize && filteredWParam == SC_MINIMIZE) {
+        ::ShowWindow(mWnd, SW_SHOWMINIMIZED);
+        result = true;
+      }
+
       if (mSizeMode == nsSizeMode_Fullscreen && filteredWParam == SC_RESTORE &&
           GetCurrentShowCmd(mWnd) != SW_SHOWMINIMIZED) {
         MakeFullScreen(false);
@@ -6375,6 +6398,14 @@ void nsWindow::OnWindowPosChanged(WINDOWPOS* wp) {
     else
       mSizeMode = nsSizeMode_Normal;
 
+    // If !sTrimOnMinimize, we minimize windows using SW_SHOWMINIMIZED (See
+    // SetSizeMode for internal calls, and WM_SYSCOMMAND for external). This
+    // prevents the working set from being trimmed but keeps the window active.
+    // After the window is minimized, we need to do some touch up work on the
+    // active window. (bugs 76831 & 499816)
+    if (!sTrimOnMinimize && nsSizeMode_Minimized == mSizeMode)
+      ActivateOtherWindowHelper(mWnd);
+
 #ifdef WINSTATE_DEBUG_OUTPUT
     switch (mSizeMode) {
       case nsSizeMode_Normal:
@@ -6492,6 +6523,30 @@ void nsWindow::OnWindowPosChanged(WINDOWPOS* wp) {
     // Send a gecko resize event
     OnResize(clientSize);
   }
+}
+
+// static
+void nsWindow::ActivateOtherWindowHelper(HWND aWnd) {
+  // Find the next window that is enabled, visible, and not minimized.
+  HWND hwndBelow = ::GetNextWindow(aWnd, GW_HWNDNEXT);
+  while (hwndBelow && (!::IsWindowEnabled(hwndBelow) || !::IsWindowVisible(hwndBelow) ||
+                       ::IsIconic(hwndBelow))) {
+    hwndBelow = ::GetNextWindow(hwndBelow, GW_HWNDNEXT);
+  }
+
+  // Push ourselves to the bottom of the stack, then activate the
+  // next window.
+  ::SetWindowPos(aWnd, HWND_BOTTOM, 0, 0, 0, 0,
+                 SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE);
+  if (hwndBelow)
+    ::SetForegroundWindow(hwndBelow);
+
+  // Play the minimize sound while we're here, since that is also
+  // forgotten when we use SW_SHOWMINIMIZED.
+  /*nsCOMPtr<nsISound> sound(do_CreateInstance("@mozilla.org/sound;1"));
+  if (sound) {
+    sound->PlaySystemSound(NS_LITERAL_STRING("Minimize"));
+  }*/
 }
 
 void nsWindow::OnWindowPosChanging(LPWINDOWPOS& info) {
@@ -6614,8 +6669,7 @@ nsIntPoint nsWindow::GetTouchCoordinates(WPARAM wParam, LPARAM lParam) {
     return ret;
   }
   PTOUCHINPUT pInputs = new TOUCHINPUT[cInputs];
-  if (GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs,
-                        sizeof(TOUCHINPUT))) {
+  if (mGesture.GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs)) {
     ret.x = TOUCH_COORD_TO_PIXEL(pInputs[0].x);
     ret.y = TOUCH_COORD_TO_PIXEL(pInputs[0].y);
   }
@@ -6629,8 +6683,7 @@ bool nsWindow::OnTouch(WPARAM wParam, LPARAM lParam) {
   uint32_t cInputs = LOWORD(wParam);
   PTOUCHINPUT pInputs = new TOUCHINPUT[cInputs];
 
-  if (GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs,
-                        sizeof(TOUCHINPUT))) {
+  if (mGesture.GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs)) {
     MultiTouchInput touchInput, touchEndInput;
 
     // Walk across the touch point array processing each contact point.
@@ -6717,7 +6770,7 @@ bool nsWindow::OnTouch(WPARAM wParam, LPARAM lParam) {
   }
 
   delete[] pInputs;
-  CloseTouchInputHandle((HTOUCHINPUT)lParam);
+  mGesture.CloseTouchInputHandle((HTOUCHINPUT)lParam);
   return true;
 }
 
@@ -6756,7 +6809,7 @@ bool nsWindow::OnGesture(WPARAM wParam, LPARAM lParam) {
       mGesture.PanFeedbackFinalize(mWnd, endFeedback);
     }
 
-    CloseGestureInfoHandle((HGESTUREINFO)lParam);
+    mGesture.CloseGestureInfoHandle((HGESTUREINFO)lParam);
 
     return true;
   }
@@ -6782,7 +6835,7 @@ bool nsWindow::OnGesture(WPARAM wParam, LPARAM lParam) {
   }
 
   // Only close this if we process and return true.
-  CloseGestureInfoHandle((HGESTUREINFO)lParam);
+  mGesture.CloseGestureInfoHandle((HGESTUREINFO)lParam);
 
   return true;  // Handled
 }

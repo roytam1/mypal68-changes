@@ -563,7 +563,7 @@
                   >
               <menupopup id="menu_HelpPopup" onpopupshowing="buildHelpMenu();">
                 <menuitem id="menu_openHelp"
-                          oncommand="openHelpLink('firefox-help')"
+                          oncommand="openHelpLink('')"
                           onclick="checkForMiddleClick(this, event);"
                           label="&productHelp2.label;"
                           accesskey="&productHelp2.accesskey;"
@@ -577,7 +577,7 @@
                           label="&helpShowTour2.label;"
                           accesskey="&helpShowTour2.accesskey;"/>
                 <menuitem id="menu_keyboardShortcuts"
-                          oncommand="openHelpLink('keyboard-shortcuts')"
+                          oncommand="openHelpLink('')"
                           onclick="checkForMiddleClick(this, event);"
                           label="&helpKeyboardShortcuts.label;"
                           accesskey="&helpKeyboardShortcuts.accesskey;"/>

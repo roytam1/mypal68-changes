@@ -526,7 +526,6 @@ var CustomizableUIInternal = {
       const removedButtons = [
         "loop-call-button",
         "loop-button-throttled",
-        "pocket-button",
       ];
       for (let placements of Object.values(gSavedState.placements)) {
         for (let button of removedButtons) {

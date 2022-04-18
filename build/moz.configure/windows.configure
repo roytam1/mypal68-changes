@@ -362,9 +362,9 @@ def lib_path_for(host_or_target):
 
         # MSVC2017 switched to use the same target naming as the sdk.
         atlmfc_dir = os.path.join(vc_path, 'atlmfc', 'lib', sdk_target)
-        if not os.path.isdir(atlmfc_dir):
-            die('Cannot find the ATL/MFC libraries in the Visual C++ directory '
-                '(%s). Please install them.' % vc_path)
+#        if not os.path.isdir(atlmfc_dir):
+#            die('Cannot find the ATL/MFC libraries in the Visual C++ directory '
+#                '(%s). Please install them.' % vc_path)
 
         libs = []
         lib_env = os.environ.get('LIB')

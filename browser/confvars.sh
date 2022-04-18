@@ -3,8 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-MOZ_APP_BASENAME=Firefox
-MOZ_APP_VENDOR=Mozilla
+MOZ_APP_BASENAME=Mypal
+MOZ_APP_VENDOR=Theodor2
 MOZ_UPDATER=1
 MOZ_PHOENIX=1
 
@@ -44,7 +44,6 @@ fi
 # "unofficial" branding.
 # For the mozilla-aurora repository, use "aurora".
 MOZ_BRANDING_DIRECTORY=browser/branding/unofficial
-MOZ_OFFICIAL_BRANDING_DIRECTORY=browser/branding/official
 MOZ_APP_ID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
 # ACCEPTED_MAR_CHANNEL_IDS should usually be the same as the value MAR_CHANNEL_ID.
 # If more than one ID is needed, then you should use a comma separated list

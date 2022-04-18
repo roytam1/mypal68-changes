@@ -330,7 +330,7 @@
          key="&minimizeWindow.key;"
          modifiers="accel"/>
     <key id="key_openHelpMac"
-         oncommand="openHelpLink('firefox-osxkey');"
+         oncommand="openHelpLink('');"
          key="&helpMac.commandkey;"
          modifiers="accel"/>
     <!-- These are used to build the Application menu -->

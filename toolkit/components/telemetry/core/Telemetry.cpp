@@ -42,7 +42,7 @@
 #include "mozilla/StaticPtr.h"
 #include "mozilla/Unused.h"
 #if defined(XP_WIN)
-#  include "mozilla/WinDllServices.h"
+//#  include "mozilla/WinDllServices.h"
 #endif
 #include "nsAppDirectoryServiceDefs.h"
 #include "nsBaseHashtable.h"
@@ -62,7 +62,7 @@
 #include "nsIXPConnect.h"
 #include "nsIXULAppInfo.h"
 #if defined(XP_WIN) && defined(NIGHTLY_BUILD)
-#  include "other/UntrustedModules.h"
+//#  include "other/UntrustedModules.h"
 #endif
 #include "nsJSUtils.h"
 #include "nsLocalFile.h"
@@ -691,14 +691,14 @@ TelemetryImpl::GetMaximalNumberOfConcurrentThreads(uint32_t* ret) {
   return NS_OK;
 }
 
-NS_IMETHODIMP
+/*NS_IMETHODIMP
 TelemetryImpl::GetUntrustedModuleLoadEvents(JSContext* cx, Promise** aPromise) {
 #if defined(XP_WIN) && defined(NIGHTLY_BUILD)
   return Telemetry::GetUntrustedModuleLoadEvents(cx, aPromise);
 #else
   return NS_ERROR_NOT_IMPLEMENTED;
 #endif
-}
+}*/
 
 NS_IMETHODIMP
 TelemetryImpl::SnapshotCapturedStacks(bool clear, JSContext* cx,
@@ -870,7 +870,7 @@ class GetLoadedModulesResultRunnable final : public Runnable {
  private:
 #  if defined(XP_WIN)
   void ObtainCertSubjects() {
-    MOZ_ASSERT(!NS_IsMainThread());
+    /*MOZ_ASSERT(!NS_IsMainThread());
 
     // NB: Currently we cannot lower this down to the profiler layer due to
     // differing startup dependencies between the profiler and DllServices.
@@ -884,7 +884,7 @@ class GetLoadedModulesResultRunnable final : public Runnable {
         mCertSubjects.Put(info.GetModulePath(),
                           nsDependentString(orgName.get()));
       }
-    }
+    }*/
   }
 #  endif  // defined(XP_WIN)
 };

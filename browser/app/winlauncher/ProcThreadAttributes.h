@@ -18,7 +18,7 @@ namespace mozilla {
 class MOZ_RAII ProcThreadAttributes final {
   struct ProcThreadAttributeListDeleter {
     void operator()(LPPROC_THREAD_ATTRIBUTE_LIST aList) {
-      ::DeleteProcThreadAttributeList(aList);
+      //::DeleteProcThreadAttributeList(aList);
       delete[] reinterpret_cast<char*>(aList);
     }
   };
@@ -72,12 +72,12 @@ class MOZ_RAII ProcThreadAttributes final {
    *         true  if the STARTUPINFOEXW::lpAttributeList was set to
    *               non-null;
    */
-  LauncherResult<bool> AssignTo(STARTUPINFOEXW& aSiex) {
-    ZeroMemory(&aSiex, sizeof(STARTUPINFOEXW));
-
+  LauncherResult<bool> AssignTo(STARTUPINFOW& aSiex) {
+    ZeroMemory(&aSiex, sizeof(STARTUPINFOW));
+    return false;
     // We'll set the size to sizeof(STARTUPINFOW) until we determine whether the
     // extended fields will be used.
-    aSiex.StartupInfo.cb = sizeof(STARTUPINFOW);
+    /*aSiex.StartupInfo.cb = sizeof(STARTUPINFOW);
 
     DWORD numAttributes = 0;
     if (HasMitigationPolicies()) {
@@ -140,7 +140,7 @@ class MOZ_RAII ProcThreadAttributes final {
     mAttrList = std::move(attrList);
     aSiex.lpAttributeList = mAttrList.get();
     aSiex.StartupInfo.cb = sizeof(STARTUPINFOEXW);
-    return true;
+    return true;*/
   }
 
  private:

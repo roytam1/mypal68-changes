@@ -7,7 +7,7 @@
 #include "mozilla/ArrayUtils.h"
 #include "mozilla/CmdLineAndEnvUtils.h"
 #include "mozilla/DebugOnly.h"
-#include "mozilla/glue/WindowsDllServices.h"
+//#include "mozilla/glue/WindowsDllServices.h"
 #include "mozilla/JSONWriter.h"
 #include "mozilla/Move.h"
 #include "mozilla/mscom/ProcessRuntime.h"
@@ -78,7 +78,7 @@ struct SerializedEventData {
 static void PostErrorToLog(const mozilla::LauncherError& aError) {
   // This is very bare-bones; just enough to spit out an HRESULT to the
   // Application event log.
-  EventLog log(::RegisterEventSourceW(nullptr, L"Firefox"));
+  EventLog log(::RegisterEventSourceW(nullptr, L"Mypal"));
   if (!log) {
     return;
   }
@@ -348,7 +348,7 @@ static bool AddModuleInfo(const nsAutoHandle& aSnapshot,
     return true;
   }
 
-  mozilla::glue::BasicDllServices dllServices;
+  //mozilla::glue::BasicDllServices dllServices;
 
   aJson.StartObjectProperty("modules");
 
@@ -399,7 +399,7 @@ static bool AddModuleInfo(const nsAutoHandle& aSnapshot,
 
     aJson.StringElement(version.c_str());
 
-    mozilla::Maybe<ptrdiff_t> sigIndex;
+    /*mozilla::Maybe<ptrdiff_t> sigIndex;
     auto signedBy = dllServices.GetBinaryOrgName(module.szExePath);
     if (signedBy) {
       std::wstring strSignedBy(signedBy.get());
@@ -416,12 +416,12 @@ static bool AddModuleInfo(const nsAutoHandle& aSnapshot,
       aJson.IntElement(sigIndex.value());
     }
 
-    aJson.EndArray();
-  } while (moduleCount < kMaxArrayLen && ::Module32NextW(aSnapshot, &module));
+    aJson.EndArray();*/
+  } while (moduleCount < kMaxArrayLen && ::Module32NextW(aSnapshot, &module));*/
 
   aJson.EndObject();
 
-  aJson.StartArrayProperty("signatures");
+  /*aJson.StartArrayProperty("signatures");
 
   // Serialize each entry in the signatures array
   for (auto&& itr : signatures) {
@@ -433,7 +433,7 @@ static bool AddModuleInfo(const nsAutoHandle& aSnapshot,
     aJson.StringElement(sigUtf8.get());
   }
 
-  aJson.EndArray();
+  aJson.EndArray();*/
 
   return true;
 }
@@ -493,20 +493,6 @@ static bool PrepPing(const PingThreadContext& aContext, const std::wstring& aId,
     std::ostringstream oss;
     oss << osv.dwMajorVersion << "." << osv.dwMinorVersion << "."
         << osv.dwBuildNumber;
-
-    if (osv.dwMajorVersion == 10 && osv.dwMinorVersion == 0) {
-      // Get the "Update Build Revision" (UBR) value
-      DWORD ubrValue;
-      DWORD ubrValueLen = sizeof(ubrValue);
-      LSTATUS ubrOk =
-          ::RegGetValueW(HKEY_LOCAL_MACHINE,
-                         L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
-                         L"UBR", RRF_RT_DWORD | RRF_SUBKEY_WOW6464KEY, nullptr,
-                         &ubrValue, &ubrValueLen);
-      if (ubrOk == ERROR_SUCCESS) {
-        oss << "." << ubrValue;
-      }
-    }
 
     if (oss) {
       aJson.StringProperty("os_version", oss.str().c_str());

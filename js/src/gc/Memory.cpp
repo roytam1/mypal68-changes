@@ -795,9 +795,9 @@ size_t GetPageFaultCount() {
   }
 #ifdef XP_WIN
   PROCESS_MEMORY_COUNTERS pmc;
-  if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)) == 0) {
+  //if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)) == 0) {
     return 0;
-  }
+  //}
   return pmc.PageFaultCount;
 #else
   struct rusage usage;

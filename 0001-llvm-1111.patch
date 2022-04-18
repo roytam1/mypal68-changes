@@ -1,0 +1,70 @@
+From 002439b2231ea7062a2dfc82b1d367db45396596 Mon Sep 17 00:00:00 2001
+From: Fedor <fedor@mail.ru>
+Date: Thu, 17 Feb 2022 17:32:56 +0200
+Subject: [PATCH] lllll 1111
+
+---
+ llvm/lib/IR/AttributeImpl.h                     | 4 ++--
+ llvm/tools/llvm-exegesis/lib/SnippetGenerator.h | 3 ++-
+ llvm/tools/llvm-exegesis/lib/X86/Target.cpp     | 6 +++---
+ 3 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/llvm/lib/IR/AttributeImpl.h b/llvm/lib/IR/AttributeImpl.h
+index 5c33434..2ef6b91 100644
+--- a/llvm/lib/IR/AttributeImpl.h
++++ b/llvm/lib/IR/AttributeImpl.h
+@@ -188,8 +188,8 @@ public:
+ class AttributeBitSet {
+   /// Bitset with a bit for each available attribute Attribute::AttrKind.
+   uint8_t AvailableAttrs[12] = {};
+-  static_assert(Attribute::EndAttrKinds <= sizeof(AvailableAttrs) * CHAR_BIT,
+-                "Too many attributes");
++  //static_assert(Attribute::EndAttrKinds <= sizeof(AvailableAttrs) * CHAR_BIT,
++  //              "Too many attributes");
+ 
+ public:
+   bool hasAttribute(Attribute::AttrKind Kind) const {
+diff --git a/llvm/tools/llvm-exegesis/lib/SnippetGenerator.h b/llvm/tools/llvm-exegesis/lib/SnippetGenerator.h
+index 5f67b39..26c14f6 100644
+--- a/llvm/tools/llvm-exegesis/lib/SnippetGenerator.h
++++ b/llvm/tools/llvm-exegesis/lib/SnippetGenerator.h
+@@ -123,7 +123,8 @@ class CombinationGenerator {
+     using value_type = T;
+ 
+     const ArrayRef<value_type> Range;
+-    typename decltype(Range)::const_iterator Position;
++    typename std::vector<decltype(Range)>::iterator Position;
++    //typename decltype(Range)::const_iterator Position;
+ 
+     // Rewind the tape, placing the position to again point at the beginning.
+     void rewind() { Position = Range.begin(); }
+diff --git a/llvm/tools/llvm-exegesis/lib/X86/Target.cpp b/llvm/tools/llvm-exegesis/lib/X86/Target.cpp
+index 7a84f93..f2399a7 100644
+--- a/llvm/tools/llvm-exegesis/lib/X86/Target.cpp
++++ b/llvm/tools/llvm-exegesis/lib/X86/Target.cpp
+@@ -787,11 +787,11 @@ std::vector<InstructionTemplate> ExegesisX86Target::generateInstructionVariants(
+   }
+ 
+   // If we don't wish to explore any variables, defer to the baseline method.
+-  if (!Exploration)
++  //if (!Exploration)
+     return ExegesisTarget::generateInstructionVariants(Instr,
+                                                        MaxConfigsPerOpcode);
+ 
+-  std::vector<InstructionTemplate> Variants;
++  /*std::vector<InstructionTemplate> Variants;
+   size_t NumVariants;
+   CombinationGenerator<MCOperand, decltype(VariableChoices)::value_type, 4> G(
+       VariableChoices);
+@@ -810,7 +810,7 @@ std::vector<InstructionTemplate> ExegesisX86Target::generateInstructionVariants(
+   assert(Variants.size() == NumVariants &&
+          Variants.size() <= MaxConfigsPerOpcode &&
+          "Should not produce too many variants");
+-  return Variants;
++  return Variants;*/
+ }
+ 
+ static ExegesisTarget *getTheExegesisX86Target() {
+-- 
+2.8.2.windows.1
+

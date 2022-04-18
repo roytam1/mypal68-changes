@@ -7,10 +7,11 @@
 include $(topsrcdir)/config/config.mk
 
 ifeq (WINNT,$(OS_TARGET))
-mozglue.def: mozglue.def.in $(GLOBAL_DEPS)
-	$(call py_action,preprocessor,$(if $(MOZ_REPLACE_MALLOC),-DMOZ_REPLACE_MALLOC) $(ACDEFINES) $< -o $@)
+#Why this shitcode fails?????
+#mozglue.def: $(topsrcdir)/mozglue/build/mozglue.def.in $(GLOBAL_DEPS)
+#	$(call py_action,preprocessor,$(if $(MOZ_REPLACE_MALLOC),-DMOZ_REPLACE_MALLOC) $(ACDEFINES) $< -o $@)
 
-GARBAGE += mozglue.def
+#GARBAGE += mozglue.def
 
 # Rebuild mozglue.dll if the manifest changes - it's included by mozglue.rc.
 # (this dependency should really be just for mozglue.dll, not other targets)

@@ -68,7 +68,7 @@ class MOZ_STATIC_CLASS MOZ_TRIVIAL_CTOR_DTOR NativeNtBlockSet final {
   NativeNtBlockSetEntry* mFirstEntry;
   // SRWLOCK_INIT == 0, so this is okay to use without any additional work as
   // long as NativeNtBlockSet is instantiated statically
-  SRWLOCK mLock;
+  CRITICAL_SECTION mLock;
 };
 
 NativeNtBlockSet::NativeNtBlockSetEntry* NativeNtBlockSet::NewEntry(
@@ -89,13 +89,15 @@ NativeNtBlockSet::NativeNtBlockSetEntry* NativeNtBlockSet::NewEntry(
 }
 
 void NativeNtBlockSet::Add(const UNICODE_STRING& aName, uint64_t aVersion) {
-  ::RtlAcquireSRWLockExclusive(&mLock);
+  ::InitializeCriticalSectionAndSpinCount(&mLock,1500);
+  ::EnterCriticalSection(&mLock);
 
   for (NativeNtBlockSetEntry* entry = mFirstEntry; entry;
        entry = entry->mNext) {
     if (::RtlEqualUnicodeString(&entry->mName, &aName, TRUE) &&
         aVersion == entry->mVersion) {
-      ::RtlReleaseSRWLockExclusive(&mLock);
+      ::LeaveCriticalSection(&mLock);
+      ::DeleteCriticalSection(&mLock);
       return;
     }
   }
@@ -104,7 +106,8 @@ void NativeNtBlockSet::Add(const UNICODE_STRING& aName, uint64_t aVersion) {
   NativeNtBlockSetEntry* newEntry = NewEntry(aName, aVersion, mFirstEntry);
   mFirstEntry = newEntry;
 
-  ::RtlReleaseSRWLockExclusive(&mLock);
+  ::LeaveCriticalSection(&mLock);
+  ::DeleteCriticalSection(&mLock);
 }
 
 void NativeNtBlockSet::Write(HANDLE aFile) {
@@ -117,7 +120,8 @@ void NativeNtBlockSet::Write(HANDLE aFile) {
   // might not run if an exception occurs, in which case we would never release
   // the lock (MSVC warns about this possibility). So we acquire and release
   // manually.
-  ::AcquireSRWLockExclusive(&mLock);
+  ::InitializeCriticalSectionAndSpinCount(&mLock,1500);
+  ::EnterCriticalSection(&mLock);
 
   MOZ_SEH_TRY {
     for (auto entry = mFirstEntry; entry; entry = entry->mNext) {
@@ -153,7 +157,8 @@ void NativeNtBlockSet::Write(HANDLE aFile) {
   }
   MOZ_SEH_EXCEPT(EXCEPTION_EXECUTE_HANDLER) {}
 
-  ::ReleaseSRWLockExclusive(&mLock);
+  ::LeaveCriticalSection(&mLock);
+  ::DeleteCriticalSection(&mLock);
 }
 
 static NativeNtBlockSet gBlockSet;

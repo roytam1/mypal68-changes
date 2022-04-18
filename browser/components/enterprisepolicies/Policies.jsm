@@ -544,14 +544,6 @@ var Policies = {
     },
   },
 
-  DisablePocket: {
-    onBeforeAddons(manager, param) {
-      if (param) {
-        setAndLockPref("extensions.pocket.enabled", false);
-      }
-    },
-  },
-
   DisablePrivateBrowsing: {
     onBeforeAddons(manager, param) {
       if (param) {
@@ -983,13 +975,6 @@ var Policies = {
         setDefaultPref(
           "browser.newtabpage.activity-stream.feeds.section.highlights",
           param.Highlights,
-          locked
-        );
-      }
-      if ("Pocket" in param) {
-        setDefaultPref(
-          "browser.newtabpage.activity-stream.feeds.section.topstories",
-          param.Pocket,
           locked
         );
       }

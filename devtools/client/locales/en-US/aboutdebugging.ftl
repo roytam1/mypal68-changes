@@ -226,7 +226,7 @@ about-debugging-browser-version-too-old = The connected browser has an old versi
 # Those are normally in range for DevTools compatibility policy, but specific non
 # backward compatible changes broke the debugger in those scenarios (Bug 1528219).
 # { $runtimeVersion } is the version of the remote browser (for instance "67.0a1")
-about-debugging-browser-version-too-old-67-debugger = The Debugger panel may not work with the connected browser. Please use Firefox { $runtimeVersion } if you need to use the Debugger with this browser.
+about-debugging-browser-version-too-old-67-debugger = The Debugger panel may not work with the connected browser. Please use Mypal { $runtimeVersion } if you need to use the Debugger with this browser.
 
 # This string is displayed in the runtime page if the remote browser version is too recent.
 # "Troubleshooting" link points to https://developer.mozilla.org/en-US/docs/Tools/WebIDE/Troubleshooting
@@ -234,7 +234,7 @@ about-debugging-browser-version-too-old-67-debugger = The Debugger panel may not
 # { $localID } is the build ID of the current Firefox instance (same format)
 # { $runtimeVersion } is the version of the remote browser (for instance "67.0a1")
 # { $localVersion } is the version of your current browser (same format)
-about-debugging-browser-version-too-recent = The connected browser is more recent ({ $runtimeVersion }, buildID { $runtimeID }) than your { -brand-shorter-name } ({ $localVersion }, buildID { $localID }). This is an unsupported setup and may cause DevTools to fail. Please update Firefox. <a>Troubleshooting</a>
+about-debugging-browser-version-too-recent = The connected browser is more recent ({ $runtimeVersion }, buildID { $runtimeID }) than your { -brand-shorter-name } ({ $localVersion }, buildID { $localID }). This is an unsupported setup and may cause DevTools to fail. Please update Mypal. <a>Troubleshooting</a>
 
 # Displayed for runtime info in runtime pages.
 # { $name } is brand name such as "Firefox Nightly"

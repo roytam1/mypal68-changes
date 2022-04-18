@@ -131,7 +131,7 @@ class D3D9DXVA2Manager : public DXVA2Manager {
   HRESULT Init(layers::KnowsCompositor* aKnowsCompositor,
                nsACString& aFailureReason);
 
-  IUnknown* GetDXVADeviceManager() override;
+  //IUnknown* GetDXVADeviceManager() override;
 
   // Copies a region (aRegion) of the video frame stored in aVideoSample
   // into an image which is returned by aOutImage.
@@ -257,10 +257,10 @@ D3D9DXVA2Manager::~D3D9DXVA2Manager() {
   MOZ_ASSERT(NS_IsMainThread());
 }
 
-IUnknown* D3D9DXVA2Manager::GetDXVADeviceManager() {
+/*IUnknown* D3D9DXVA2Manager::GetDXVADeviceManager() {
   MutexAutoLock lock(mLock);
   return mDeviceManager;
-}
+}*/
 
 HRESULT
 D3D9DXVA2Manager::Init(layers::KnowsCompositor* aKnowsCompositor,
@@ -580,7 +580,7 @@ class D3D11DXVA2Manager : public DXVA2Manager {
   HRESULT InitInternal(layers::KnowsCompositor* aKnowsCompositor,
                        nsACString& aFailureReason, ID3D11Device* aDevice);
 
-  IUnknown* GetDXVADeviceManager() override;
+  //IUnknown* GetDXVADeviceManager() override;
 
   // Copies a region (aRegion) of the video frame stored in aVideoSample
   // into an image which is returned by aOutImage.
@@ -612,7 +612,7 @@ class D3D11DXVA2Manager : public DXVA2Manager {
 
   RefPtr<ID3D11Device> mDevice;
   RefPtr<ID3D11DeviceContext> mContext;
-  RefPtr<IMFDXGIDeviceManager> mDXGIDeviceManager;
+  //RefPtr<IMFDXGIDeviceManager> mDXGIDeviceManager;
   RefPtr<MFTDecoder> mTransform;
   RefPtr<D3D11RecycleAllocator> mTextureClientAllocator;
   RefPtr<ID3D11VideoDecoder> mDecoder;
@@ -642,10 +642,10 @@ bool D3D11DXVA2Manager::SupportsConfig(IMFMediaType* aType, float aFramerate) {
 
 D3D11DXVA2Manager::~D3D11DXVA2Manager() {}
 
-IUnknown* D3D11DXVA2Manager::GetDXVADeviceManager() {
+/*IUnknown* D3D11DXVA2Manager::GetDXVADeviceManager() {
   MutexAutoLock lock(mLock);
   return mDXGIDeviceManager;
-}
+}*/
 HRESULT
 D3D11DXVA2Manager::Init(layers::KnowsCompositor* aKnowsCompositor,
                         nsACString& aFailureReason, ID3D11Device* aDevice) {
@@ -719,6 +719,10 @@ D3D11DXVA2Manager::InitInternal(layers::KnowsCompositor* aKnowsCompositor,
 
   mDevice = aDevice;
 
+aFailureReason.AssignLiteral("Failed to create D3D11 device for decoder");
+return E_FAIL;
+
+
   if (!mDevice) {
     mDevice = gfx::DeviceManagerDx::Get()->CreateDecoderDevice();
     if (!mDevice) {
@@ -734,7 +738,7 @@ D3D11DXVA2Manager::InitInternal(layers::KnowsCompositor* aKnowsCompositor,
 
   mDevice->GetImmediateContext(getter_AddRefs(mContext));
 
-  hr = wmf::MFCreateDXGIDeviceManager(&mDeviceManagerToken,
+  /*hr = wmf::MFCreateDXGIDeviceManager(&mDeviceManagerToken,
                                       getter_AddRefs(mDXGIDeviceManager));
   if (!SUCCEEDED(hr)) {
     aFailureReason =
@@ -747,7 +751,7 @@ D3D11DXVA2Manager::InitInternal(layers::KnowsCompositor* aKnowsCompositor,
     aFailureReason = nsPrintfCString(
         "IMFDXGIDeviceManager::ResetDevice failed with code %X", hr);
     return hr;
-  }
+  }*/
 
   // The IMFTransform interface used by MFTDecoder is documented to require to
   // run on an MTA thread.
@@ -765,8 +769,8 @@ D3D11DXVA2Manager::InitInternal(layers::KnowsCompositor* aKnowsCompositor,
       return;
     }
 
-    hr = mft->SendMFTMessage(MFT_MESSAGE_SET_D3D_MANAGER,
-                             ULONG_PTR(mDXGIDeviceManager.get()));
+    /*hr = mft->SendMFTMessage(MFT_MESSAGE_SET_D3D_MANAGER,
+                             ULONG_PTR(mDXGIDeviceManager.get()));*/
     if (!SUCCEEDED(hr)) {
       aFailureReason = nsPrintfCString(
           "MFTDecoder::SendMFTMessage(MFT_MESSAGE_"

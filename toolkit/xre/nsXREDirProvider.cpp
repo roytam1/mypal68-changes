@@ -289,16 +289,16 @@ static nsresult GetSystemParentDirectory(nsIFile** aFile) {
   rv = GetOSXFolderType(kOnSystemDisk, kApplicationSupportFolderType,
                         getter_AddRefs(localDir));
   if (NS_SUCCEEDED(rv)) {
-    rv = localDir->AppendNative(NS_LITERAL_CSTRING("Mozilla"));
+    rv = localDir->AppendNative(NS_LITERAL_CSTRING("Mypal68"));
   }
 #  else
   NS_NAMED_LITERAL_CSTRING(dirname,
 #    ifdef HAVE_USR_LIB64_DIR
-                           "/usr/lib64/mozilla"
+                           "/usr/lib64/mypal68"
 #    elif defined(__OpenBSD__) || defined(__FreeBSD__)
-                           "/usr/local/lib/mozilla"
+                           "/usr/local/lib/mypal68"
 #    else
-                           "/usr/lib/mozilla"
+                           "/usr/lib/mypal68"
 #    endif
   );
   rv = NS_NewNativeLocalFile(dirname, false, getter_AddRefs(localDir));
@@ -311,12 +311,35 @@ static nsresult GetSystemParentDirectory(nsIFile** aFile) {
 }
 #endif
 
+nsresult
+nsXREDirProvider::Portable(uint32_t *aResult)
+{
+  bool portable;
+  nsCOMPtr<nsIFile> portmodemark;
+  GetAppDir()->Clone(getter_AddRefs(portmodemark));
+  portmodemark->AppendNative(NS_LITERAL_CSTRING("pmprt.mod"));
+  portmodemark->Exists(&portable);
+  if (portable) {
+     *aResult = 1;
+     return NS_OK;
+     }
+  GetAppDir()->Clone(getter_AddRefs(portmodemark));
+  portmodemark->AppendNative(NS_LITERAL_CSTRING("pmundprt.mod"));
+  portmodemark->Exists(&portable);
+  if (portable) *aResult = 2;
+  else *aResult = 0;
+  return NS_OK;
+}
+
 NS_IMETHODIMP
 nsXREDirProvider::GetFile(const char* aProperty, bool* aPersistent,
                           nsIFile** aFile) {
   nsresult rv;
 
   bool gettingProfile = false;
+
+  uint32_t portable;
+  Portable(&portable);
 
   if (!strcmp(aProperty, NS_APP_USER_PROFILE_LOCAL_50_DIR)) {
     // If XRE_NotifyProfile hasn't been called, don't fall through to
@@ -373,7 +396,8 @@ nsXREDirProvider::GetFile(const char* aProperty, bool* aPersistent,
     }
   } else if (!strcmp(aProperty, NS_APP_APPLICATION_REGISTRY_DIR) ||
              !strcmp(aProperty, XRE_USER_APP_DATA_DIR)) {
-    rv = GetUserAppDataDirectory(getter_AddRefs(file));
+    if (mProfileDir && portable > 0) rv = mProfileDir->Clone(getter_AddRefs(file));
+      else rv = GetUserAppDataDirectory(getter_AddRefs(file));
   }
 #if defined(XP_UNIX) || defined(XP_MACOSX)
   else if (!strcmp(aProperty, XRE_SYS_NATIVE_MANIFESTS)) {
@@ -388,9 +412,9 @@ nsXREDirProvider::GetFile(const char* aProperty, bool* aPersistent,
     rv = GetUserDataDirectoryHome(getter_AddRefs(localDir), false);
     if (NS_SUCCEEDED(rv)) {
 #  if defined(XP_MACOSX)
-      rv = localDir->AppendNative(NS_LITERAL_CSTRING("Mozilla"));
+      rv = localDir->AppendNative(NS_LITERAL_CSTRING("Mypal68"));
 #  else
-      rv = localDir->AppendNative(NS_LITERAL_CSTRING(".mozilla"));
+      rv = localDir->AppendNative(NS_LITERAL_CSTRING(".mypal68"));
 #  endif
     }
     if (NS_SUCCEEDED(rv)) {
@@ -1107,17 +1131,29 @@ void nsXREDirProvider::DoShutdown() {
 }
 
 #ifdef XP_WIN
-static nsresult GetShellFolderPath(KNOWNFOLDERID folder, nsAString& _retval) {
-  DWORD flags = KF_FLAG_SIMPLE_IDLIST | KF_FLAG_DONT_VERIFY | KF_FLAG_NO_ALIAS;
-  PWSTR path = nullptr;
+static nsresult GetShellFolderPath(int folder, nsAString& _retval) {
+  wchar_t* buf;
+  uint32_t bufLength = _retval.GetMutableData(&buf, MAXPATHLEN + 3);
+  NS_ENSURE_TRUE(bufLength >= (MAXPATHLEN + 3), NS_ERROR_OUT_OF_MEMORY);
 
-  if (!SUCCEEDED(SHGetKnownFolderPath(folder, flags, NULL, &path))) {
-    return NS_ERROR_NOT_AVAILABLE;
+  nsresult rv = NS_OK;
+
+  LPITEMIDLIST pItemIDList = nullptr;
+
+  if (SUCCEEDED(SHGetSpecialFolderLocation(nullptr, folder, &pItemIDList)) &&
+      SHGetPathFromIDListW(pItemIDList, buf)) {
+    // We're going to use wcslen (wcsnlen not available in msvc7.1) so make
+    // sure to null terminate.
+    buf[bufLength - 1] = L'\0';
+    _retval.SetLength(wcslen(buf));
+  } else {
+    _retval.SetLength(0);
+    rv = NS_ERROR_NOT_AVAILABLE;
   }
 
-  _retval = nsDependentString(path);
-  CoTaskMemFree(path);
-  return NS_OK;
+  CoTaskMemFree(pItemIDList);
+
+  return rv;
 }
 
 /**
@@ -1296,7 +1332,7 @@ nsresult nsXREDirProvider::GetUpdateRootDir(nsIFile** aResult,
             nsDependentCString(hasVendor ? GetAppVendor() : GetAppName())))) {
       return NS_ERROR_FAILURE;
     }
-  } else if (NS_FAILED(localDir->AppendNative(NS_LITERAL_CSTRING("Mozilla")))) {
+  } else if (NS_FAILED(localDir->AppendNative(NS_LITERAL_CSTRING("Mypal68")))) {
     return NS_ERROR_FAILURE;
   }
 
@@ -1436,11 +1472,11 @@ nsresult nsXREDirProvider::GetUserDataDirectoryHome(nsIFile** aFile,
 #elif defined(XP_WIN)
   nsString path;
   if (aLocal) {
-    rv = GetShellFolderPath(FOLDERID_LocalAppData, path);
+    rv = GetShellFolderPath(CSIDL_LOCAL_APPDATA, path);
     if (NS_FAILED(rv)) rv = GetRegWindowsAppDataFolder(aLocal, path);
   }
   if (!aLocal || NS_FAILED(rv)) {
-    rv = GetShellFolderPath(FOLDERID_RoamingAppData, path);
+    rv = GetShellFolderPath(CSIDL_APPDATA, path);
     if (NS_FAILED(rv)) {
       if (!aLocal) rv = GetRegWindowsAppDataFolder(aLocal, path);
     }
@@ -1483,9 +1519,6 @@ nsresult nsXREDirProvider::GetUserDataDirectoryHome(nsIFile** aFile,
 nsresult nsXREDirProvider::GetSysUserExtensionsDirectory(nsIFile** aFile) {
   nsCOMPtr<nsIFile> localDir;
   nsresult rv = GetUserDataDirectoryHome(getter_AddRefs(localDir), false);
-  NS_ENSURE_SUCCESS(rv, rv);
-
-  rv = AppendSysUserExtensionPath(localDir);
   NS_ENSURE_SUCCESS(rv, rv);
 
   rv = EnsureDirectoryExists(localDir);
@@ -1597,7 +1630,7 @@ nsresult nsXREDirProvider::AppendSysUserExtensionPath(nsIFile* aFile) {
 
 #if defined(XP_MACOSX) || defined(XP_WIN)
 
-  static const char* const sXR = "Mozilla";
+  static const char* const sXR = "Mypal68";
   rv = aFile->AppendNative(nsDependentCString(sXR));
   NS_ENSURE_SUCCESS(rv, rv);
 
@@ -1607,7 +1640,7 @@ nsresult nsXREDirProvider::AppendSysUserExtensionPath(nsIFile* aFile) {
 
 #elif defined(XP_UNIX)
 
-  static const char* const sXR = ".mozilla";
+  static const char* const sXR = ".mypal68";
   rv = aFile->AppendNative(nsDependentCString(sXR));
   NS_ENSURE_SUCCESS(rv, rv);
 
@@ -1628,7 +1661,7 @@ nsresult nsXREDirProvider::AppendSysUserExtensionsDevPath(nsIFile* aFile) {
 
 #if defined(XP_MACOSX) || defined(XP_WIN)
 
-  static const char* const sXR = "Mozilla";
+  static const char* const sXR = "Mypal68";
   rv = aFile->AppendNative(nsDependentCString(sXR));
   NS_ENSURE_SUCCESS(rv, rv);
 
@@ -1638,7 +1671,7 @@ nsresult nsXREDirProvider::AppendSysUserExtensionsDevPath(nsIFile* aFile) {
 
 #elif defined(XP_UNIX)
 
-  static const char* const sXR = ".mozilla";
+  static const char* const sXR = ".mypal68";
   rv = aFile->AppendNative(nsDependentCString(sXR));
   NS_ENSURE_SUCCESS(rv, rv);
 
@@ -1689,11 +1722,7 @@ nsresult nsXREDirProvider::AppendProfilePath(nsIFile* aFile, bool aLocal) {
   if (!profile.IsEmpty()) {
     rv = AppendProfileString(aFile, profile.get());
   } else {
-    if (!vendor.IsEmpty()) {
-      rv = aFile->AppendNative(vendor);
-      NS_ENSURE_SUCCESS(rv, rv);
-    }
-    rv = aFile->AppendNative(appName);
+    rv = aFile->AppendNative(nsDependentCString("Mypal68"));
   }
   NS_ENSURE_SUCCESS(rv, rv);
 
@@ -1702,7 +1731,7 @@ nsresult nsXREDirProvider::AppendProfilePath(nsIFile* aFile, bool aLocal) {
   // The parent of this directory is set in GetUserDataDirectoryHome
   // XXX: handle gAppData->profile properly
   // XXXsmaug ...and the rest of the profile creation!
-  rv = aFile->AppendNative(nsDependentCString("mozilla"));
+  rv = aFile->AppendNative(nsDependentCString("mypal68"));
   NS_ENSURE_SUCCESS(rv, rv);
 #elif defined(XP_UNIX)
   nsAutoCString folder;
@@ -1724,19 +1753,10 @@ nsresult nsXREDirProvider::AppendProfilePath(nsIFile* aFile, bool aLocal) {
 
     rv = AppendProfileString(aFile, folder.BeginReading());
   } else {
-    if (!vendor.IsEmpty()) {
-      folder.Append(vendor);
-      ToLowerCase(folder);
-
-      rv = aFile->AppendNative(folder);
-      NS_ENSURE_SUCCESS(rv, rv);
-
-      folder.Truncate();
-    }
 
     // This can be the case in tests.
     if (!appName.IsEmpty()) {
-      folder.Append(appName);
+      folder.Append(nsDependentCString("Mypal68"));
       ToLowerCase(folder);
 
       rv = aFile->AppendNative(folder);

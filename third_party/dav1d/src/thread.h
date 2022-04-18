@@ -44,9 +44,14 @@ typedef struct {
     unsigned stack_size;
 } pthread_attr_t;
 
-typedef SRWLOCK pthread_mutex_t;
-typedef CONDITION_VARIABLE pthread_cond_t;
-typedef INIT_ONCE pthread_once_t;
+typedef CRITICAL_SECTION pthread_mutex_t;
+typedef struct pthread_cond_t {
+    void *Ptr;
+} pthread_cond_t;
+typedef union pthread_once_t  {
+    void * Ptr;    ///< For the Windows 6.0+ native functions
+    LONG state;    ///< For the pre-Windows 6.0 compat code
+} pthread_once_t;
 
 int dav1d_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
                          void *(*func)(void*), void *arg);
@@ -77,7 +82,7 @@ static inline int pthread_attr_setstacksize(pthread_attr_t *const attr,
 static inline int pthread_mutex_init(pthread_mutex_t *const mutex,
                                      const void *const attr)
 {
-    InitializeSRWLock(mutex);
+//    InitializeSRWLock(mutex);
     return 0;
 }
 
@@ -86,19 +91,19 @@ static inline int pthread_mutex_destroy(pthread_mutex_t *const mutex) {
 }
 
 static inline int pthread_mutex_lock(pthread_mutex_t *const mutex) {
-    AcquireSRWLockExclusive(mutex);
+//    AcquireSRWLockExclusive(mutex);
     return 0;
 }
 
 static inline int pthread_mutex_unlock(pthread_mutex_t *const mutex) {
-    ReleaseSRWLockExclusive(mutex);
+//    ReleaseSRWLockExclusive(mutex);
     return 0;
 }
 
 static inline int pthread_cond_init(pthread_cond_t *const cond,
                                     const void *const attr)
 {
-    InitializeConditionVariable(cond);
+//    InitializeConditionVariable(cond);
     return 0;
 }
 
@@ -109,16 +114,16 @@ static inline int pthread_cond_destroy(pthread_cond_t *const cond) {
 static inline int pthread_cond_wait(pthread_cond_t *const cond,
                                     pthread_mutex_t *const mutex)
 {
-    return !SleepConditionVariableSRW(cond, mutex, INFINITE, 0);
+//    return !SleepConditionVariableSRW(cond, mutex, INFINITE, 0);
 }
 
 static inline int pthread_cond_signal(pthread_cond_t *const cond) {
-    WakeConditionVariable(cond);
+//    WakeConditionVariable(cond);
     return 0;
 }
 
 static inline int pthread_cond_broadcast(pthread_cond_t *const cond) {
-    WakeAllConditionVariable(cond);
+//    WakeAllConditionVariable(cond);
     return 0;
 }
 

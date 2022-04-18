@@ -29,7 +29,7 @@ if CONFIG['MOZ_UBSAN']:
     ]
 
 if CONFIG['OS_TARGET'] == 'WINNT':
-    DEFFILE = '!mozglue.def'
+    DEFFILE = 'mozglue.def'
     # We'll break the DLL blocklist if we immediately load user32.dll
     DELAYLOAD_DLLS += [
         'user32.dll',
@@ -58,31 +58,32 @@ if CONFIG['MOZ_WIDGET_TOOLKIT']:
         ]
 
         SOURCES += [
-            'Authenticode.cpp',
-            'UntrustedDllsHandler.cpp',
+#            'Authenticode.cpp',
+#            'UntrustedDllsHandler.cpp',
             'WindowsDllBlocklist.cpp',
         ]
 
         DisableStlWrapping()
         OS_LIBS += [
-            'crypt32',
+#            'crypt32',
+            'ntdll',
             'version',
-            'wintrust',
+#            'wintrust',
         ]
         DELAYLOAD_DLLS += [
-            'crypt32.dll',
-            'wintrust.dll',
+#            'crypt32.dll',
+#            'wintrust.dll',
         ]
         EXPORTS.mozilla += [
-            'Authenticode.h',
+#            'Authenticode.h',
             'WindowsDllBlocklistCommon.h',
             'WindowsDllBlocklistDefs.h',
         ]
         EXPORTS.mozilla.glue += [
-            'WindowsDllServices.h',
+#            'WindowsDllServices.h',
         ]
         USE_LIBS += [
-            'mscom-mozglue',
+        #    'mscom-mozglue',
         ]
         if CONFIG['CPU_ARCH'] == 'aarch64':
             USE_LIBS += [

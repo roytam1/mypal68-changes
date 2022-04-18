@@ -16,8 +16,7 @@ rights-intro-point-1 =
     License also gives you the right to distribute your modified versions.
 rights-intro-point-2 =
     You are not granted any trademark rights or licenses to the trademarks of
-    the Mozilla Foundation or any party, including without limitation the
-    Firefox name or logo. Additional information on trademarks may be found
+    Mypal name or logo. Additional information on trademarks may be found
     <a data-l10n-name="mozilla-trademarks-link">here</a>.
 rights-intro-point-3 =
     Some features in { -brand-short-name }, such as the Crash Reporter, give

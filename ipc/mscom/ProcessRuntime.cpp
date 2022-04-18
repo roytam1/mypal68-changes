@@ -9,7 +9,7 @@
 #endif  // defined(ACCESSIBILITY) && defined(MOZILLA_INTERNAL_API)
 #include "mozilla/Assertions.h"
 #include "mozilla/DynamicallyLinkedFunctionPtr.h"
-#include "mozilla/mscom/ProcessRuntimeShared.h"
+//#include "mozilla/mscom/ProcessRuntimeShared.h"
 #include "mozilla/RefPtr.h"
 #include "mozilla/UniquePtr.h"
 #include "mozilla/Unused.h"
@@ -124,9 +124,16 @@ ProcessRuntime::ProcessRuntime(GeckoProcessType aProcessType)
 }
 
 void ProcessRuntime::InitInsideApartment() {
-  ProcessInitLock lock;
-  if (lock.IsInitialized()) {
+  //ProcessInitLock lock;
+  /*if (lock.IsInitialized()) {
     // COM has already been initialized by a previous ProcessRuntime instance
+    mInitResult = S_OK;
+    return;
+  }*/
+
+  // Windows XP doesn't support setting of the COM exception policy, so we'll
+  // just stop here in that case.
+  if (!IsVistaOrLater()) {
     mInitResult = S_OK;
     return;
   }
@@ -148,8 +155,13 @@ void ProcessRuntime::InitInsideApartment() {
   }
 
   // Disable COM's catch-all exception handler
+  // Windows 7 has a policy that is even more strict. We should use that one
+  // whenever possible.
+  ULONG_PTR exceptionSetting = IsWin7OrLater() ?
+                               COMGLB_EXCEPTION_DONOT_HANDLE_ANY :
+                               COMGLB_EXCEPTION_DONOT_HANDLE;
   mInitResult = globalOpts->Set(COMGLB_EXCEPTION_HANDLING,
-                                COMGLB_EXCEPTION_DONOT_HANDLE_ANY);
+                                exceptionSetting);
   MOZ_ASSERT(SUCCEEDED(mInitResult));
 
   // Disable the BSTR cache (as it never invalidates, thus leaking memory)
@@ -159,7 +171,7 @@ void ProcessRuntime::InitInsideApartment() {
     return;
   }
 
-  lock.SetInitialized();
+  //lock.SetInitialized();
 }
 
 /* static */

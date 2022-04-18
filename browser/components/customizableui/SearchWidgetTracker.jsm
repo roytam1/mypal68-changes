@@ -44,7 +44,9 @@ const SearchWidgetTracker = {
     // should always match the actual placement when the browser starts up - i.e.
     // once the navigation bar has been registered.
     if (aArea == CustomizableUI.AREA_NAVBAR) {
+      let wwwww = Services.prefs.getBoolPref(PREF_NAME);
       this.syncPreferenceWithWidget();
+      Services.prefs.setBoolPref(PREF_NAME, wwwww);
     }
   },
 

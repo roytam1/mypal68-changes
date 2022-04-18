@@ -19,7 +19,6 @@
 #include "nsIMutationObserver.h"
 #include "nsTArray.h"
 #include "nsCycleCollectionParticipant.h"
-#include "nsILoginReputation.h"
 
 // X.h defines KeyPress
 #ifdef KeyPress
@@ -104,13 +103,10 @@ class nsFormFillController final : public nsIFormFillController,
 
   bool IsTextControl(nsINode* aNode);
 
-  nsresult StartQueryLoginReputation(mozilla::dom::HTMLInputElement* aInput);
-
   // members //////////////////////////////////////////
 
   nsCOMPtr<nsIAutoCompleteController> mController;
   nsCOMPtr<nsILoginAutoCompleteSearch> mLoginManagerAC;
-  nsCOMPtr<nsILoginReputationService> mLoginReputationService;
   mozilla::dom::HTMLInputElement* mFocusedInput;
 
   // mListNode is a <datalist> element which, is set, has the form fill

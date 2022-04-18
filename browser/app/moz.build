@@ -8,7 +8,7 @@ with Files("**"):
 with Files("blocklist.xml"):
     BUG_COMPONENT = ("Toolkit", "Blocklist Implementation")
 
-with Files("firefox.exe.manifest"):
+with Files("mypal.exe.manifest"):
     BUG_COMPONENT = ("Core", "Widget: Win32")
 with Files("module.ver"):
     BUG_COMPONENT = ("Core", "Widget: Win32")
@@ -27,7 +27,7 @@ with Files("Makefile.in"):
 
 with Files("profile/channel-prefs.js"):
     BUG_COMPONENT = ("Firefox", "Installer")
-with Files("profile/firefox.js"):
+with Files("profile/mypal.js"):
     BUG_COMPONENT = ("Firefox", "General")
 
 if CONFIG['MOZ_NO_PIE_COMPAT']:

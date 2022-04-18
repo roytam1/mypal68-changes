@@ -416,7 +416,7 @@ class VisualStudioBackend(CommonBackend):
             fh.write(b'$env:%s = "%s"\r\n' % (k, v))
 
         relpath = os.path.relpath(self.environment.topsrcdir,
-            self.environment.topobjdir).replace('\\', '/')
+            self.environment.topsrcdir).replace('\\', '/')
 
         fh.write(b'$bashargs = "%s/mach", "--log-no-times"\r\n' % relpath)
         fh.write(b'$bashargs = $bashargs + $args\r\n')
@@ -445,7 +445,7 @@ class VisualStudioBackend(CommonBackend):
         # relative paths, since munging c:\ to /c/ is slightly more
         # complicated.
         relpath = os.path.relpath(self.environment.topsrcdir,
-            self.environment.topobjdir).replace('\\', '/')
+            self.environment.topsrcdir).replace('\\', '/')
 
         # We go through mach because it has the logic for choosing the most
         # appropriate build tool.

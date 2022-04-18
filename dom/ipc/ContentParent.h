@@ -569,13 +569,6 @@ class ContentParent final : public PContentParent,
       PURLClassifierLocalParent* aActor, const URIParams& aURI,
       nsTArray<IPCURLClassifierFeature>&& aFeatures) override;
 
-  PLoginReputationParent* AllocPLoginReputationParent(const URIParams& aURI);
-
-  virtual mozilla::ipc::IPCResult RecvPLoginReputationConstructor(
-      PLoginReputationParent* aActor, const URIParams& aURI) override;
-
-  bool DeallocPLoginReputationParent(PLoginReputationParent* aActor);
-
   PSessionStorageObserverParent* AllocPSessionStorageObserverParent();
 
   virtual mozilla::ipc::IPCResult RecvPSessionStorageObserverConstructor(

@@ -13,6 +13,27 @@
 
 #ifndef XP_WIN
 #  include <pthread.h>
+#else
+typedef struct _RTL_RWLOCK {
+   RTL_CRITICAL_SECTION rtlCS;
+
+   HANDLE hSharedReleaseSemaphore;
+   UINT   uSharedWaiters;
+
+   HANDLE hExclusiveReleaseSemaphore;
+   UINT   uExclusiveWaiters;
+
+   INT    iNumberActive;
+   HANDLE hOwningThreadId;
+   DWORD  dwTimeoutBoost;
+   PVOID  pDebugInfo;
+} RTL_RWLOCK, *LPRTL_RWLOCK;
+
+typedef VOID (WINAPI *RtlInitializeResource)(LPRTL_RWLOCK rwl);
+typedef VOID (WINAPI *RtlDeleteResource)(LPRTL_RWLOCK rwl);
+typedef VOID (WINAPI *RtlAcquireResourceExclusive)(LPRTL_RWLOCK rwl, BYTE fWait);
+typedef VOID (WINAPI *RtlAcquireResourceShared)(LPRTL_RWLOCK rwl, BYTE fWait);
+typedef VOID (WINAPI *RtlReleaseResource)(LPRTL_RWLOCK rwl);
 #endif
 
 namespace mozilla {
@@ -43,26 +64,20 @@ class RWLock : public BlockingResourceBase {
  public:
   explicit RWLock(const char* aName);
 
-  // Windows rwlocks don't need any special handling to be destroyed, but
-  // POSIX ones do.
-#ifdef XP_WIN
-  ~RWLock() = default;
-#else
   ~RWLock();
-#endif
 
-#ifdef DEBUG
+//#ifdef DEBUG
   bool LockedForWritingByCurrentThread();
-  void ReadLock();
-  void ReadUnlock();
-  void WriteLock();
-  void WriteUnlock();
-#else
+  void ReadLock(){};
+  void ReadUnlock(){};
+  void WriteLock(){};
+  void WriteUnlock(){};
+/*#else
   void ReadLock() { ReadLockInternal(); }
   void ReadUnlock() { ReadUnlockInternal(); }
   void WriteLock() { WriteLockInternal(); }
   void WriteUnlock() { WriteUnlockInternal(); }
-#endif
+#endif*/
 
  private:
   void ReadLockInternal();
@@ -80,12 +95,18 @@ class RWLock : public BlockingResourceBase {
   // SRWLock is pointer-sized.  We declare it in such a fashion here to
   // avoid pulling in windows.h wherever this header is used.
   void* mRWLock;
+  RTL_RWLOCK rtlRWLock;
+  void* Initialize;
+  void* Delete;
+  void* AcquireExclusive;
+  void* AcquireShared;
+  void* Release;
 #endif
 
-#ifdef DEBUG
+//#ifdef DEBUG
   // We record the owning thread for write locks only.
   PRThread* mOwningThread;
-#endif
+//#endif
 };
 
 // Read lock and unlock a RWLock with RAII semantics.  Much preferred to bare

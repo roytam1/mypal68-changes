@@ -44,6 +44,8 @@
 #include "mozilla/layers/PaintThread.h"
 #include "mozilla/layers/ReadbackManagerD3D11.h"
 
+#include "WinUtils.h"
+
 #include "gfxDWriteFontList.h"
 #include "gfxDWriteFonts.h"
 #include "gfxDWriteCommon.h"
@@ -120,6 +122,9 @@ class GfxD2DVramReporter final : public nsIMemoryReporter {
 };
 
 NS_IMPL_ISUPPORTS(GfxD2DVramReporter, nsIMemoryReporter)
+
+#define GFX_USE_CLEARTYPE_ALWAYS "gfx.font_rendering.cleartype.always_use_for_content"
+#define GFX_DOWNLOADABLE_FONTS_USE_CLEARTYPE "gfx.font_rendering.cleartype.use_for_downloadable_fonts"
 
 #define GFX_CLEARTYPE_PARAMS "gfx.font_rendering.cleartype_params."
 #define GFX_CLEARTYPE_PARAMS_GAMMA "gfx.font_rendering.cleartype_params.gamma"
@@ -286,6 +291,8 @@ class D3DSharedTexturesReporter final : public nsIMemoryReporter {
 NS_IMPL_ISUPPORTS(D3DSharedTexturesReporter, nsIMemoryReporter)
 
 gfxWindowsPlatform::gfxWindowsPlatform() : mRenderMode(RENDER_GDI) {
+  mUseClearTypeForDownloadableFonts = UNINITIALIZED_VALUE;
+  mUseClearTypeAlways = UNINITIALIZED_VALUE;
   /*
    * Initialize COM
    */
@@ -468,6 +475,16 @@ bool gfxWindowsPlatform::CanUseHardwareVideoDecoding() {
 }
 
 bool gfxWindowsPlatform::InitDWriteSupport() {
+  if (!IsVistaOrLater()) {
+    return false;
+  }
+
+  // DWrite is only supported on Windows 7 with the platform update and higher.
+  // We check this by seeing if D2D1 support is available.
+  if (!Factory::SupportsD2D1()) {
+    return false;
+  }
+
   mozilla::ScopedGfxFeatureReporter reporter("DWrite");
   if (!Factory::EnsureDWriteFactory()) {
     return false;
@@ -1027,6 +1044,22 @@ void gfxWindowsPlatform::GetPlatformCMSOutputProfile(void*& mem,
 #endif    // _WIN32
 }
 
+bool gfxWindowsPlatform::UseClearTypeForDownloadableFonts() {
+  if (mUseClearTypeForDownloadableFonts == UNINITIALIZED_VALUE) {
+      mUseClearTypeForDownloadableFonts = Preferences::GetBool(GFX_DOWNLOADABLE_FONTS_USE_CLEARTYPE, true);
+  }
+
+  return mUseClearTypeForDownloadableFonts;
+}
+
+bool gfxWindowsPlatform::UseClearTypeAlways() {
+  if (mUseClearTypeAlways == UNINITIALIZED_VALUE) {
+      mUseClearTypeAlways = Preferences::GetBool(GFX_USE_CLEARTYPE_ALWAYS, false);
+  }
+
+  return mUseClearTypeAlways;
+}
+
 void gfxWindowsPlatform::GetDLLVersion(char16ptr_t aDLLPath,
                                        nsAString& aVersion) {
   DWORD versInfoSize, vers[4] = {0};
@@ -1109,8 +1142,14 @@ void gfxWindowsPlatform::FontsPrefsChanged(const char* aPref) {
 
   gfxPlatform::FontsPrefsChanged(aPref);
 
-  if (aPref &&
-      !strncmp(GFX_CLEARTYPE_PARAMS, aPref, strlen(GFX_CLEARTYPE_PARAMS))) {
+  if (!aPref) {
+    mUseClearTypeForDownloadableFonts = UNINITIALIZED_VALUE;
+    mUseClearTypeAlways = UNINITIALIZED_VALUE;
+  } else if (!strcmp(GFX_DOWNLOADABLE_FONTS_USE_CLEARTYPE, aPref)) {
+    mUseClearTypeForDownloadableFonts = UNINITIALIZED_VALUE;
+  } else if (!strcmp(GFX_USE_CLEARTYPE_ALWAYS, aPref)) {
+    mUseClearTypeAlways = UNINITIALIZED_VALUE;
+  } else if (!strncmp(GFX_CLEARTYPE_PARAMS, aPref, strlen(GFX_CLEARTYPE_PARAMS))) {
     SetupClearTypeParams();
   } else {
     clearTextFontCaches = false;
@@ -1536,6 +1575,11 @@ void gfxWindowsPlatform::InitializeD3D11() {
 void gfxWindowsPlatform::InitializeD2DConfig() {
   FeatureState& d2d1 = gfxConfig::GetFeature(Feature::DIRECT2D);
 
+  if (!IsVistaOrLater()) {
+    d2d1.DisableByDefault(FeatureStatus::Unavailable, "Direct2D is not available on Windows XP",
+                          NS_LITERAL_CSTRING("FEATURE_FAILURE_D2D_XP"));
+    return;
+  }
   if (!gfxConfig::IsEnabled(Feature::D3D11_COMPOSITING)) {
     d2d1.DisableByDefault(FeatureStatus::Unavailable,
                           "Direct2D requires Direct3D 11 compositing",
@@ -1644,11 +1688,13 @@ bool gfxWindowsPlatform::InitGPUProcessSupport() {
                     "Not using GPU Process since D3D11 is unavailable",
                     NS_LITERAL_CSTRING("FEATURE_FAILURE_NO_D3D11"));
   } else if (!IsWin7SP1OrLater()) {
-    // On Windows 7 Pre-SP1, DXGI 1.2 is not available and remote presentation
-    // for D3D11 will not work. Rather than take a regression we revert back
-    // to in-process rendering.
+    // For Windows XP, we simply don't care enough to support this
+    // configuration. On Windows Vista and 7 Pre-SP1, DXGI 1.2 is not
+    // available and remote presentation for D3D11 will not work. Rather
+    // than take a regression and use D3D9, we revert back to in-process
+    // rendering.
     gpuProc.Disable(FeatureStatus::Unavailable,
-                    "Windows 7 Pre-SP1 cannot use the GPU process",
+                    "Windows XP, Vista, and 7 Pre-SP1 cannot use the GPU process",
                     NS_LITERAL_CSTRING("FEATURE_FAILURE_OLD_WINDOWS"));
   } else if (!IsWin8OrLater()) {
     // Windows 7 SP1 can have DXGI 1.2 only via the Platform Update, so we
@@ -1668,9 +1714,14 @@ bool gfxWindowsPlatform::InitGPUProcessSupport() {
 }
 
 bool gfxWindowsPlatform::DwmCompositionEnabled() {
+  if (!IsVistaOrLater()) {
+    return false;
+  }
+
+  MOZ_ASSERT(WinUtils::dwmIsCompositionEnabledPtr);
   BOOL dwmEnabled = false;
 
-  if (FAILED(DwmIsCompositionEnabled(&dwmEnabled))) {
+  if (FAILED(WinUtils::dwmIsCompositionEnabledPtr(&dwmEnabled))) {
     return false;
   }
 
@@ -1701,7 +1752,7 @@ class D3DVsyncSource final : public VsyncSource {
       DWM_TIMING_INFO vblankTime;
       // Make sure to init the cbSize, otherwise GetCompositionTiming will fail
       vblankTime.cbSize = sizeof(DWM_TIMING_INFO);
-      HRESULT hr = DwmGetCompositionTimingInfo(0, &vblankTime);
+      HRESULT hr = WinUtils::dwmGetCompositionTimingInfoPtr(0, &vblankTime);
       if (SUCCEEDED(hr)) {
         UNSIGNED_RATIO refreshRate = vblankTime.rateRefresh;
         // We get the rate in hertz / time, but we want the rate in ms.
@@ -1781,7 +1832,7 @@ class D3DVsyncSource final : public VsyncSource {
       // Make sure to init the cbSize, otherwise
       // GetCompositionTiming will fail
       vblankTime.cbSize = sizeof(DWM_TIMING_INFO);
-      HRESULT hr = DwmGetCompositionTimingInfo(0, &vblankTime);
+      HRESULT hr = WinUtils::dwmGetCompositionTimingInfoPtr(0, &vblankTime);
       if (!SUCCEEDED(hr)) {
         return vsync;
       }
@@ -1862,7 +1913,7 @@ class D3DVsyncSource final : public VsyncSource {
 
         // Using WaitForVBlank, the whole system dies because WaitForVBlank
         // only works if it's run on the same thread as the Present();
-        HRESULT hr = DwmFlush();
+        HRESULT hr = WinUtils::dwmFlushProcPtr();
         if (!SUCCEEDED(hr)) {
           // DWMFlush isn't working, fallback to software vsync.
           ScheduleSoftwareVsync(TimeStamp::Now());
@@ -1930,8 +1981,13 @@ already_AddRefed<mozilla::gfx::VsyncSource>
 gfxWindowsPlatform::CreateHardwareVsyncSource() {
   MOZ_RELEASE_ASSERT(NS_IsMainThread(), "GFX: Not in main thread.");
 
+  if (!WinUtils::dwmIsCompositionEnabledPtr) {
+    NS_WARNING("Dwm composition not available, falling back to software vsync");
+    return gfxPlatform::CreateHardwareVsyncSource();
+  }
+
   BOOL dwmEnabled = false;
-  DwmIsCompositionEnabled(&dwmEnabled);
+  WinUtils::dwmIsCompositionEnabledPtr(&dwmEnabled);
   if (!dwmEnabled) {
     NS_WARNING("DWM not enabled, falling back to software vsync");
     return gfxPlatform::CreateHardwareVsyncSource();

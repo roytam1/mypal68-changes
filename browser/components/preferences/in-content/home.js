@@ -46,22 +46,6 @@ var gHomePane = {
     );
   },
 
-  get isPocketNewtabEnabled() {
-    const value = Services.prefs.getStringPref(
-      "browser.newtabpage.activity-stream.discoverystream.config",
-      ""
-    );
-    if (value) {
-      try {
-        return JSON.parse(value).enabled;
-      } catch (e) {
-        console.error("Failed to parse Discovery Stream pref.");
-      }
-    }
-
-    return false;
-  },
-
   /**
    * _handleNewTabOverrides: disables new tab settings UI. Called by
    * an observer in ._watchNewTab that watches for new tab url changes
@@ -440,7 +424,6 @@ var gHomePane = {
   _changedHomeTabDefaultPrefs() {
     // If Discovery Stream is enabled Firefox Home Content preference options are hidden
     const homeContentChanged =
-      !this.isPocketNewtabEnabled &&
       this.homePanePrefs.some(pref => pref.hasUserValue);
     const newtabPref = Preferences.get(this.NEWTAB_ENABLED_PREF);
 
@@ -455,17 +438,6 @@ var gHomePane = {
     const btn = document.getElementById("restoreDefaultHomePageBtn");
     const prefChanged = this._changedHomeTabDefaultPrefs();
     btn.style.visibility = prefChanged ? "visible" : "hidden";
-  },
-
-  /**
-   * Set all prefs on the Home tab back to their default values.
-   */
-  restoreDefaultPrefsForHome() {
-    this.restoreDefaultHomePage();
-    // If Discovery Stream is enabled Firefox Home Content preference options are hidden
-    if (!this.isPocketNewtabEnabled) {
-      this.homePanePrefs.forEach(pref => Services.prefs.clearUserPref(pref.id));
-    }
   },
 
   init() {
@@ -485,9 +457,6 @@ var gHomePane = {
     document
       .getElementById("useBookmarkBtn")
       .addEventListener("command", this.setHomePageToBookmark.bind(this));
-    document
-      .getElementById("restoreDefaultHomePageBtn")
-      .addEventListener("command", this.restoreDefaultPrefsForHome.bind(this));
 
     this._updateUseCurrentButton();
     window.addEventListener("focus", this._updateUseCurrentButton.bind(this));

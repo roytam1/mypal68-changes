@@ -9,7 +9,7 @@
 ## - Translated.
 
 -facebook-container-brand-name = Facebook Container
--lockwise-brand-name = Firefox Lockwise
--monitor-brand-name = Firefox Monitor
+-lockwise-brand-name = Mypal Lockwise
+-monitor-brand-name = Mypal Monitor
 -pocket-brand-name = Pocket
--send-brand-name = Firefox Send
+-send-brand-name = Mypal Send

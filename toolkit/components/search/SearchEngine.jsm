@@ -408,12 +408,7 @@ function ParamSubstitution(paramValue, searchTerms, engine) {
 }
 
 const ENGINE_ALIASES = new Map([
-  ["google", ["@google"]],
-  ["amazondotcom", ["@amazon"]],
-  ["amazon", ["@amazon"]],
-  ["twitter", ["@twitter"]],
   ["wikipedia", ["@wikipedia"]],
-  ["ebay", ["@ebay"]],
   ["bing", ["@bing"]],
   ["ddg", ["@duckduckgo", "@ddg"]],
   ["yandex", ["@\u044F\u043D\u0434\u0435\u043A\u0441", "@yandex"]],

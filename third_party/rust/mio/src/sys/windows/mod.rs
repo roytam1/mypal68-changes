@@ -163,7 +163,7 @@ enum Family {
 unsafe fn cancel(socket: &AsRawSocket,
                  overlapped: &Overlapped) -> io::Result<()> {
     let handle = socket.as_raw_socket() as winapi::HANDLE;
-    let ret = kernel32::CancelIoEx(handle, overlapped.as_mut_ptr());
+    let ret = kernel32::CancelIo(handle);
     if ret == 0 {
         Err(io::Error::last_os_error())
     } else {

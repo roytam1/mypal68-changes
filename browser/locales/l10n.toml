@@ -109,7 +109,6 @@ locales = [
 [env]
     l = "{l10n_base}/{locale}/"
 
-
 [[paths]]
     reference = "browser/locales/en-US/**"
     l10n = "{l}browser/**"
@@ -117,22 +116,6 @@ locales = [
 [[paths]]
     reference = "browser/branding/official/locales/en-US/**"
     l10n = "{l}browser/branding/official/**"
-
-[[paths]]
-    reference = "browser/extensions/formautofill/locales/en-US/**"
-    l10n = "{l}browser/extensions/formautofill/**"
-
-[[paths]]
-    reference = "browser/extensions/fxmonitor/locales/en-US/**"
-    l10n = "{l}browser/extensions/fxmonitor/**"
-
-[[paths]]
-    reference = "browser/extensions/webcompat-reporter/locales/en-US/**"
-    l10n = "{l}browser/extensions/webcompat-reporter/**"
-
-[[paths]]
-    reference = "browser/extensions/report-site-issue/locales/en-US/**"
-    l10n = "{l}browser/extensions/report-site-issue/**"
 
 [[paths]]
     reference = "services/sync/locales/en-US/**"
@@ -171,7 +154,7 @@ locales = [
 [[filters]]
     path = [
         "{l}browser/defines.inc",
-        "{l}browser/firefox-l10n.js",
+        "{l}browser/mypal-l10n.js",
     ]
     action = "ignore"
 

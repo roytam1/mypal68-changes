@@ -14,7 +14,7 @@
  */
 
 pref("keyword.enabled", false);
-pref("general.useragent.compatMode.firefox", false);
+pref("general.useragent.compatMode.firefox", true);
 
 // This pref exists only for testing purposes. In order to disable all
 // overrides by default, don't initialize UserAgentOverrides.jsm.
@@ -362,7 +362,7 @@ pref("media.wmf.use-nv12-format", true);
 pref("media.wmf.force.allow-p010-format", false);
 pref("media.wmf.disable-d3d11-for-dlls", "igd11dxva64.dll: 20.19.15.4463, 20.19.15.4454, 20.19.15.4444, 20.19.15.4416, 20.19.15.4404, 20.19.15.4390, 20.19.15.4380, 20.19.15.4377, 20.19.15.4364, 20.19.15.4360, 20.19.15.4352, 20.19.15.4331, 20.19.15.4326, 20.19.15.4300; igd10iumd32.dll: 20.19.15.4444, 20.19.15.4424, 20.19.15.4409, 20.19.15.4390, 20.19.15.4380, 20.19.15.4360, 10.18.10.4358, 20.19.15.4331, 20.19.15.4312, 20.19.15.4300, 10.18.15.4281, 10.18.15.4279, 10.18.10.4276, 10.18.15.4268, 10.18.15.4256, 10.18.10.4252, 10.18.15.4248, 10.18.14.4112, 10.18.10.3958, 10.18.10.3496, 10.18.10.3431, 10.18.10.3412, 10.18.10.3355, 9.18.10.3234, 9.18.10.3071, 9.18.10.3055, 9.18.10.3006; igd10umd32.dll: 9.17.10.4229, 9.17.10.3040, 9.17.10.2884, 9.17.10.2857, 8.15.10.2274, 8.15.10.2272, 8.15.10.2246, 8.15.10.1840, 8.15.10.1808; igd10umd64.dll: 9.17.10.4229, 9.17.10.2884, 9.17.10.2857, 10.18.10.3496; isonyvideoprocessor.dll: 4.1.2247.8090, 4.1.2153.6200; tosqep.dll: 1.2.15.526, 1.1.12.201, 1.0.11.318, 1.0.11.215, 1.0.10.1224; tosqep64.dll: 1.1.12.201, 1.0.11.215; nvwgf2um.dll: 22.21.13.8253, 22.21.13.8233, 22.21.13.8205, 22.21.13.8189, 22.21.13.8178, 22.21.13.8165, 21.21.13.7892, 21.21.13.7878, 21.21.13.7866, 21.21.13.7849, 21.21.13.7654, 21.21.13.7653, 21.21.13.7633, 21.21.13.7619, 21.21.13.7563, 21.21.13.7306, 21.21.13.7290, 21.21.13.7270, 21.21.13.7254, 21.21.13.6939, 21.21.13.6926, 21.21.13.6909, 21.21.13.4201, 21.21.13.4200, 10.18.13.6881, 10.18.13.6839, 10.18.13.6510, 10.18.13.6472, 10.18.13.6143, 10.18.13.5946, 10.18.13.5923, 10.18.13.5921, 10.18.13.5891, 10.18.13.5887, 10.18.13.5582, 10.18.13.5445, 10.18.13.5382, 10.18.13.5362, 9.18.13.4788, 9.18.13.4752, 9.18.13.4725, 9.18.13.4709, 9.18.13.4195, 9.18.13.4192, 9.18.13.4144, 9.18.13.4052, 9.18.13.3788, 9.18.13.3523, 9.18.13.3235, 9.18.13.3165, 9.18.13.2723, 9.18.13.2702, 9.18.13.1422, 9.18.13.1407, 9.18.13.1106, 9.18.13.546; atidxx32.dll: 21.19.151.3, 21.19.142.257, 21.19.137.514, 21.19.137.1, 21.19.134.1, 21.19.128.7, 21.19.128.4, 20.19.0.32837, 20.19.0.32832, 8.17.10.682, 8.17.10.671, 8.17.10.661, 8.17.10.648, 8.17.10.644, 8.17.10.625, 8.17.10.605, 8.17.10.581, 8.17.10.569, 8.17.10.560, 8.17.10.545, 8.17.10.539, 8.17.10.531, 8.17.10.525, 8.17.10.520, 8.17.10.519, 8.17.10.514, 8.17.10.511, 8.17.10.494, 8.17.10.489, 8.17.10.483, 8.17.10.453, 8.17.10.451, 8.17.10.441, 8.17.10.436, 8.17.10.432, 8.17.10.425, 8.17.10.418, 8.17.10.414, 8.17.10.401, 8.17.10.395, 8.17.10.385, 8.17.10.378, 8.17.10.362, 8.17.10.355, 8.17.10.342, 8.17.10.331, 8.17.10.318, 8.17.10.310, 8.17.10.286, 8.17.10.269, 8.17.10.261, 8.17.10.247, 8.17.10.240, 8.15.10.212; atidxx64.dll: 21.19.151.3, 21.19.142.257, 21.19.137.514, 21.19.137.1, 21.19.134.1, 21.19.128.7, 21.19.128.4, 20.19.0.32832, 8.17.10.682, 8.17.10.661, 8.17.10.644, 8.17.10.625; nvumdshim.dll: 10.18.13.6822");
 pref("media.wmf.disable-d3d9-for-dlls", "igdumd64.dll: 8.15.10.2189, 8.15.10.2119, 8.15.10.2104, 8.15.10.2102, 8.771.1.0; atiumd64.dll: 7.14.10.833, 7.14.10.867, 7.14.10.885, 7.14.10.903, 7.14.10.911, 8.14.10.768, 9.14.10.1001, 9.14.10.1017, 9.14.10.1080, 9.14.10.1128, 9.14.10.1162, 9.14.10.1171, 9.14.10.1183, 9.14.10.1197, 9.14.10.945, 9.14.10.972, 9.14.10.984, 9.14.10.996");
-pref("media.wmf.deblacklisting-for-telemetry-in-gpu-process", true);
+pref("media.wmf.deblacklisting-for-telemetry-in-gpu-process", false);
 pref("media.wmf.play-stand-alone", true);
 pref("media.wmf.use-sync-texture", true);
 #endif
@@ -391,7 +391,7 @@ pref("media.decoder-doctor.decode-warnings-allowed", "");
 // Whether we report partial failures.
 pref("media.decoder-doctor.verbose", false);
 // URL to report decode issues
-pref("media.decoder-doctor.new-issue-endpoint", "https://webcompat.com/issues/new");
+pref("media.decoder-doctor.new-issue-endpoint", "data:text/plain,");
 
 #if defined(NIGHTLY_BUILD) && defined(XP_WIN)
 pref("media.videocontrols.picture-in-picture.enabled", true);
@@ -628,7 +628,7 @@ pref("media.audiograph.single_thread.enabled", false);
 #ifdef MOZ_AV1
 #if defined(XP_WIN) && !defined(_ARM64_)
 pref("media.av1.enabled", true);
-pref("media.av1.use-dav1d", true);
+pref("media.av1.use-dav1d", false);
 #elif defined(XP_MACOSX)
 pref("media.av1.enabled", true);
 pref("media.av1.use-dav1d", true);
@@ -1073,14 +1073,14 @@ pref("toolkit.tabbox.switchByScrolling", false);
 
 // Telemetry settings.
 // Server to submit telemetry pings to.
-pref("toolkit.telemetry.server", "https://incoming.telemetry.mozilla.org");
+pref("toolkit.telemetry.server", "data:text/plain,");
 // Telemetry server owner. Please change if you set toolkit.telemetry.server to a different server
 pref("toolkit.telemetry.server_owner", "Mozilla");
 // Determines whether full SQL strings are returned when they might contain sensitive info
 // i.e. dynamically constructed SQL strings or SQL executed by addons against addon DBs
 pref("toolkit.telemetry.debugSlowSql", false);
 // Whether to use the unified telemetry behavior, requires a restart.
-pref("toolkit.telemetry.unified", true);
+pref("toolkit.telemetry.unified", false);
 // AsyncShutdown delay before crashing in case of shutdown freeze
 #ifndef MOZ_ASAN
 pref("toolkit.asyncshutdown.crash_timeout", 60000); // 1 minute
@@ -2730,7 +2730,7 @@ pref("security.strict_security_checks.enabled", false);
 
 // Remote settings preferences
 pref("services.settings.poll_interval", 86400); // 24H
-pref("services.settings.server", "https://firefox.settings.services.mozilla.com/v1");
+pref("services.settings.server", "data:text/plain,");
 pref("services.settings.default_bucket", "main");
 
 // The percentage of clients who will report uptake telemetry as
@@ -2744,20 +2744,20 @@ pref("services.settings.security.onecrl.collection", "onecrl");
 pref("services.settings.security.onecrl.signer", "onecrl.content-signature.mozilla.org");
 pref("services.settings.security.onecrl.checked", 0);
 
-pref("extensions.abuseReport.enabled", true);
-pref("extensions.abuseReport.url", "https://addons.mozilla.org/api/v4/abuse/report/addon/");
+pref("extensions.abuseReport.enabled", false);
+pref("extensions.abuseReport.url", "data:text/plain,");
 
 // Blocklist preferences
-pref("extensions.blocklist.enabled", true);
+pref("extensions.blocklist.enabled", false);
 // OneCRL freshness checking depends on this value, so if you change it,
 // please also update security.onecrl.maximum_staleness_in_seconds.
 pref("extensions.blocklist.interval", 86400);
 // Required blocklist freshness for OneCRL OCSP bypass
 // (default is 1.25x extensions.blocklist.interval, or 30 hours)
 pref("security.onecrl.maximum_staleness_in_seconds", 108000);
-pref("extensions.blocklist.url", "https://blocklists.settings.services.mozilla.com/v1/blocklist/3/%APP_ID%/%APP_VERSION%/%PRODUCT%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/%DISTRIBUTION%/%DISTRIBUTION_VERSION%/%PING_COUNT%/%TOTAL_PING_COUNT%/%DAYS_SINCE_LAST_PING%/");
-pref("extensions.blocklist.detailsURL", "https://blocked.cdn.mozilla.net/");
-pref("extensions.blocklist.itemURL", "https://blocked.cdn.mozilla.net/%blockID%.html");
+pref("extensions.blocklist.url", "data:text/plain,");
+pref("extensions.blocklist.detailsURL", "data:text/plain,");
+pref("extensions.blocklist.itemURL", "data:text/plain,");
 // Controls what level the blocklist switches from warning about items to forcibly
 // blocking them.
 pref("extensions.blocklist.level", 2);
@@ -5143,7 +5143,7 @@ pref("layers.shared-buffer-provider.enabled", true);
 pref("layers.force-active", false);
 
 // Enable/Disable the geolocation API for content
-pref("geo.enabled", true);
+pref("geo.enabled", false);
 
 // Timeout for outbound network geolocation provider XHR
 pref("geo.wifi.xhr.timeout", 60000);
@@ -5218,9 +5218,9 @@ pref("extensions.recommendations.themeRecommendationUrl", "");
 // Note that on enabling the button in other release channels, make sure to
 // disable it in problematic tests, see disableNonReleaseActions() inside
 // browser/modules/test/browser/head.js
-pref("extensions.webcompat-reporter.newIssueEndpoint", "https://webcompat.com/issues/new");
+pref("extensions.webcompat-reporter.newIssueEndpoint", "data:text/plain,");
 #if MOZ_UPDATE_CHANNEL != release && MOZ_UPDATE_CHANNEL != esr
-pref("extensions.webcompat-reporter.enabled", true);
+pref("extensions.webcompat-reporter.enabled", false);
 #else
 pref("extensions.webcompat-reporter.enabled", false);
 #endif
@@ -5548,9 +5548,9 @@ pref("network.connectivity-service.IPv6.url", "http://detectportal.firefox.com/s
 // 0 - default off, 1 - race, 2 TRR first, 3 TRR only, 4 shadow, 5 off by choice
 pref("network.trr.mode", 0);
 // DNS-over-HTTP service to use, must be HTTPS://
-pref("network.trr.uri", "https://mozilla.cloudflare-dns.com/dns-query");
+pref("network.trr.uri", "data:text/plain,");
 // DNS-over-HTTP service options, must be HTTPS://
-pref("network.trr.resolvers", "[{ \"name\": \"Cloudflare\", \"url\": \"https://mozilla.cloudflare-dns.com/dns-query\" }]");
+pref("network.trr.resolvers", "[{ \"name\": \"Cloudflare\", \"url\": \"data:text/plain,\" }]");
 // credentials to pass to DOH end-point
 pref("network.trr.credentials", "");
 pref("network.trr.custom_uri", "");
@@ -5665,10 +5665,10 @@ pref("browser.safebrowsing.id", "Firefox");
 #endif
 
 // Download protection
-pref("browser.safebrowsing.downloads.enabled", true);
-pref("browser.safebrowsing.downloads.remote.enabled", true);
+pref("browser.safebrowsing.downloads.enabled", false);
+pref("browser.safebrowsing.downloads.remote.enabled", false);
 pref("browser.safebrowsing.downloads.remote.timeout_ms", 15000);
-pref("browser.safebrowsing.downloads.remote.url", "https://sb-ssl.google.com/safebrowsing/clientreport/download?key=%GOOGLE_SAFEBROWSING_API_KEY%");
+pref("browser.safebrowsing.downloads.remote.url", "");
 pref("browser.safebrowsing.downloads.remote.block_dangerous",            true);
 pref("browser.safebrowsing.downloads.remote.block_dangerous_host",       true);
 pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", true);
@@ -5676,35 +5676,35 @@ pref("browser.safebrowsing.downloads.remote.block_uncommon",             true);
 
 // Google Safe Browsing provider (legacy)
 pref("browser.safebrowsing.provider.google.pver", "2.2");
-pref("browser.safebrowsing.provider.google.lists", "goog-badbinurl-shavar,goog-downloadwhite-digest256,goog-phish-shavar,googpub-phish-shavar,goog-malware-shavar,goog-unwanted-shavar");
-pref("browser.safebrowsing.provider.google.updateURL", "https://safebrowsing.google.com/safebrowsing/downloads?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2&key=%GOOGLE_SAFEBROWSING_API_KEY%");
-pref("browser.safebrowsing.provider.google.gethashURL", "https://safebrowsing.google.com/safebrowsing/gethash?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2");
-pref("browser.safebrowsing.provider.google.reportURL", "https://safebrowsing.google.com/safebrowsing/diagnostic?client=%NAME%&hl=%LOCALE%&site=");
-pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "https://%LOCALE%.phish-error.mozilla.com/?hl=%LOCALE%&url=");
-pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "https://%LOCALE%.malware-error.mozilla.com/?hl=%LOCALE%&url=");
-pref("browser.safebrowsing.provider.google.advisoryURL", "https://developers.google.com/safe-browsing/v4/advisory");
-pref("browser.safebrowsing.provider.google.advisoryName", "Google Safe Browsing");
+pref("browser.safebrowsing.provider.google.lists", "");
+pref("browser.safebrowsing.provider.google.updateURL", "");
+pref("browser.safebrowsing.provider.google.gethashURL", "");
+pref("browser.safebrowsing.provider.google.reportURL", "");
+pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "");
+pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "");
+pref("browser.safebrowsing.provider.google.advisoryURL", "");
+pref("browser.safebrowsing.provider.google.advisoryName", "");
 
 // Google Safe Browsing provider
 pref("browser.safebrowsing.provider.google4.pver", "4");
-pref("browser.safebrowsing.provider.google4.lists", "goog-badbinurl-proto,goog-downloadwhite-proto,goog-phish-proto,googpub-phish-proto,goog-malware-proto,goog-unwanted-proto,goog-harmful-proto,goog-passwordwhite-proto");
-pref("browser.safebrowsing.provider.google4.updateURL", "https://safebrowsing.googleapis.com/v4/threatListUpdates:fetch?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST");
-pref("browser.safebrowsing.provider.google4.gethashURL", "https://safebrowsing.googleapis.com/v4/fullHashes:find?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST");
-pref("browser.safebrowsing.provider.google4.reportURL", "https://safebrowsing.google.com/safebrowsing/diagnostic?client=%NAME%&hl=%LOCALE%&site=");
-pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "https://%LOCALE%.phish-error.mozilla.com/?hl=%LOCALE%&url=");
-pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "https://%LOCALE%.malware-error.mozilla.com/?hl=%LOCALE%&url=");
-pref("browser.safebrowsing.provider.google4.advisoryURL", "https://developers.google.com/safe-browsing/v4/advisory");
-pref("browser.safebrowsing.provider.google4.advisoryName", "Google Safe Browsing");
-pref("browser.safebrowsing.provider.google4.dataSharingURL", "https://safebrowsing.googleapis.com/v4/threatHits?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST");
+pref("browser.safebrowsing.provider.google4.lists", "");
+pref("browser.safebrowsing.provider.google4.updateURL", "");
+pref("browser.safebrowsing.provider.google4.gethashURL", "");
+pref("browser.safebrowsing.provider.google4.reportURL", "");
+pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "");
+pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "");
+pref("browser.safebrowsing.provider.google4.advisoryURL", "");
+pref("browser.safebrowsing.provider.google4.advisoryName", "");
+pref("browser.safebrowsing.provider.google4.dataSharingURL", "");
 pref("browser.safebrowsing.provider.google4.dataSharing.enabled", false);
 
-pref("browser.safebrowsing.reportPhishURL", "https://%LOCALE%.phish-report.mozilla.com/?hl=%LOCALE%&url=");
+pref("browser.safebrowsing.reportPhishURL", "");
 
 // Mozilla Safe Browsing provider (for tracking protection and plugin blocking)
 pref("browser.safebrowsing.provider.mozilla.pver", "2.2");
-pref("browser.safebrowsing.provider.mozilla.lists", "base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,block-flash-digest256,except-flash-digest256,allow-flashallow-digest256,except-flashallow-digest256,block-flashsubdoc-digest256,except-flashsubdoc-digest256,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256");
-pref("browser.safebrowsing.provider.mozilla.updateURL", "https://shavar.services.mozilla.com/downloads?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2");
-pref("browser.safebrowsing.provider.mozilla.gethashURL", "https://shavar.services.mozilla.com/gethash?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2");
+pref("browser.safebrowsing.provider.mozilla.lists", "");
+pref("browser.safebrowsing.provider.mozilla.updateURL", "");
+pref("browser.safebrowsing.provider.mozilla.gethashURL", "");
 // Set to a date in the past to force immediate download in new profiles.
 pref("browser.safebrowsing.provider.mozilla.nextupdatetime", "1");
 // Block lists for tracking protection. The name values will be used as the keys
@@ -5730,9 +5730,9 @@ pref("snav.enabled", false);
 pref("dom.wakelock.enabled", false);
 
 // The URL of the Firefox Accounts auth server backend
-pref("identity.fxaccounts.auth.uri", "https://api.accounts.firefox.com/v1");
+pref("identity.fxaccounts.auth.uri", "");
 
-pref("beacon.enabled", true);
+pref("beacon.enabled", false);
 
 // UDPSocket API
 pref("dom.udpsocket.enabled", false);
@@ -5768,14 +5768,14 @@ pref("dom.visualviewport.enabled", false);
 
 // Search service settings
 pref("browser.search.log", false);
-pref("browser.search.update", true);
+pref("browser.search.update", false);
 pref("browser.search.update.log", false);
 pref("browser.search.update.interval", 21600);
-pref("browser.search.suggest.enabled", true);
+pref("browser.search.suggest.enabled", false);
 pref("browser.search.reset.enabled", false);
 pref("browser.search.reset.whitelist", "");
 pref("browser.search.geoSpecificDefaults", false);
-pref("browser.search.geoip.url", "https://location.services.mozilla.com/v1/country?key=%MOZILLA_API_KEY%");
+pref("browser.search.geoip.url", "");
 pref("browser.search.geoip.timeout", 3000);
 
 #ifdef MOZ_OFFICIAL_BRANDING
@@ -5789,7 +5789,7 @@ pref("browser.search.official", true);
 //pref("media.gmp-manager.url.override", "");
 
 // Update service URL for GMP install/updates:
-pref("media.gmp-manager.url", "https://aus5.mozilla.org/update/3/GMP/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/%DISTRIBUTION%/%DISTRIBUTION_VERSION%/update.xml");
+pref("media.gmp-manager.url", "");
 
 // When |media.gmp-manager.cert.requireBuiltIn| is true or not specified the
 // final certificate and all certificates the connection is redirected to before
@@ -5813,11 +5813,11 @@ pref("media.gmp-manager.cert.requireBuiltIn", true);
 // the |media.gmp-manager.url.override| preference should ONLY be used for testing.
 // IMPORTANT! app.update.certs.* prefs should also be updated if these
 // are updated.
-pref("media.gmp-manager.cert.checkAttributes", true);
+pref("media.gmp-manager.cert.checkAttributes", false);
 pref("media.gmp-manager.certs.1.issuerName", "CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US");
-pref("media.gmp-manager.certs.1.commonName", "aus5.mozilla.org");
+pref("media.gmp-manager.certs.1.commonName", "");
 pref("media.gmp-manager.certs.2.issuerName", "CN=thawte SSL CA - G2,O=\"thawte, Inc.\",C=US");
-pref("media.gmp-manager.certs.2.commonName", "aus5.mozilla.org");
+pref("media.gmp-manager.certs.2.commonName", "");
 
 // Whether or not to perform reader mode article parsing on page load.
 // If this pref is disabled, we will never show a reader mode icon in the toolbar.
@@ -5898,8 +5898,8 @@ pref("webextensions.tests", false);
 // 16MB default non-parseable upload limit for requestBody.raw.bytes
 pref("webextensions.webRequest.requestBodyMaxRawBytes", 16777216);
 
-pref("webextensions.storage.sync.enabled", true);
-pref("webextensions.storage.sync.serverURL", "https://webextensions.settings.services.mozilla.com/v1");
+pref("webextensions.storage.sync.enabled", false);
+pref("webextensions.storage.sync.serverURL", "");
 
 // Allow customization of the fallback directory for file uploads
 pref("dom.input.fallbackUploadDir", "");
@@ -5980,7 +5980,7 @@ pref("dom.payments.defaults.saveAddress", true);
 pref("dom.payments.request.supportedRegions", "US,CA");
 
 #ifdef MOZ_ASAN_REPORTER
-pref("asanreporter.apiurl", "https://anf1.fuzzing.mozilla.org/crashproxy/submit/");
+pref("asanreporter.apiurl", "");
 pref("asanreporter.clientid", "unknown");
 pref("toolkit.telemetry.overrideUpdateChannel", "nightly-asan");
 #endif

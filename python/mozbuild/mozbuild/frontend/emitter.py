@@ -1082,10 +1082,9 @@ class TreeMetadataEmitter(LoggingMixin):
                         'Path specified in DEFFILE does not exist: %s '
                         '(resolved to %s)' % (deffile,
                         deffile.full_path), context)
-                path = mozpath.relpath(deffile.full_path, context.objdir)
             else:
                 path = deffile.target_basename
-
+            path = deffile.full_path
             # We don't have any better way to indicate that the def file
             # is a dependency to whatever we're building beyond stuffing
             # it into EXTRA_DEPS.

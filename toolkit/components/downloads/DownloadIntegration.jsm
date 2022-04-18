@@ -119,13 +119,6 @@ XPCOMUtils.defineLazyGetter(this, "gParentalControlsService", function() {
   return null;
 });
 
-XPCOMUtils.defineLazyServiceGetter(
-  this,
-  "gApplicationReputationService",
-  "@mozilla.org/reputationservice/application-reputation-service;1",
-  Ci.nsIApplicationReputationService
-);
-
 // We have to use the gCombinedDownloadIntegration identifier because, in this
 // module only, the DownloadIntegration identifier refers to the base version.
 /* global gCombinedDownloadIntegration:false */
@@ -168,20 +161,6 @@ const kObserverTopics = [
   "network:offline-status-changed",
   "xpcom-will-shutdown",
 ];
-
-/**
- * Maps nsIApplicationReputationService verdicts with the DownloadError ones.
- */
-const kVerdictMap = {
-  [Ci.nsIApplicationReputationService.VERDICT_DANGEROUS]:
-    Downloads.Error.BLOCK_VERDICT_MALWARE,
-  [Ci.nsIApplicationReputationService.VERDICT_UNCOMMON]:
-    Downloads.Error.BLOCK_VERDICT_UNCOMMON,
-  [Ci.nsIApplicationReputationService.VERDICT_POTENTIALLY_UNWANTED]:
-    Downloads.Error.BLOCK_VERDICT_POTENTIALLY_UNWANTED,
-  [Ci.nsIApplicationReputationService.VERDICT_DANGEROUS_HOST]:
-    Downloads.Error.BLOCK_VERDICT_MALWARE,
-};
 
 /**
  * Provides functions to integrate with the host application, handling for
@@ -495,23 +474,6 @@ var DownloadIntegration = {
       if (aDownload.source.referrer) {
         aReferrer = NetUtil.newURI(aDownload.source.referrer);
       }
-      gApplicationReputationService.queryReputation(
-        {
-          sourceURI: NetUtil.newURI(aDownload.source.url),
-          referrerURI: aReferrer,
-          fileSize: aDownload.currentBytes,
-          sha256Hash: hash,
-          suggestedFileName: OS.Path.basename(aDownload.target.path),
-          signatureInfo: sigInfo,
-          redirects: channelRedirects,
-        },
-        function onComplete(aShouldBlock, aRv, aVerdict) {
-          resolve({
-            shouldBlock: aShouldBlock,
-            verdict: (aShouldBlock && kVerdictMap[aVerdict]) || "",
-          });
-        }
-      );
     });
   },
 

@@ -889,27 +889,6 @@ class NetErrorChild extends ActorChild {
     this.mm.sendAsyncMessage("Browser:ResetSSLPreferences");
   }
 
-  onSetAutomatic(evt) {
-    this.mm.sendAsyncMessage("Browser:SetSSLErrorReportAuto", {
-      automatic: evt.detail,
-    });
-
-    // If we're enabling reports, send a report for this failure.
-    if (evt.detail) {
-      let win = evt.originalTarget.ownerGlobal;
-      let docShell = win.docShell;
-
-      let { securityInfo } = docShell.failedChannel;
-      securityInfo.QueryInterface(Ci.nsITransportSecurityInfo);
-      let { host, port } = win.document.mozDocumentURIIfNotForErrorPages;
-
-      let errorReporter = Cc["@mozilla.org/securityreporter;1"].getService(
-        Ci.nsISecurityReporter
-      );
-      errorReporter.reportTLSError(securityInfo, host, port);
-    }
-  }
-
   onCertError(target, win) {
     this.mm.sendAsyncMessage("Browser:CertExceptionError", {
       frameId: WebNavigationFrames.getFrameId(win),

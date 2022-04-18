@@ -30,7 +30,7 @@
 
 #if defined(MOZ_LAUNCHER_PROCESS)
 #  include "mozilla/LauncherRegistryInfo.h"
-#  include "SameBinary.h"
+//#  include "SameBinary.h"
 #endif  // defined(MOZ_LAUNCHER_PROCESS)
 
 /**
@@ -124,14 +124,14 @@ static bool DoLauncherProcessChecks(int& argc, wchar_t** argv) {
   // variables.
   bool result = false;
 
-#if defined(MOZ_LAUNCHER_PROCESS)
+/*#if defined(MOZ_LAUNCHER_PROCESS)
   mozilla::LauncherResult<bool> isSame = mozilla::IsSameBinaryAsParentProcess();
   if (isSame.isOk()) {
     result = !isSame.unwrap();
   } else {
     HandleLauncherError(isSame.unwrapErr());
   }
-#endif  // defined(MOZ_LAUNCHER_PROCESS)
+#endif  // defined(MOZ_LAUNCHER_PROCESS)*/
 
   if (mozilla::EnvHasValue("MOZ_LAUNCHER_PROCESS")) {
     mozilla::SaveToEnv("MOZ_LAUNCHER_PROCESS=");
@@ -289,8 +289,8 @@ Maybe<int> LauncherMain(int& argc, wchar_t* argv[],
 
   DWORD creationFlags = CREATE_SUSPENDED | CREATE_UNICODE_ENVIRONMENT;
 
-  STARTUPINFOEXW siex;
-  LauncherResult<bool> attrsOk = attrs.AssignTo(siex);
+  STARTUPINFOW si;
+  LauncherResult<bool> attrsOk = attrs.AssignTo(si);
   if (attrsOk.isErr()) {
     HandleLauncherError(attrsOk);
     return Nothing();
@@ -299,13 +299,13 @@ Maybe<int> LauncherMain(int& argc, wchar_t* argv[],
   BOOL inheritHandles = FALSE;
 
   if (attrsOk.unwrap()) {
-    creationFlags |= EXTENDED_STARTUPINFO_PRESENT;
+    //creationFlags |= EXTENDED_STARTUPINFO_PRESENT;
 
     if (attrs.HasInheritableHandles()) {
-      siex.StartupInfo.dwFlags |= STARTF_USESTDHANDLES;
-      siex.StartupInfo.hStdInput = stdHandles[0];
-      siex.StartupInfo.hStdOutput = stdHandles[1];
-      siex.StartupInfo.hStdError = stdHandles[2];
+      si.dwFlags |= STARTF_USESTDHANDLES;
+      si.hStdInput = stdHandles[0];
+      si.hStdOutput = stdHandles[1];
+      si.hStdError = stdHandles[2];
 
       // Since attrsOk == true, we have successfully set the handle inheritance
       // whitelist policy, so only the handles added to attrs will be inherited.
@@ -320,11 +320,11 @@ Maybe<int> LauncherMain(int& argc, wchar_t* argv[],
     createOk =
         ::CreateProcessAsUserW(mediumIlToken.get(), argv[0], cmdLine.get(),
                                nullptr, nullptr, inheritHandles, creationFlags,
-                               nullptr, nullptr, &siex.StartupInfo, &pi);
+                               nullptr, nullptr, &si, &pi);
   } else {
     createOk = ::CreateProcessW(argv[0], cmdLine.get(), nullptr, nullptr,
                                 inheritHandles, creationFlags, nullptr, nullptr,
-                                &siex.StartupInfo, &pi);
+                                &si, &pi);
   }
 
   if (!createOk) {

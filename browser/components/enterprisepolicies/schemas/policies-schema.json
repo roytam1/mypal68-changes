@@ -267,10 +267,6 @@
       "type": "boolean"
     },
 
-    "DisablePocket": {
-      "type": "boolean"
-    },
-
     "DisablePrivateBrowsing": {
       "type": "boolean"
     },
@@ -485,9 +481,6 @@
           "type": "boolean"
         },
         "Highlights": {
-          "type": "boolean"
-        },
-        "Pocket": {
           "type": "boolean"
         },
         "Snippets": {

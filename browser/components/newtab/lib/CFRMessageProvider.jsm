@@ -38,13 +38,7 @@ const REDDIT_ENHANCEMENT_PARAMS = {
   min_frecency: 10000,
 };
 const PINNED_TABS_TARGET_SITES = [
-  "docs.google.com", "www.docs.google.com", "calendar.google.com",
-  "messenger.com", "www.messenger.com", "web.whatsapp.com", "mail.google.com",
-  "outlook.live.com", "facebook.com", "www.facebook.com", "twitter.com", "www.twitter.com",
-  "reddit.com", "www.reddit.com", "github.com", "www.github.com", "youtube.com", "www.youtube.com",
-  "feedly.com", "www.feedly.com", "drive.google.com", "amazon.com", "www.amazon.com",
-  "messages.android.com", "amazon.ca", "www.amazon.ca", "amazon.com.au", "www.amazon.com.au",
-  "amazon.co.uk", "www.amazon.co.uk", "amazon.fr", "www.amazon.fr", "amazon.de", "www.amazon.de",
+  "reddit.com", "www.reddit.com", "github.com", "www.github.com",
 ];
 const PINNED_TABS_TARGET_LOCALES = ["en-US", "en-CA", "en-AU", "en-GB", "en-ZA", "en-NZ", "fr", "de"];
 

@@ -998,7 +998,7 @@ Function createInstall
     StrCpy $ExistingBuildID "0"
   ${EndIf}
 
-  ${If} ${FileExists} "$LOCALAPPDATA\Mozilla\Firefox"
+  ${If} ${FileExists} "$LOCALAPPDATA\Mypal68"
     StrCpy $ExistingProfile "1"
   ${Else}
     StrCpy $ExistingProfile "0"
@@ -1846,8 +1846,8 @@ Function CopyPostSigningData
     ClearErrors
     StrCpy $PostSigningData "0"
   ${Else}
-    CreateDirectory "$LOCALAPPDATA\Mozilla\Firefox"
-    CopyFiles /SILENT "$EXEDIR\postSigningData" "$LOCALAPPDATA\Mozilla\Firefox"
+    CreateDirectory "$LOCALAPPDATA\Mypal68"
+    CopyFiles /SILENT "$EXEDIR\postSigningData" "$LOCALAPPDATA\Mypal68"
   ${Endif}
 FunctionEnd
 
@@ -1901,11 +1901,11 @@ Function ShouldPromptForProfileCleanup
   StrCpy $R0 ""
   ; First look for an install-specific profile, which might be listed as
   ; either a relative or an absolute path (installs.ini doesn't say which).
-  ${If} ${FileExists} "$APPDATA\Mozilla\Firefox\installs.ini"
+  ${If} ${FileExists} "$APPDATA\Mypal68\installs.ini"
     ClearErrors
-    ReadINIStr $1 "$APPDATA\Mozilla\Firefox\installs.ini" "$AppUserModelID" "Default"
+    ReadINIStr $1 "$APPDATA\Mypal68\installs.ini" "$AppUserModelID" "Default"
     ${IfNot} ${Errors}
-      ${GetLongPath} "$APPDATA\Mozilla\Firefox\$1" $2
+      ${GetLongPath} "$APPDATA\Mypal68\$1" $2
       ${If} ${FileExists} $2
         StrCpy $R0 $2
       ${Else}
@@ -1924,21 +1924,21 @@ Function ShouldPromptForProfileCleanup
     ${Do}
       ClearErrors
       ; Check if the section exists by reading a value that must be present.
-      ReadINIStr $1 "$APPDATA\Mozilla\Firefox\profiles.ini" "Profile$0" "Path"
+      ReadINIStr $1 "$APPDATA\Mypal68\profiles.ini" "Profile$0" "Path"
       ${If} ${Errors}
         ; We've run out of profile sections.
         ${Break}
       ${EndIf}
 
       ClearErrors
-      ReadINIStr $1 "$APPDATA\Mozilla\Firefox\profiles.ini" "Profile$0" "Default"
+      ReadINIStr $1 "$APPDATA\Mypal68\profiles.ini" "Profile$0" "Default"
       ${IfNot} ${Errors}
       ${AndIf} $1 == "1"
         ; We've found the default profile
-        ReadINIStr $1 "$APPDATA\Mozilla\Firefox\profiles.ini" "Profile$0" "Path"
-        ReadINIStr $2 "$APPDATA\Mozilla\Firefox\profiles.ini" "Profile$0" "IsRelative"
+        ReadINIStr $1 "$APPDATA\Mypal68\profiles.ini" "Profile$0" "Path"
+        ReadINIStr $2 "$APPDATA\Mypal68\profiles.ini" "Profile$0" "IsRelative"
         ${If} $2 == "1"
-          StrCpy $R0 "$APPDATA\Mozilla\Firefox\$1"
+          StrCpy $R0 "$APPDATA\Mypal68\$1"
         ${Else}
           StrCpy $R0 "$1"
         ${EndIf}

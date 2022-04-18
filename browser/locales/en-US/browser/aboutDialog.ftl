@@ -29,23 +29,13 @@ update-otherInstanceHandlingUpdates = { -brand-short-name } is being updated by 
 
 update-manual = Updates available at <label data-l10n-name="manual-link"/>
 
-update-unsupported = You can not perform further updates on this system. <label data-l10n-name="unsupported-link">Learn more</label>
-
 update-restarting = Restarting…
 
-channel-description = You are currently on the <label data-l10n-name="current-channel"></label> update channel.
-
-warningDesc-version = { -brand-short-name } is experimental and may be unstable.
-
-community-exp = <label data-l10n-name="community-exp-mozillaLink">{ -vendor-short-name }</label> is a <label data-l10n-name="community-exp-creditsLink">global community</label> working together to keep the Web open, public and accessible to all.
-
-community-2 = { -brand-short-name } is designed by <label data-l10n-name="community-mozillaLink">{ -vendor-short-name }</label>, a <label data-l10n-name="community-creditsLink">global community</label> working together to keep the Web open, public and accessible to all.
-
-helpus = Want to help? <label data-l10n-name="helpus-donateLink">Make a donation</label> or <label data-l10n-name="helpus-getInvolvedLink">get involved!</label>
+community-2 = { -brand-short-name } is based on Mozilla Firefox adapted for winxp\win2003.
 
 bottomLinks-license = Licensing Information
 bottomLinks-rights = End-User Rights
-bottomLinks-privacy = Privacy Policy
+bottomLinks-privacy = Build Configuration
 
 # Example of resulting string: 66.0.1 (64-bit)
 # Variables:

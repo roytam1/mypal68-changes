@@ -472,11 +472,6 @@ class nsHttpChannel final : public HttpBaseChannel,
   MOZ_MUST_USE nsresult
   ProcessContentSignatureHeader(nsHttpResponseHead* aResponseHead);
 
-  /**
-   * A function that will, if the feature is enabled, send security reports.
-   */
-  void ProcessSecurityReport(nsresult status);
-
   nsresult GetResponseCrossOriginPolicy(
       nsILoadInfo::CrossOriginPolicy* aResponseCrossOriginPolicy);
   nsresult ProcessCrossOriginHeader();

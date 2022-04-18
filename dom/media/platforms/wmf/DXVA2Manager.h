@@ -33,7 +33,7 @@ class DXVA2Manager {
   // device we're using for hardware accelerated video decoding. If we're using
   // D3D9Ex, this is an IDirect3DDeviceManager9. For D3D11 this is an
   // IMFDXGIDeviceManager. It is safe to call this on any thread.
-  virtual IUnknown* GetDXVADeviceManager() = 0;
+  //virtual IUnknown* GetDXVADeviceManager() = 0;
 
   // Creates an Image for the video frame stored in aVideoSample.
   virtual HRESULT CopyToImage(IMFSample* aVideoSample,

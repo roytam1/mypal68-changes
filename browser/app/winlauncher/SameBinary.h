@@ -35,10 +35,10 @@ static inline mozilla::LauncherResult<bool> IsSameBinaryAsParentProcess() {
   // path, which may exceed MAX_PATH.
   WCHAR parentExe[(MAX_PATH * 2) + 1] = {};
   DWORD parentExeLen = mozilla::ArrayLength(parentExe);
-  if (!::QueryFullProcessImageNameW(parentProcess.get(), PROCESS_NAME_NATIVE,
+ /* if (!::QueryFullProcessImageNameW(parentProcess.get(), PROCESS_NAME_NATIVE,
                                     parentExe, &parentExeLen)) {
     return LAUNCHER_ERROR_FROM_LAST();
-  }
+  }*/
 
   WCHAR ourExe[MAX_PATH + 1] = {};
   DWORD ourExeOk =

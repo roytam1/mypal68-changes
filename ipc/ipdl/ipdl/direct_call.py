@@ -40,8 +40,6 @@ DIRECT_CALL_OVERRIDES = {
     ("PGMPVideoEncoder", "child"): ("GMPVideoEncoderChild", "GMPVideoEncoderChild.h"),
     ("PGMPVideoDecoder", "child"): ("GMPVideoDecoderChild", "GMPVideoDecoderChild.h"),
 
-    ("PLoginReputation", "parent"): ("LoginReputationParent", "mozilla/LoginReputationIPC.h"),
-
     ("PMedia", "child"): ("Child", "mozilla/media/MediaChild.h"),
 
     ("PPresentationRequest", "child"): (
@@ -582,7 +580,6 @@ VIRTUAL_CALL_CLASSES = set([
     ("PWebRenderBridge", "parent"),
 
     # Not actually subclassed
-    ("PLoginReputation", "child"),
     ("PPluginSurface", "child"),
     ("PTestShellCommand", "child"),
 

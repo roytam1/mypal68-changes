@@ -19,6 +19,10 @@
 #include "nsITabSource.h"
 #include "prenv.h"
 
+#ifdef XP_WIN
+#include "mozilla/WindowsVersion.h"
+#endif
+
 static mozilla::LazyLogModule sGetUserMediaLog("GetUserMedia");
 #undef LOG
 #define LOG(args) MOZ_LOG(sGetUserMediaLog, mozilla::LogLevel::Debug, args)

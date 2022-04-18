@@ -83,17 +83,13 @@ struct Mutex {
 // Ideally, we'd use the same type of locks everywhere, but SRWLocks
 // everywhere incur a performance penalty. See bug 1418389.
 #if defined(XP_WIN)
-struct StaticMutex {
-  SRWLOCK mMutex;
+/*struct StaticMutex {
+  CRITICAL_SECTION mMutex;
 
-  inline void Lock() { AcquireSRWLockExclusive(&mMutex); }
+  inline void Lock() { EnterCriticalSection(&mMutex); }
 
-  inline void Unlock() { ReleaseSRWLockExclusive(&mMutex); }
-};
-
-// Normally, we'd use a constexpr constructor, but MSVC likes to create
-// static initializers anyways.
-#  define STATIC_MUTEX_INIT SRWLOCK_INIT
+  inline void Unlock() { LeaveCriticalSection(&mMutex); }
+};*/
 
 #else
 typedef Mutex StaticMutex;

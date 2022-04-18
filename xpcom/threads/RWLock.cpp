@@ -7,9 +7,9 @@
 #ifdef XP_WIN
 #  include <windows.h>
 
-static_assert(sizeof(SRWLOCK) <= sizeof(void*), "SRWLOCK is too big!");
+/*static_assert(sizeof(SRWLOCK) <= sizeof(void*), "SRWLOCK is too big!");
 
-#  define NativeHandle(m) (reinterpret_cast<SRWLOCK*>(&m))
+#  define NativeHandle(m) (reinterpret_cast<SRWLOCK*>(&m))*/
 #else
 #  define NativeHandle(m) (&m)
 #endif
@@ -18,35 +18,45 @@ namespace mozilla {
 
 RWLock::RWLock(const char* aName)
     : BlockingResourceBase(aName, eMutex)
-#ifdef DEBUG
+//#ifdef DEBUG
       ,
       mOwningThread(nullptr)
-#endif
+//#endif
 {
 #ifdef XP_WIN
-  InitializeSRWLock(NativeHandle(mRWLock));
+  HMODULE hModule = LoadLibraryW(L"NTDLL.DLL");
+
+  Initialize = GetProcAddress(hModule, "RtlInitializeResource");
+  Delete = GetProcAddress(hModule, "RtlDeleteResource");
+  AcquireExclusive = GetProcAddress(hModule, "RtlAcquireResourceExclusive");
+  AcquireShared = GetProcAddress(hModule, "RtlAcquireResourceShared");
+  Release = GetProcAddress(hModule, "RtlReleaseResource");
+  FreeModule(hModule);
+  MOZ_RELEASE_ASSERT(Initialize,
+                     "RtlInitializeResource failed");
 #else
   MOZ_RELEASE_ASSERT(pthread_rwlock_init(NativeHandle(mRWLock), nullptr) == 0,
                      "pthread_rwlock_init failed");
 #endif
 }
 
-#ifdef DEBUG
+//#ifdef DEBUG
 bool RWLock::LockedForWritingByCurrentThread() {
   return mOwningThread == PR_GetCurrentThread();
 }
-#endif
+//#endif
 
-#ifndef XP_WIN
 RWLock::~RWLock() {
+#ifndef XP_WIN
   MOZ_RELEASE_ASSERT(pthread_rwlock_destroy(NativeHandle(mRWLock)) == 0,
                      "pthread_rwlock_destroy failed");
-}
 #endif
+}
+
 
 void RWLock::ReadLockInternal() {
 #ifdef XP_WIN
-  AcquireSRWLockShared(NativeHandle(mRWLock));
+//  AcquireSRWLockShared(NativeHandle(mRWLock));
 #else
   MOZ_RELEASE_ASSERT(pthread_rwlock_rdlock(NativeHandle(mRWLock)) == 0,
                      "pthread_rwlock_rdlock failed");
@@ -55,7 +65,7 @@ void RWLock::ReadLockInternal() {
 
 void RWLock::ReadUnlockInternal() {
 #ifdef XP_WIN
-  ReleaseSRWLockShared(NativeHandle(mRWLock));
+//  ReleaseSRWLockShared(NativeHandle(mRWLock));
 #else
   MOZ_RELEASE_ASSERT(pthread_rwlock_unlock(NativeHandle(mRWLock)) == 0,
                      "pthread_rwlock_unlock failed");
@@ -64,7 +74,7 @@ void RWLock::ReadUnlockInternal() {
 
 void RWLock::WriteLockInternal() {
 #ifdef XP_WIN
-  AcquireSRWLockExclusive(NativeHandle(mRWLock));
+//  AcquireSRWLockExclusive(NativeHandle(mRWLock));
 #else
   MOZ_RELEASE_ASSERT(pthread_rwlock_wrlock(NativeHandle(mRWLock)) == 0,
                      "pthread_rwlock_wrlock failed");
@@ -73,7 +83,7 @@ void RWLock::WriteLockInternal() {
 
 void RWLock::WriteUnlockInternal() {
 #ifdef XP_WIN
-  ReleaseSRWLockExclusive(NativeHandle(mRWLock));
+//  ReleaseSRWLockExclusive(NativeHandle(mRWLock));
 #else
   MOZ_RELEASE_ASSERT(pthread_rwlock_unlock(NativeHandle(mRWLock)) == 0,
                      "pthread_rwlock_unlock failed");

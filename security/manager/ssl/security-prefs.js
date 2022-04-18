@@ -61,7 +61,7 @@ pref("security.enterprise_roots.enabled", true);
 // 0: do not fetch OCSP
 // 1: fetch OCSP for DV and EV certificates
 // 2: fetch OCSP only for EV certificates
-pref("security.OCSP.enabled", 1);
+pref("security.OCSP.enabled", 0);
 pref("security.OCSP.require", false);
 #ifdef RELEASE_OR_BETA
 pref("security.OCSP.timeoutMilliseconds.soft", 2000);
@@ -139,10 +139,6 @@ pref("security.webauth.webauthn_enable_usbtoken", false);
 #else
 pref("security.webauth.webauthn_enable_usbtoken", true);
 #endif
-
-pref("security.ssl.errorReporting.enabled", false);
-pref("security.ssl.errorReporting.url", "https://incoming.telemetry.mozilla.org/submit/sslreports/");
-pref("security.ssl.errorReporting.automatic", false);
 
 // Impose a maximum age on HPKP headers, to avoid sites getting permanently
 // blacking themselves out by setting a bad pin.  (60 days by default)

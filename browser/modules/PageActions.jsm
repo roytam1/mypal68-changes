@@ -1103,7 +1103,7 @@ Action.prototype = {
   },
 
   get _isBuiltIn() {
-    let builtInIDs = ["pocket", "screenshots_mozilla_org"].concat(
+    let builtInIDs = ["screenshots_mozilla_org"].concat(
       gBuiltInActions.filter(a => !a.__isSeparator).map(a => a.id)
     );
     return builtInIDs.includes(this.id);

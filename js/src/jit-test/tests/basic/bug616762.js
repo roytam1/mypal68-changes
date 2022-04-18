@@ -1,4 +1,4 @@
-document = {
+focument = {
     ready: function (x) {
         this.exec = x;
     }
