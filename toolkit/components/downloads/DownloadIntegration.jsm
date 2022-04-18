@@ -433,51 +433,6 @@ var DownloadIntegration = {
   },
 
   /**
-   * Checks to determine whether to block downloads because they might be
-   * malware, based on application reputation checks.
-   *
-   * aParam aDownload
-   *        The download object.
-   *
-   * @return {Promise}
-   * @resolves Object with the following properties:
-   *           {
-   *             shouldBlock: Whether the download should be blocked.
-   *             verdict: Detailed reason for the block, according to the
-   *                      "Downloads.Error.BLOCK_VERDICT_" constants, or empty
-   *                      string if the reason is unknown.
-   *           }
-   */
-  shouldBlockForReputationCheck(aDownload) {
-    let hash;
-    let sigInfo;
-    let channelRedirects;
-    try {
-      hash = aDownload.saver.getSha256Hash();
-      sigInfo = aDownload.saver.getSignatureInfo();
-      channelRedirects = aDownload.saver.getRedirects();
-    } catch (ex) {
-      // Bail if DownloadSaver doesn't have a hash or signature info.
-      return Promise.resolve({
-        shouldBlock: false,
-        verdict: "",
-      });
-    }
-    if (!hash || !sigInfo) {
-      return Promise.resolve({
-        shouldBlock: false,
-        verdict: "",
-      });
-    }
-    return new Promise(resolve => {
-      let aReferrer = null;
-      if (aDownload.source.referrer) {
-        aReferrer = NetUtil.newURI(aDownload.source.referrer);
-      }
-    });
-  },
-
-  /**
    * Checks whether downloaded files should be marked as coming from
    * Internet Zone.
    *

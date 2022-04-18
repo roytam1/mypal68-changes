@@ -2236,34 +2236,8 @@ this.DownloadCopySaver.prototype = {
    * @rejects DownloadError if the download should be blocked.
    */
   async _checkReputationAndMove(aSetPropertiesFn) {
-    let download = this.download;
     let targetPath = this.download.target.path;
     let partFilePath = this.download.target.partFilePath;
-
-    let {
-      shouldBlock,
-      verdict,
-    } = await DownloadIntegration.shouldBlockForReputationCheck(download);
-    if (shouldBlock) {
-      let newProperties = { progress: 100, hasPartialData: false };
-
-      // We will remove the potentially dangerous file if instructed by
-      // DownloadIntegration. We will always remove the file when the
-      // download did not use a partial file path, meaning it
-      // currently has its final filename.
-      if (!DownloadIntegration.shouldKeepBlockedData() || !partFilePath) {
-        await this.removeData(!partFilePath);
-      } else {
-        newProperties.hasBlockedData = true;
-      }
-
-      aSetPropertiesFn(newProperties);
-
-      throw new DownloadError({
-        becauseBlockedByReputationCheck: true,
-        reputationCheckVerdict: verdict,
-      });
-    }
 
     if (partFilePath) {
       await OS.File.move(partFilePath, targetPath);
